@@ -33,3 +33,9 @@ If you're only developing for one platform you can ignore the steps below that a
 ### License
 
 - See [LICENSE](/LICENSE)
+
+### FYI
+
+- 1. 1) If you don't see `ios/GoogleService-Info.plist` and `android/app/google-services.json`, contact to administrator to get these files.
+- 2. 2) **[Android]** You will need to have JDK 8.0 installed. (http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html : `Java SE Development Kit 8u162`)
+  		Useful Resource: Setting Up React Native android without Android Studio (https://medium.com/surabayadev/setting-up-react-native-android-without-android-studio-35a496e1dfa3)
