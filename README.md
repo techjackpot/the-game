@@ -22,7 +22,7 @@ If you're only developing for one platform you can ignore the steps below that a
 
 - 1.1) Install NPM packages with your package manager of choice - i.e run `yarn` or `npm install`
 - 1.2) **[iOS]** `cd ios` and run `pod install` - if you don't have CocoaPods you can follow [these instructions](https://guides.cocoapods.org/using/getting-started.html#getting-started) to install it.
-- 1.3) **[Android]** No additional steps for android here.
+- 1.3) **[Android]** `react-native bundle --platform android --dev true --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res`
 
 #### 2) Start your app
 
@@ -38,4 +38,42 @@ If you're only developing for one platform you can ignore the steps below that a
 
 - 1. 1) If you don't see `ios/GoogleService-Info.plist` and `android/app/google-services.json`, contact to administrator to get these files.
 - 2. 2) **[Android]** You will need to have JDK 8.0 installed. (http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html : `Java SE Development Kit 8u162`)
-  		Useful Resource: Setting Up React Native android without Android Studio (https://medium.com/surabayadev/setting-up-react-native-android-without-android-studio-35a496e1dfa3)
+  		Useful Resource: [Setting Up React Native android without Android Studio](https://medium.com/surabayadev/setting-up-react-native-android-without-android-studio-35a496e1dfa3)
+
+
+### OVERALL STEPS
+1. `npm install`
+2. put `ios/GoogleService-Info.plist`, `android/app/google-services.json`
+3. `cd ios`, `pod install`
+4. `react-native bundle --platform android --dev true --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res`
+5. `npm start`
+6. `npm run ios`, `npm run android`
+
+
+### REQUIREMENTS
+
+`javac -version`
+
+javac 1.8.0_162
+
+
+`java -version`
+
+java version "1.8.0_162"
+
+Java(TM) SE Runtime Environment (build 1.8.0_162-b12)
+
+Java HotSpot(TM) 64-Bit Server VM (build 25.162-b12, mixed mode)
+
+
+`node -v`
+
+v9.5.0
+
+
+`react-native --version`
+
+react-native-cli: 2.0.1
+
+react-native: 0.53.3
+
