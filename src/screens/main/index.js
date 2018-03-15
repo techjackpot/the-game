@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   Image,
   View,
   Text
 } from 'react-native';
 import { StackNavigator, TabNavigator } from 'react-navigation';
+
+import TopMiniHeader from '../topminiheader';
 
 import Core4Screen from '../core4';
 import Key4Screen from '../key4';
@@ -17,12 +20,8 @@ import MovieScreen from '../movie';
 import GroupsScreen from '../groups';
 import NotificationScreen from '../notification';
 
-import TopMiniHeader from '../topminiheader';
 
 // import AuthService from '../services/authservice';
-
-import { connect } from 'react-redux';
-import { setTabIndex } from '@actions/globals'
 
 import styles from './styles';
 
@@ -264,41 +263,28 @@ const MainTabNavigator = TabNavigator({
   }
 ); 
 
-class MainNavScreen extends React.Component {
-
-  constructor(props)
-  {
-    super(props);
-  }
-  
-  componentDidMount() {
-  }
-
-  _onNav = (prevState, nextState) => {
-    this.props.setTabIndex(nextState.index);
-  }
-
+class MainScreen extends React.Component {
   render() {
     return (
       <View style={{flex:1, backgroundColor: 'black'}}>
-        <TopMiniHeader />
-        <MainTabNavigator style={{backgroundColor: 'black'}} onNavigationStateChange={this._onNav}/>
+        <TopMiniHeader {...this.props} />
+        <MainTabNavigator />
       </View>
     );
   }
 };
 
-function mapDispatchToProps(dispatch) {
+const mapStateToProps = state => {
   return {
-      dispatch,
-      setTabIndex: value => dispatch(setTabIndex(value))
-  };
-}
+    user: state.user || {},
+    isLoading: state.status.loading || false,
+  }
+};
 
-function mapStateToProps(state) {
-  return { 
-      globals : state.get('globals'),
-  };
-}
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatch
+  }
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainNavScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(MainScreen);

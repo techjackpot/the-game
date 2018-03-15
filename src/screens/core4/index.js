@@ -1,4 +1,3 @@
-import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import {
   Text,
@@ -147,7 +146,7 @@ class Core4ScoreStatusPanel extends React.Component {
   }
 }
 
-class Core4Screen extends React.Component {
+export default class Core4Screen extends React.Component {
   render () {
     return (
       <View style={styles.pageContainer}>
@@ -172,17 +171,3 @@ class Core4Screen extends React.Component {
     );
   }
 }
-
-function mapDispatchToProps(dispatch) {
-  return {
-      dispatch,
-  };
-}
-
-function mapStateToProps(state) {
-  return { 
-      globals : state.get('globals')
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Core4Screen);
