@@ -23,6 +23,10 @@ const styles = StyleSheet.create({
     height: 40,
     paddingHorizontal: 20,
   },
+  bottomIcon: {
+    width: 30,
+    height: 30,
+  }
 });
 
 export default styles;
