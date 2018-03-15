@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#000000',
-        maxHeight: 120,
+        maxHeight: 80,
     },
     welcome: {
         fontSize: 20,

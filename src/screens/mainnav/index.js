@@ -1,36 +1,30 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet,
   Image,
   View,
   Text
 } from 'react-native';
 import { StackNavigator, TabNavigator } from 'react-navigation';
 
-import Core4Screen from './core4';
-import Key4Screen from './key4';
-import StackScreen from './stack';
-import TimelineScreen from './timeline';
-import DashboardScreen from './dashboard';
-import ProfileScreen from './profile';
-import TodayScreen from './today';
-import MovieScreen from './movie';
-import MembersScreen from './members';
-import NotificationScreen from './notification';
+import Core4Screen from '../core4';
+import Key4Screen from '../key4';
+import StackScreen from '../stack';
+import TimelineScreen from '../timeline';
+import DashboardScreen from '../dashboard';
+import ProfileScreen from '../profile';
+import TodayScreen from '../today';
+import MovieScreen from '../movie';
+import MembersScreen from '../members';
+import NotificationScreen from '../notification';
 
-import TopMiniHeader from './topminiheader';
+import TopMiniHeader from '../topminiheader';
 
 // import AuthService from '../services/authservice';
 
 import { connect } from 'react-redux';
 import { setTabIndex } from '@actions/globals'
 
-const styles = StyleSheet.create({
-  icon: {
-    width: 26,
-    height: 26,
-  },
-});
+import styles from './styles';
 
 const TodayNav = StackNavigator(
   {
@@ -118,6 +112,7 @@ const TimelineNav = StackNavigator(
     headerMode: 'none',
   }
 );
+console.log('dfdfs')
 const DashboardNav = StackNavigator(
   {
     Dashboard: {
@@ -137,28 +132,50 @@ const GameNav = TabNavigator(
   {
     Core4: {
       screen: Core4Nav,
+      navigationOptions: {
+        tabBarLabel: ({focused, tintColor}) => <Text style={[styles.topBarLabel, focused ? styles.activeTabBarLabel : {}, {color: tintColor}]}>CORE4</Text>
+      }
     },
     Key4: {
       screen: Key4Nav,
+      navigationOptions: {
+        tabBarLabel: ({focused, tintColor}) => <Text style={[styles.topBarLabel, focused ? styles.activeTabBarLabel : {}, {color: tintColor}]}>KEY4</Text>
+      }
     },
     Stack: {
       screen: StackNav,
+      navigationOptions: {
+        tabBarLabel: ({focused, tintColor}) => <Text style={[styles.topBarLabel, focused ? styles.activeTabBarLabel : {}, {color: tintColor}]}>STACK</Text>
+      }
     },
     Timeline: {
       screen: TimelineNav,
+      navigationOptions: {
+        tabBarLabel: ({focused, tintColor}) => <Text style={[styles.topBarLabel, focused ? styles.activeTabBarLabel : {}, {color: tintColor}]}>TIMELINE</Text>
+      }
     },
     Dashboard: {
       screen: DashboardNav,
+      navigationOptions: {
+        tabBarLabel: ({focused, tintColor}) => <Text style={[styles.topBarLabel, focused ? styles.activeTabBarLabel : {}, {color: tintColor}]}>DASHBOARD</Text>
+      }
     }
   },
   {
     initialRouteName: 'Core4',
     tabBarPosition: 'top',
     navigationOptions: {
-      gesturesEnabled: false
+      gesturesEnabled: false,
     },
     tabBarOptions: {
-      showIcon: false
+      showIcon: false,
+      tabStyle: styles.topBarTab,
+      indicatorStyle: styles.topBarIndicator,
+      labelStyle: styles.topBarLabel,
+      style: styles.topBar,
+      activeTintColor: '#ffffff',
+      inactiveTintColor: '#4b4b4b',
+      upperCaseLabel: false,
     }
   }
 );
@@ -203,6 +220,7 @@ const MainTabNavigator = TabNavigator({
     swipeEnabled: false,
     tabBarPosition: 'bottom',
     initialRouteName: 'Game',
+    tabBarOptions: {}
   }
 ); 
 
