@@ -17,20 +17,6 @@ export default class AuthService {
 		});
 	}
 
-    static addExpoToken(token)
-    {
-        const uid = firebaseApp.auth().currentUser.uid;
-        try{
-            firebaseApp.firestore()
-                .collection('users')
-                .doc(uid)
-                .collection('expoTokens')
-                .doc(token).set({state: true});
-        } catch(error) {
-            // console.log(error);
-        }
-    }
-
 	static signOut() {
 		return firebaseApp.auth().signOut();
 	}

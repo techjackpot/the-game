@@ -14,7 +14,7 @@ import DashboardScreen from '../dashboard';
 import ProfileScreen from '../profile';
 import TodayScreen from '../today';
 import MovieScreen from '../movie';
-import MembersScreen from '../members';
+import GroupsScreen from '../groups';
 import NotificationScreen from '../notification';
 
 import TopMiniHeader from '../topminiheader';
@@ -112,7 +112,7 @@ const TimelineNav = StackNavigator(
     headerMode: 'none',
   }
 );
-console.log('dfdfs')
+
 const DashboardNav = StackNavigator(
   {
     Dashboard: {
@@ -180,14 +180,14 @@ const GameNav = TabNavigator(
   }
 );
 
-const MembersNav = StackNavigator(
+const GroupsNav = StackNavigator(
   {
-    Members: {
-      screen: MembersScreen,
+    Groups: {
+      screen: GroupsScreen,
     },
   },
   {
-    initialRouteName: 'Members',
+    initialRouteName: 'Groups',
     navigationOptions: {
       gesturesEnabled: false
     },
@@ -211,16 +211,56 @@ const NotificationNav = StackNavigator(
 );
 
 const MainTabNavigator = TabNavigator({
-    Today: { screen: TodayNav },
-    Movie: { screen: MovieNav },
-    Game: { screen: GameNav },
-    Members: { screen: MembersNav},
-    Notification: { screen: NotificationNav}
+    Today: {
+      screen: TodayNav,
+      navigationOptions: {
+        showLabel: false,
+        tabBarIcon: ({ tintColor }) => <Image style={styles.bottomIcon} resizeMode={'contain'} source={require('../../assets/icons/magazine.png')} />,
+        showIcon: true
+      },
+    },
+    Movie: {
+      screen: MovieNav,
+      navigationOptions: {
+        showLabel: false,
+        tabBarIcon: ({ tintColor }) => <Image style={styles.bottomIcon} resizeMode={'contain'} source={require('../../assets/icons/tv.png')} />,
+        showIcon: true
+      },
+    },
+    Game: {
+      screen: GameNav,
+      navigationOptions: {
+        showLabel: false,
+        tabBarIcon: ({ tintColor }) => <Image style={styles.bottomIcon} resizeMode={'contain'} source={require('../../assets/icons/game.png')} />,
+        showIcon: true
+      },
+    },
+    Groups: {
+      screen: GroupsNav,
+      navigationOptions: {
+        showLabel: false,
+        tabBarIcon: ({ tintColor }) => <Image style={styles.bottomIcon} resizeMode={'contain'} source={require('../../assets/icons/groups.png')} />,
+        showIcon: true
+      },
+    },
+    Notification: {
+      screen: NotificationNav,
+      navigationOptions: {
+        showLabel: false,
+        tabBarIcon: ({ tintColor }) => <Image style={styles.bottomIcon} resizeMode={'contain'} source={require('../../assets/icons/bell.png')} />,
+        showIcon: true
+      },
+    }
   }, {
     swipeEnabled: false,
     tabBarPosition: 'bottom',
     initialRouteName: 'Game',
-    tabBarOptions: {}
+    tabBarOptions: {
+      showLabel: false,
+      style: {
+        backgroundColor: '#131313'
+      },
+    }
   }
 ); 
 

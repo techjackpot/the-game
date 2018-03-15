@@ -7,12 +7,12 @@ import {
 } from 'react-native';
 import styles from './styles';
 
-class MembersScreen extends React.Component{
+class GroupsScreen extends React.Component{
   render () {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Members Screen
+          Groups Screen
         </Text>
       </View>
     );
@@ -31,4 +31,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MembersScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(GroupsScreen);
