@@ -1,4 +1,3 @@
-import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import {
   Text,
@@ -7,7 +6,7 @@ import {
 } from 'react-native';
 import styles from './styles';
 
-class MovieScreen extends React.Component{
+export default class MovieScreen extends React.Component{
   render () {
     return (
       <View style={styles.container}>
@@ -18,17 +17,3 @@ class MovieScreen extends React.Component{
     );
   }
 }
-
-function mapDispatchToProps(dispatch) {
-  return {
-      dispatch,
-  };
-}
-
-function mapStateToProps(state) {
-  return { 
-      globals : state.get('globals')
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(MovieScreen);

@@ -1,31 +1,9 @@
-
 import React from 'react';
-import { StyleSheet, Platform, Image, Text, View } from 'react-native';
+import Root from './src/index';
+import configureStore from './src/store/index';
 
-import firebase from 'react-native-firebase';
+const { persistor, store } = configureStore();
 
-import WarriorGame from './src';
-
-import { Provider } from 'react-redux';
-import configureStore from './src/configureStore';
-
-const store = configureStore();
-
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
-
-  componentDidMount() {
-  }
-
-  render() {
-    return (
-      <Provider store={store}>
-        <WarriorGame />
-      </Provider>
-    );
-  }
+export default function App() {
+  return <Root store={store} persistor={persistor} />;
 }
