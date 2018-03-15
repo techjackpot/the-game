@@ -34,6 +34,7 @@
     "react-native": "^0.53.0",
     "react-native-dropdownalert": "^3.4.0",
     "react-native-elements": "^0.19.0",
+    "react-native-extended-stylesheet": "^0.8.1",
     "react-native-firebase": "^3.2.7",
     "react-native-gesture-recognizers": "^0.3.0",
     "react-native-google-signin": "git+https://github.com/invertase/react-native-google-signin.git#v0.12.1",
