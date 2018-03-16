@@ -1,24 +1,6 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 const styles = EStyleSheet.create({
-    pageContainer: {
-        flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        backgroundColor: '$bgMain',
-        flexWrap: 'nowrap',
-    },
-    flexColumn: {
-        flexDirection: 'column',
-    },
-    flexRow: {
-        flexDirection: 'row',
-    },
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
     dateNavigation: {
         flex: 1,
         flexDirection: 'row',

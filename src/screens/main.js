@@ -14,43 +14,44 @@ import Key4Screen from './key4';
 import StackScreen from './stack';
 import TimelineScreen from './timeline';
 import DashboardScreen from './dashboard';
-import ProfileScreen from './profile';
-import TodayScreen from './today';
-import MovieScreen from './movie';
-import GroupsScreen from './groups';
-import NotificationScreen from './notification';
+// import TodayScreen from './today';
+// import MovieScreen from './movie';
+// import GroupsScreen from './groups';
+// import NotificationScreen from './notification';
 
-import gstyles, { main as styles } from '../stylesheets';
+import Loading from './loading';
 
-const TodayNav = StackNavigator(
-  {
-    Today: {
-      screen: TodayScreen,
-    },
-  },
-  {
-    initialRouteName: 'Today',
-    navigationOptions: {
-      gesturesEnabled: false
-    },
-    headerMode: 'none',
-  }
-);
+import { main as styles, global as gstyles } from '../stylesheets';
 
-const MovieNav = StackNavigator(
-  {
-    Movie: {
-      screen: MovieScreen,
-    },
-  },
-  {
-    initialRouteName: 'Movie',
-    navigationOptions: {
-      gesturesEnabled: false
-    },
-    headerMode: 'none',
-  }
-);
+// const TodayNav = StackNavigator(
+//   {
+//     Today: {
+//       screen: TodayScreen,
+//     },
+//   },
+//   {
+//     initialRouteName: 'Today',
+//     navigationOptions: {
+//       gesturesEnabled: false
+//     },
+//     headerMode: 'none',
+//   }
+// );
+
+// const MovieNav = StackNavigator(
+//   {
+//     Movie: {
+//       screen: MovieScreen,
+//     },
+//   },
+//   {
+//     initialRouteName: 'Movie',
+//     navigationOptions: {
+//       gesturesEnabled: false
+//     },
+//     headerMode: 'none',
+//   }
+// );
 
 const Core4Nav = StackNavigator(
   {
@@ -108,7 +109,6 @@ const TimelineNav = StackNavigator(
     headerMode: 'none',
   }
 );
-
 const DashboardNav = StackNavigator(
   {
     Dashboard: {
@@ -176,38 +176,38 @@ const GameNav = TabNavigator(
   }
 );
 
-const GroupsNav = StackNavigator(
-  {
-    Groups: {
-      screen: GroupsScreen,
-    },
-  },
-  {
-    initialRouteName: 'Groups',
-    navigationOptions: {
-      gesturesEnabled: false
-    },
-    headerMode: 'none',
-  }
-);
+// const GroupsNav = StackNavigator(
+//   {
+//     Groups: {
+//       screen: GroupsScreen,
+//     },
+//   },
+//   {
+//     initialRouteName: 'Groups',
+//     navigationOptions: {
+//       gesturesEnabled: false
+//     },
+//     headerMode: 'none',
+//   }
+// );
 
-const NotificationNav = StackNavigator(
-  {
-    Notification: {
-      screen: NotificationScreen,
-    },
-  },
-  {
-    initialRouteName: 'Notification',
-    navigationOptions: {
-      gesturesEnabled: false
-    },
-    headerMode: 'none',
-  }
-);
+// const NotificationNav = StackNavigator(
+//   {
+//     Notification: {
+//       screen: NotificationScreen,
+//     },
+//   },
+//   {
+//     initialRouteName: 'Notification',
+//     navigationOptions: {
+//       gesturesEnabled: false
+//     },
+//     headerMode: 'none',
+//   }
+// );
 
 const MainTabNavigator = TabNavigator({
-    Today: {
+    /*Today: {
       screen: TodayNav,
       navigationOptions: {
         showLabel: false,
@@ -222,16 +222,16 @@ const MainTabNavigator = TabNavigator({
         tabBarIcon: ({ tintColor }) => <Image style={styles.bottomIcon} resizeMode={'contain'} source={require('../assets/icons/tv.png')} />,
         showIcon: true
       },
-    },
+    },*/
     Game: {
       screen: GameNav,
       navigationOptions: {
         showLabel: false,
-        tabBarIcon: ({ tintColor }) => <Image style={styles.bottomIcon} resizeMode={'contain'} source={require('../assets/icons/game.png')} />,
+        tabBarIcon: ({ focused, tintColor }) => <View style={[styles.container,styles.gameIconContainer]}><Image style={styles.bottomIcon} resizeMode={'contain'} source={focused ? require('../assets/icons/game-active.png') : require('../assets/icons/game.png')} /></View>,
         showIcon: true
       },
     },
-    Groups: {
+    /*Groups: {
       screen: GroupsNav,
       navigationOptions: {
         showLabel: false,
@@ -246,7 +246,7 @@ const MainTabNavigator = TabNavigator({
         tabBarIcon: ({ tintColor }) => <Image style={styles.bottomIcon} resizeMode={'contain'} source={require('../assets/icons/bell.png')} />,
         showIcon: true
       },
-    }
+    }*/
   }, {
     swipeEnabled: false,
     tabBarPosition: 'bottom',
@@ -254,7 +254,8 @@ const MainTabNavigator = TabNavigator({
     tabBarOptions: {
       showLabel: false,
       style: {
-        backgroundColor: '#131313'
+        backgroundColor: '#131313',
+        height: 60,
       },
     }
   }
@@ -262,8 +263,12 @@ const MainTabNavigator = TabNavigator({
 
 class MainScreen extends React.Component {
   render() {
+    const {isLoading} = this.props;
     return (
-      <View style={{flex:1, backgroundColor: 'black'}}>
+      <View style={[gstyles.mainContainer]}>
+        {
+          // isLoading && <Loading style={[gstyles.container, gstyles.loadingContainer]} />
+        }
         <TopMiniHeader {...this.props} />
         <MainTabNavigator />
       </View>

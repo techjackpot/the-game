@@ -9,7 +9,7 @@ import {
   ScrollView,
 } from 'react-native';
 
-import gstyles, { core4 as styles } from '../stylesheets';
+import { core4 as styles, global as gstyles } from '../stylesheets';
 
 const elitesAssets = {
   fitness: {
@@ -74,17 +74,17 @@ class Core4Elites extends React.Component {
   render() {
     const {elites} = this.state;
     return (
-      <View style={[styles.container, styles.elitesContainer, styles.flexRow]}>
+      <View style={[gstyles.container, styles.elitesContainer, gstyles.flexRow]}>
         {
           Object.entries(elites).map(([elite, status]) => 
             <TouchableOpacity activeOpacity={0.9} style={styles.eliteContainer} key={elite} onPress={() => this.toggleStatus(elite)}>
-              <View style={[styles.container, status === true ? styles.eliteActive : {}]}>
-                <View style={[styles.container, styles.flexRow, styles.eliteBackground]}>
+              <View style={[gstyles.container, status === true ? styles.eliteActive : {}]}>
+                <View style={[gstyles.container, gstyles.flexRow, styles.eliteBackground]}>
                   <View style={styles.backgroundWhiteSpace}></View>
                   <Image style={styles.eliteBackgroudImage} resizeMode={'cover'} source={elitesAssets[elite].background} />
                 </View>
-                <View style={[styles.container, styles.eliteCategoryContainer, status === false ? styles.eliteInactive : {}]}>
-                  <View style={[styles.container, styles.eliteCategory]}>
+                <View style={[gstyles.container, styles.eliteCategoryContainer, status === false ? styles.eliteInactive : {}]}>
+                  <View style={[gstyles.container, styles.eliteCategory]}>
                     <Image style={styles.eliteCategoryIcon} resizeMode={'contain'} source={elitesAssets[elite].icon} />
                   </View>
                 </View>
@@ -115,23 +115,23 @@ class Core4ScoreStatusPanel extends React.Component {
   render () {
     const {score, zone, power} = this.state;
     return (
-      <View style={[styles.container, styles.flexRow, styles.statusPanel]}>
-        <View style={[styles.container, styles.flexColumn, styles.scoreBoard]}>
-          <View style={[styles.container, styles.flexRow, styles.core4Scores]}>
+      <View style={[gstyles.container, gstyles.flexRow, styles.statusPanel]}>
+        <View style={[gstyles.container, gstyles.flexColumn, styles.scoreBoard]}>
+          <View style={[gstyles.container, gstyles.flexRow, styles.core4Scores]}>
             <Text style={[styles.scoreText, styles.totalScore]}>{score}</Text>
             <Text style={[styles.scoreText, styles.maxScore]}>/4</Text>
           </View>
           <View style={[styles.horizontalBar, !zone.active && !power.active ? {display: 'none'} : {}]} />
-          <View style={[styles.addonScores, styles.flexRow]}>
+          <View style={[styles.addonScores, gstyles.flexRow]}>
             { zone.active && (
-                <View style={[styles.container, styles.flexColumn, styles.addonScoreArea]}>
+                <View style={[gstyles.container, gstyles.flexColumn, styles.addonScoreArea]}>
                   <View style={styles.addonScoreLabel}><Text style={styles.addonScoreLabelText}>ZONE</Text></View>
                   <Text style={[styles.scoreText, styles.addonScore]}>{zone.score}</Text>
                 </View>
               )
             }
             { power.active && (
-                <View style={[styles.container, styles.flexColumn, styles.addonScoreArea]}>
+                <View style={[gstyles.container, gstyles.flexColumn, styles.addonScoreArea]}>
                   <View style={styles.addonScoreLabel}><Text style={styles.addonScoreLabelText}>POWER</Text></View>
                   <Text style={[styles.scoreText, styles.addonScore]}>{power.score}</Text>
                 </View>
@@ -139,7 +139,7 @@ class Core4ScoreStatusPanel extends React.Component {
             }
           </View>
         </View>
-        <View style={[styles.container, styles.statusBoard]}>
+        <View style={[gstyles.container, styles.statusBoard]}>
           <Image style={styles.statusLevel} resizeMode={'contain'} source={require('../assets/images/stack/power-active.png')} />
         </View>
       </View>
@@ -150,8 +150,8 @@ class Core4ScoreStatusPanel extends React.Component {
 export default class Core4Screen extends React.Component {
   render () {
     return (
-      <View style={gstyles.core4.pageContainer}>
-        <View style={[styles.container, styles.dateNavigation]}>
+      <View style={[gstyles.container, gstyles.gameContainer]}>
+        <View style={[gstyles.container, styles.dateNavigation]}>
           <TouchableOpacity>
             <Text style={[styles.dateOption, styles.activeDateOption]}>Today</Text>
           </TouchableOpacity>
@@ -161,10 +161,10 @@ export default class Core4Screen extends React.Component {
           </TouchableOpacity>
         </View>
         <ScrollView>
-          <View style={styles.container}>
+          <View style={gstyles.container}>
             <Core4ScoreStatusPanel />
           </View>
-          <View style={styles.container}>
+          <View style={gstyles.container}>
             <Core4Elites />
           </View>
         </ScrollView>

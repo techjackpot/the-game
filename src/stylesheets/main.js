@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#bb0000'
     },
     icon: {
         width: 26,
@@ -33,6 +32,15 @@ const styles = StyleSheet.create({
     bottomIcon: {
         width: 30,
         height: 30,
+    },
+    gameIconContainer: {
+        borderColor: '#1fb9fc',
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderRadius: 45,
+        width: 45,
+        minHeight: 45,
+        maxHeight: 45,
     }
 });
 

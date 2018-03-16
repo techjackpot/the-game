@@ -1,19 +1,25 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 const styles = EStyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#000000',
-        maxHeight: 80,
+    wrapper: {
+        justifyContent: 'space-between',
+        paddingHorizontal: 30,
     },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
-        color: '#ffffff'
+    date: {
+        fontSize: 8,
+        fontWeight: '700',
+        color: '#626262'
     },
+    title: {
+        fontSize: 32,
+        color: '#ffffff',
+        fontWeight: '800',
+    },
+    avatar: {
+        width: 34,
+        height: 34,
+        borderRadius: 17,
+    }
 });
 
 export default styles;

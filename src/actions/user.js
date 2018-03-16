@@ -75,7 +75,6 @@ export function login(formData) {
               // }
 
               // Get User Data
-              console.log('loading more user info')
               getUserDetails(dispatch);
             }
 
@@ -95,11 +94,15 @@ export function login(formData) {
   * Logout
   */
 export function logout() {
-  return dispatch => new Promise((resolve, reject) => {
+  return dispatch => new Promise(async (resolve, reject) => {
+    await statusMessage(dispatch, 'loading', true);
     Firebase.auth().signOut()
       .then(() => {
         dispatch({ type: 'USER_RESET' });
-        setTimeout(resolve, 1000); // Resolve after 1s so that user sees a message
+        setTimeout(async () => {
+          resolve();
+          await statusMessage(dispatch, 'loading', false);
+        }, 1000); // Resolve after 1s so that user sees a message
       }).catch(reject);
   }).catch(async (err) => { await statusMessage(dispatch, 'error', err.message); throw err.message; });
 }
