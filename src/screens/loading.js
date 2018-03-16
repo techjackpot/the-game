@@ -4,10 +4,10 @@ import {
   ActivityIndicator
 } from 'react-native';
 
-import gstyles, { loading as styles } from '../stylesheets';
+import { loading as styles, global as gstyles } from '../stylesheets';
 
 const Loading = () => (
-  <View style={styles.container}>
+  <View style={gstyles.container}>
     <ActivityIndicator size="large" color={'#ffffff'} />
   </View>
 );

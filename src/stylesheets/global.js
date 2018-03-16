@@ -8,7 +8,27 @@ const styles = EStyleSheet.create({
     },
     devBackground: {
         backgroundColor: '#bb0000'
-    }
+    },
+    flexColumn: {
+        flexDirection: 'column',
+    },
+    flexRow: {
+        flexDirection: 'row',
+    },
+    mainContainer: {
+    	flex: 1,
+    	backgroundColor: '$bgMain',
+    },
+    gameContainer: {
+    	backgroundColor: '$bgMain',
+        flexWrap: 'nowrap',
+    },
+    topNavContainer: {
+    	maxHeight: 80,
+    },
+    loadingContainer: {
+    	position: 'absolute',
+    },
 });
 
 export default styles;
