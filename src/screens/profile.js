@@ -12,8 +12,6 @@ import { logout, getUserData } from '../actions/user';
 
 class ProfileScreen extends React.Component{
 
-  componentDidMount = () => this.props.getUserData();
-
   handleLogout() {
     this.props.handleLogout();
   }
@@ -36,7 +34,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  getUserData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileScreen);
