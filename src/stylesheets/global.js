@@ -29,6 +29,10 @@ const styles = EStyleSheet.create({
     loadingContainer: {
     	position: 'absolute',
     },
+    core4Container: {
+    },
+    key4Container: {
+    },
 });
 
 export default styles;

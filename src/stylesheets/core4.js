@@ -84,6 +84,7 @@ const styles = EStyleSheet.create({
         justifyContent: 'space-around',
         marginHorizontal: 12,
         marginVertical: 24,
+        paddingBottom: 60,
     },
     eliteContainer: {
         width: '48%',
@@ -118,7 +119,9 @@ const styles = EStyleSheet.create({
     },
     eliteCategoryContainer: {
         width: '100%',
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
+        borderRadius: 8,
+        overflow: 'hidden'
     },
     eliteCategory: {
         width: 24,

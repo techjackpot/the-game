@@ -150,7 +150,7 @@ class Core4ScoreStatusPanel extends React.Component {
 export default class Core4Screen extends React.Component {
   render () {
     return (
-      <View style={[gstyles.container, gstyles.gameContainer]}>
+      <View style={[gstyles.container, gstyles.gameContainer, gstyles.core4Container]}>
         <View style={[gstyles.container, styles.dateNavigation]}>
           <TouchableOpacity>
             <Text style={[styles.dateOption, styles.activeDateOption]}>Today</Text>

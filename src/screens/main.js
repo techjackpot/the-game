@@ -158,7 +158,7 @@ const GameNav = TabNavigator(
     }
   },
   {
-    initialRouteName: 'Core4',
+    initialRouteName: 'Key4',
     tabBarPosition: 'top',
     navigationOptions: {
       gesturesEnabled: false,
@@ -256,6 +256,12 @@ const MainTabNavigator = TabNavigator({
       style: {
         backgroundColor: '#131313',
         height: 60,
+        position: 'absolute',
+        bottom: 0,
+        left: 5,
+        right: 5,
+        borderTopLeftRadius: 5,
+        borderTopRightRadius: 5,
       },
     }
   }
