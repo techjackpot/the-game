@@ -21,6 +21,8 @@ import gstyles, { login as styles } from '../stylesheets';
 
 import { login } from '../actions/user';
 
+const loginBackground = require('../assets/images/signin_background.png');
+
 class LoginScreen extends React.Component{
 
   static defaultProps = {
@@ -53,7 +55,7 @@ class LoginScreen extends React.Component{
     return (
       <ImageBackground 
         style  = {styles.backgroundimage}
-        source = {require('../assets/images/signin_background.png')}
+        source = {loginBackground}
       >
         <View style = {[styles.container/*, {opacity: (this.state.authChecked ? 1 : 0)}*/]}>
           <Spinner 

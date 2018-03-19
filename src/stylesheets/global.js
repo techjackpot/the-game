@@ -33,6 +33,9 @@ const styles = EStyleSheet.create({
     },
     key4Container: {
     },
+    stackContainer: {
+        alignItems: 'stretch',
+    }
 });
 
 export default styles;

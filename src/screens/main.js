@@ -158,7 +158,7 @@ const GameNav = TabNavigator(
     }
   },
   {
-    initialRouteName: 'Key4',
+    initialRouteName: 'Stack',
     tabBarPosition: 'top',
     navigationOptions: {
       gesturesEnabled: false,
