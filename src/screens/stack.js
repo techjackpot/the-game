@@ -9,10 +9,11 @@ import {
   ScrollView,
   StatusBar,
 } from 'react-native';
+import moment from 'moment';
 
 import { stack as styles, global as gstyles } from '../stylesheets';
 
-import { StackPhaseData_Pit, StackPhaseData } from '../constants/stack';
+import StackPhaseData from '../constants/stack';
 
 import { getStackData, moveToNextPhase, moveToNextField, updateStackField } from '../actions/stack';
 
@@ -28,11 +29,6 @@ class StackPhaseStepFieldInput extends React.Component {
     const {data} = this.props;
     return (
       <View style={[gstyles.container, styles.container]}>
-        { !!data.label && (
-          <View style={[gstyles.container, styles.container, styles.fieldLabelContainer]}>
-            <Text style={styles.fieldLabel}>{data.label.toUpperCase()}</Text>
-          </View>
-        ) }
         <View style={[gstyles.container, styles.container, styles.fieldValueContainer, styles.fieldInputValueContainer]}>
           <TextInput style={styles.fieldInputValue} placeholderTextColor={'#2c2c2c'} placeholder={data.placeholder || ''} />
         </View>
@@ -51,11 +47,6 @@ class StackPhaseStepFieldSingle extends React.Component {
     const {data} = this.props;
     return (
       <View style={[gstyles.container, styles.container]}>
-        { !!data.label && (
-          <View style={[gstyles.container, styles.container, styles.fieldLabelContainer]}>
-            <Text style={styles.fieldLabel}>{data.label.toUpperCase()}</Text>
-          </View>
-        ) }
         <View style={[gstyles.container, gstyles.flexRow, styles.fieldValueContainer, styles.fieldSingleValueContainer]}>
           {
             data.options.map((val, ind) => <TouchableOpacity key={ind} activeOpacity={0.9} style={[styles.fieldSingleValue]}><Text style={[styles.fieldSingleValueText]}>{val.toUpperCase()}</Text></TouchableOpacity>)
@@ -71,6 +62,7 @@ class StackPhaseStepField extends React.Component {
     super(props);
   
     this.state = {};
+    // this.props.updateIndicator()
   }
   render() {
     const {data} = this.props;
@@ -92,6 +84,14 @@ class StackPhaseStepField extends React.Component {
     return (
       <View style={[gstyles.container, styles.container, styles.fieldContainer]}>
         <View style={[styles.fieldTrackPointer]} />
+        { !!data.label && (
+          <View style={[gstyles.container, styles.container, styles.fieldLabelContainer, styles.fieldLabelContainerBubble]}>
+            <Text style={styles.fieldLabel, styles.fieldLabelBubble}>{data.label}</Text>
+            <View style={[styles.fieldLabelBubbleArrow]}>
+              <View style={[styles.fieldLabelBubbleArrowBox]} />
+            </View>
+          </View>
+        ) }
         <Layout data={data} />
       </View>
     );
@@ -144,12 +144,6 @@ class StackPhasePit extends React.Component {
     super(props);
   
     this.state = {
-      intro: {
-          title: '',
-          core4: '',
-          who: '',
-          feeling: [],
-      },
     };
 
     this.core4Icons = {
@@ -159,8 +153,48 @@ class StackPhasePit extends React.Component {
       business: require('../assets/images/core4/icons/business.png'),
     };
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (JSON.stringify(this.props.stack.status.intro) !== JSON.stringify(nextProps.stack.status.intro)) {
+      this.forceUpdate();
+    }
+  } 
+
+  validatePhase(data) {
+    return Object.entries(data).every(([key, val]) => val.constructor === Array ? val.length > 0 : val !== '');
+  }
+
+  updatePitState(key, val, multi) {
+    const {currentPhase, status} = this.props.stack;
+    const {intro} = status;
+
+    if (multi) {
+      let exists = intro[key].indexOf(val);
+      if (exists > -1) {
+        intro[key].splice(exists, 1)
+      } else {
+        intro[key].push(val);
+      }
+    } else {
+      intro[key] = val;
+    }
+
+    this.props.updateStackField({
+      phase: 'intro',
+      field: key,
+      data: intro[key]
+    })
+
+    console.log(currentPhase);
+    if (currentPhase === 0) {
+      console.log(this.validatePhase(intro));
+      this.validatePhase(intro) && this.props.moveToNextPhase(1);
+    }
+  }
+
   render() {
     const {data} = this.props;
+    const {intro} = this.props.stack.status;
     return (
       <View style={[gstyles.container, styles.container, styles.phaseContainer]}>
         <View style={[gstyles.container, styles.container, styles.phaseLabel]}><Text style={styles.phaseLabelText}>{'THE PIT'}</Text></View>
@@ -175,12 +209,8 @@ class StackPhasePit extends React.Component {
                       style={[styles.fieldInputValue, styles.fieldInputValueBig]}
                       placeholderTextColor={'#2c2c2c'}
                       placeholder={__get(['steps', 0, 'fields', 0, 'placeholder'], data)}
-                      onChangeText={(text) => this.props.updateStackField({
-                            phase: 'intro',
-                            field: 'title',
-                            data: text
-                        })
-                      }
+                      onChangeText={(text) => this.updatePitState('title', text)}
+                      value={intro.title}
                     />
                   </View>
                 </View>
@@ -197,7 +227,16 @@ class StackPhasePit extends React.Component {
                   </View>
                   <View style={[gstyles.container, gstyles.flexRow, styles.fieldValueContainer, styles.fieldSingleValueContainer]}>
                     {
-                      __get(['steps', 1, 'fields', 0, 'options'], data).map((type) => <TouchableOpacity key={type} activeOpacity={0.9} style={[styles.fieldSingleValue]}><Image style={[styles.fieldSingleValueImage]} source={this.core4Icons[type]} /></TouchableOpacity>)
+                      __get(['steps', 1, 'fields', 0, 'options'], data).map((type) =>
+                        <TouchableOpacity
+                          key={type}
+                          activeOpacity={0.9}
+                          style={[styles.fieldSingleValue, intro.core4===type ? styles.fieldValueSelected : {}]}
+                          onPress={() => this.updatePitState('core4', type)}
+                        >
+                          <Image style={[styles.fieldSingleValueImage]} source={this.core4Icons[type]} />
+                        </TouchableOpacity>
+                      )
                     }
                   </View>
                 </View>
@@ -213,7 +252,13 @@ class StackPhasePit extends React.Component {
                     <Text style={styles.fieldLabel}>{__get(['steps', 2, 'fields', 0, 'label'], data).toUpperCase()}</Text>
                   </View>
                   <View style={[gstyles.container, styles.container, styles.fieldValueContainer, styles.fieldInputValueContainer]}>
-                    <TextInput style={styles.fieldInputValue} placeholderTextColor={'#2c2c2c'} placeholder={__get(['steps', 2, 'fields', 0, 'placeholder'], data)} />
+                    <TextInput
+                      style={styles.fieldInputValue}
+                      placeholderTextColor={'#2c2c2c'}
+                      placeholder={__get(['steps', 2, 'fields', 0, 'placeholder'], data)}
+                      onChangeText={(text) => this.updatePitState('who', text)}
+                      value={intro.who}
+                    />
                   </View>
                 </View>
               </View>
@@ -229,7 +274,15 @@ class StackPhasePit extends React.Component {
                   </View>
                   <View style={[gstyles.container, gstyles.flexRow, styles.fieldValueContainer, styles.fieldSingleValueContainer]}>
                     {
-                      __get(['steps', 3, 'fields', 0, 'options'], data).map((feeling) => <TouchableOpacity key={feeling} activeOpacity={0.9} style={[styles.fieldSingleValue]}><Text style={[styles.fieldSingleValueText]}>{feeling.toUpperCase()}</Text></TouchableOpacity>)
+                      __get(['steps', 3, 'fields', 0, 'options'], data).map((feeling) =>
+                      <TouchableOpacity
+                        key={feeling}
+                        activeOpacity={0.9}
+                        style={[styles.fieldSingleValue, intro.feeling.indexOf(feeling) > -1 ? styles.fieldValueSelected : {}]}
+                        onPress={() => this.updatePitState('feeling', feeling, true)}
+                      >
+                        <Text style={[styles.fieldSingleValueText]}>{feeling.toUpperCase()}</Text>
+                      </TouchableOpacity>)
                     }
                   </View>
                 </View>
@@ -247,12 +300,11 @@ class StackScreen extends React.Component {
     super(props);
   
     this.state = {
-      currentStep: 0,
     };
   }
 
   componentWillMount() {
-    // this.props.getStackData(new Date());
+    this.props.getStackData(moment().format('dddd, MMMM Do'));
   }
 
   moveNext() {
@@ -262,8 +314,15 @@ class StackScreen extends React.Component {
     this.props.getStackData(new Date());
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (JSON.stringify(this.props.stack) !== JSON.stringify(nextProps.stack)) {
+      this.forceUpdate();
+    }
+  } 
+
+
   render () {
-    const {step} = this.props;
+    const {stack} = this.props;
     return (
       <View style={[gstyles.container, styles.container, gstyles.gameContainer, gstyles.stackContainer, styles.stackContainer]}>
         <StatusBar hidden={true} />
@@ -271,15 +330,18 @@ class StackScreen extends React.Component {
           <ScrollView>
             <View style={[styles.fieldTrackBar]} />
             <View style={[gstyles.container, styles.container, styles.phasesContainer]}>
-              <StackPhasePit data={StackPhaseData_Pit} {...this.props} />
+              <StackPhasePit
+                data={StackPhaseData.data[0]}
+                {...this.props}
+              />
               {
-                StackPhaseData.data.filter((phase, key) => key<=step).map(phase => <StackPhase key={phase.id} data={phase} />)
+                StackPhaseData.data.filter((phase, key) => key!==0 /*&& key <= stack.currentPhase*/).map(phase => <StackPhase key={phase.id} data={phase} />)
               }
             </View>
-            <View style={[gstyles.container, gstyles.flexRow, styles.nextButtonContainer]}>
+            {/*<View style={[gstyles.container, gstyles.flexRow, styles.nextButtonContainer]}>
               <TouchableOpacity style={styles.nextButton} onPress={() => this.moveNext()}><Text style={styles.nextButtonText}>• Next •</Text></TouchableOpacity>
               <TouchableOpacity style={styles.nextButton} onPress={() => this.restart()}><Text style={styles.nextButtonText}>• Restart •</Text></TouchableOpacity>
-            </View>
+            </View>*/}
           </ScrollView>
         </View>
       </View>
@@ -287,15 +349,20 @@ class StackScreen extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  stack: state.stack || {}
-});
+const mapStateToProps = state => {
+  return {
+    stack: state.stack || {}
+  };
+};
 
-const mapDispatchToProps = {
-  getStackData,
-  moveToNextPhase,
-  moveToNextField,
-  updateStackField,
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatch,
+    getStackData: date => dispatch(getStackData(date)),
+    moveToNextPhase: nextPhase => dispatch(moveToNextPhase(nextPhase)),
+    moveToNextField,
+    updateStackField: fieldData => dispatch(updateStackField(fieldData)),
+  }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(StackScreen);

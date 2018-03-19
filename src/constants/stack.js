@@ -1,60 +1,59 @@
-const StackPhaseData_Pit = {
-    "id": "intro",
-    "title": "THE PIT",
-    "type": "target",
-    "method": "all",
-    "steps": [
+export default {
+    "data": [
         {
-            "id": "title",
-            "fields": [
+            "id": "intro",
+            "title": "THE PIT",
+            "type": "target",
+            "method": "all",
+            "steps": [
                 {
                     "id": "title",
-                    "type": "text",
-                    "placeholder": "This is my title",
-                    "label": "",
-                }
-            ]
-        },
-        {
-            "id": "core4",
-            "fields": [
+                    "fields": [
+                        {
+                            "id": "title",
+                            "type": "text",
+                            "placeholder": "This is my title",
+                            "label": "",
+                        }
+                    ]
+                },
                 {
                     "id": "core4",
-                    "type": "single",
-                    "placeholder": "",
-                    "label": "What area of the Core 4 are you stacking?",
-                    "options": ['body', 'being', 'balance', 'business'],
-                }
-            ]
-        },
-        {
-            "id": "who",
-            "fields": [
+                    "fields": [
+                        {
+                            "id": "core4",
+                            "type": "single",
+                            "placeholder": "",
+                            "label": "What area of the Core 4 are you stacking?",
+                            "options": ['body', 'being', 'balance', 'business'],
+                        }
+                    ]
+                },
                 {
                     "id": "who",
-                    "type": "text",
-                    "placeholder": "",
-                    "label": "Who / What are you stacking ?",
-                }
-            ]
-        },
-        {
-            "id": "feeling",
-            "fields": [
+                    "fields": [
+                        {
+                            "id": "who",
+                            "type": "text",
+                            "placeholder": "",
+                            "label": "Who / What are you stacking ?",
+                        }
+                    ]
+                },
                 {
                     "id": "feeling",
-                    "type": "multi",
-                    "placeholder": "",
-                    "label": "Which of the four feelings of the drift are you currently experiencing right now?",
-                    "options": ['anger', 'blame', 'guilt', 'shame', 'other'],
-                }
+                    "fields": [
+                        {
+                            "id": "feeling",
+                            "type": "multi",
+                            "placeholder": "",
+                            "label": "Which of the four feelings of the drift are you currently experiencing right now?",
+                            "options": ['anger', 'blame', 'guilt', 'shame', 'other'],
+                        }
+                    ]
+                },
             ]
         },
-    ]
-};
-
-const StackPhaseData = {
-    "data": [
         {
             "id": "dark",
             "title": "DARK",
@@ -549,5 +548,3 @@ const StackPhaseData = {
         }
     ]
 }
-
-export { StackPhaseData, StackPhaseData_Pit };

@@ -25,9 +25,11 @@ const styles = EStyleSheet.create({
     },
     statusPanel: {
         paddingVertical: 12,
+        marginTop: 22,
+        minHeight: 200,
     },
     scoreBoard: {
-        alignSelf: 'flex-start'
+        // alignSelf: 'flex-start'
     },
     statusBoard: {
         alignSelf: 'flex-start'

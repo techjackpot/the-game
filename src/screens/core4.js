@@ -63,12 +63,18 @@ class Core4Elites extends React.Component {
         fuel          : true,
       }
     };
+    this.updateScore(this.state.elites);
+  }
+
+  updateScore(elites) {
+    this.props.updateScore(Object.entries(elites).reduce((c, [key, val]) => c + (!!val?1:0), 0) * 0.5);
   }
 
   toggleStatus = (elite) => {
     const {elites} = this.state;
     elites[elite] = !elites[elite];
     this.setState({elites});
+    this.updateScore(elites);
   }
 
   render() {
@@ -102,16 +108,23 @@ class Core4ScoreStatusPanel extends React.Component {
     super(props);
     this.state = {
       zone: {
-        active: true,
+        active: false,
         score: 3
       },
       power: {
-        active: true,
+        active: false,
         score: 4
       },
-      score: 3.5
+      score: props.score
     };
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.score !== nextProps.score) {
+      this.setState({score: nextProps.score});
+    }
+  }
+
   render () {
     const {score, zone, power} = this.state;
     return (
@@ -148,10 +161,21 @@ class Core4ScoreStatusPanel extends React.Component {
 }
 
 export default class Core4Screen extends React.Component {
+  constructor(props) {
+    super(props);
+  
+    this.state = {
+      score: 3.5
+    };
+  }
+  updateScore(score) {
+    this.setState({score});
+  }
   render () {
+    const {score} = this.state;
     return (
       <View style={[gstyles.container, gstyles.gameContainer, gstyles.core4Container]}>
-        <View style={[gstyles.container, styles.dateNavigation]}>
+        {/*<View style={[gstyles.container, styles.dateNavigation]}>
           <TouchableOpacity>
             <Text style={[styles.dateOption, styles.activeDateOption]}>Today</Text>
           </TouchableOpacity>
@@ -159,13 +183,13 @@ export default class Core4Screen extends React.Component {
           <TouchableOpacity>
             <Text style={styles.dateOption}>This Week</Text>
           </TouchableOpacity>
-        </View>
+        </View>*/}
         <ScrollView>
           <View style={gstyles.container}>
-            <Core4ScoreStatusPanel />
+            <Core4ScoreStatusPanel score={score} />
           </View>
           <View style={gstyles.container}>
-            <Core4Elites />
+            <Core4Elites updateScore={(score) => this.updateScore(score)}/>
           </View>
         </ScrollView>
       </View>

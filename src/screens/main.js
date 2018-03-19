@@ -144,7 +144,7 @@ const GameNav = TabNavigator(
         tabBarLabel: ({focused, tintColor}) => <Text style={[styles.topBarLabel, focused ? styles.activeTabBarLabel : {}, {color: tintColor}]}>STACK</Text>
       }
     },
-    Timeline: {
+    /*Timeline: {
       screen: TimelineNav,
       navigationOptions: {
         tabBarLabel: ({focused, tintColor}) => <Text style={[styles.topBarLabel, focused ? styles.activeTabBarLabel : {}, {color: tintColor}]}>TIMELINE</Text>
@@ -155,10 +155,10 @@ const GameNav = TabNavigator(
       navigationOptions: {
         tabBarLabel: ({focused, tintColor}) => <Text style={[styles.topBarLabel, focused ? styles.activeTabBarLabel : {}, {color: tintColor}]}>DASHBOARD</Text>
       }
-    }
+    }*/
   },
   {
-    initialRouteName: 'Stack',
+    initialRouteName: 'Core4',
     tabBarPosition: 'top',
     navigationOptions: {
       gesturesEnabled: false,

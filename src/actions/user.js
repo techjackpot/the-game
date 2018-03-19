@@ -2,6 +2,8 @@ import ErrorMessages from '../constants/errors';
 import statusMessage from './status';
 import Firebase from '../lib/firebase';
 
+import moment from 'moment';
+
 /**
   * Get this User's Details
   */
@@ -18,10 +20,29 @@ function getUserDetails(dispatch) {
   const ref = Firebase.firestore().collection('users').doc(UID).collection('public').doc('profile').onSnapshot((doc) => {
     const userData = doc.data() || {};
 
-    return dispatch({
-      type: 'USER_DETAILS_UPDATE',
-      data: userData,
+    return Firebase.firestore().collection('users').doc(UID).collection('apps').doc('ww').get().then((challengeDoc) => {
+      if (challengeDoc.exists) {
+        let challengeId = challengeDoc.data().activeChallenge;
+        if (challengeId) {
+          let weekId = moment().format('YWW');
+          return Firebase.firestore().collection('users').doc(UID).collection('apps').doc('ww').collection('challenges').doc(challengeId).collection('weeks').doc(weekId).collection('key4Targets').doc('door').get().then((doorDoc) => {
+            if (doorDoc.exists) {
+              return Promise.resolve(doorDoc.data().image || '');
+            }
+            return Promise.resolve('');
+          })
+        }
+        return Promise.resolve('');
+      }
+      return Promise.resolve('');
+    }).then((doorImage) => {
+      console.log(doorImage);
+      return dispatch({
+        type: 'USER_DETAILS_UPDATE',
+        data: {...userData, doorImage},
+      });
     });
+
   });
 }
 

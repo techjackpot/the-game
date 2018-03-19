@@ -7,17 +7,16 @@ export default function stackReducer(state = initialState, action) {
   switch (action.type) {
     case 'STACK_LOAD_DATA': {
     	if (action.data) {
-	      return {
-	        ...state,
-	      };
+        return {...objectAssignDeep(state, action.data)};
 	    }
       return initialState;
     }
     case 'STACK_NEXT_PHASE': {
     	if (action.data) {
-	      return {
-	        ...state,
-	      };
+        if (action.data.currentPhase > state.currentPhase) {
+          return {...state, currentPhase: action.data.currentPhase};
+        }
+        return {...state};
 	    }
       return initialState;
     }
@@ -31,7 +30,7 @@ export default function stackReducer(state = initialState, action) {
     }
     case 'STACK_UPDATE_FIELD': {
     	if (action.data) {
-	      return objectAssignDeep(state, action.data);
+	      return {...objectAssignDeep(state, action.data)};
 	    }
       return initialState;
     }

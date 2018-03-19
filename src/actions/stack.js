@@ -13,11 +13,13 @@ export function getStackData(date) {
   });
 }
 
-export function moveToNextPhase(data) {
+export function moveToNextPhase(nextPhase) {
+	console.log(nextPhase);
+	const data = __set(['currentPhase'], nextPhase);
 	return dispatch => new Promise((resolve) => {
 		return resolve(dispatch({
 			type: 'STACK_NEXT_PHASE',
-			data: initialData,
+			data: data,
 		}));
 	});
 }
