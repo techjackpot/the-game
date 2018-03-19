@@ -1,6 +1,7 @@
 import status from './status';
 import user from './user';
 import nav from './nav';
+import stack from './stack';
 
 const rehydrated = (state = false, action) => {
   switch (action.type) {
@@ -16,4 +17,5 @@ export default {
   status,
   user,
   nav,
+  stack
 };

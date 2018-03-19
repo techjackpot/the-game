@@ -9,6 +9,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import AppWithNavigationState from './routes/AppNavigator';
 import Loading from './screens/loading';
 
+// import StackScreen from './screens/stack';
 
 // Hide StatusBar on Android as it overlaps tabs
 if (Platform.OS === 'android') StatusBar.setHidden(true);
@@ -26,6 +27,7 @@ const Root = ({ store, persistor }) => (
       persistor={persistor}
     >
       <AppWithNavigationState />
+      {/*<StackScreen />*/}
     </PersistGate>
   </Provider>
 );
