@@ -47,11 +47,13 @@ class WeekNavigator extends React.Component {
 
 class Avatar extends React.Component {
   render() {
-    const {source} = this.props;
+    const {source, door} = this.props;
     return (
       <View style={[gstyles.container, styles.key4Avatar]}>
-        <View style={[gstyles.container, styles.key4AvatarImageWrapper]}>
-          <Image style={[styles.image, styles.key4AvatarImage]} source={ source ? {uri: source} : require('../assets/images/avatars/profile.jpg')} />
+        <View style={[gstyles.container, styles.key4AvatarImageWrapper, door === 0 ? styles.key4AvatarImageOffStatus : {}]}>
+          <TouchableOpacity activeOpacity={0.7} onPress={() => this.props.updateDoor((door+1)%2)}>
+            <Image style={[styles.image, styles.key4AvatarImage]} source={{uri: source}} />
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -77,14 +79,14 @@ class Key4ScoresPanel extends React.Component {
           </View>
           <Text style={styles.scoreLabelText}>KEYS</Text>
         </View>
-        <View style={[gstyles.container, gstyles.flexColumn, styles.scoreWidget]}>
+        {/*<View style={[gstyles.container, gstyles.flexColumn, styles.scoreWidget]}>
           <Text style={styles.scoreText}>{score.zone}</Text>
           <Text style={styles.scoreLabelText}>ZONE</Text>
         </View>
         <View style={[gstyles.container, gstyles.flexColumn, styles.scoreWidget]}>
           <Text style={styles.scoreText}>{score.power}</Text>
           <Text style={styles.scoreLabelText}>POWER</Text>
-        </View>
+        </View>*/}
       </View>
     );
   }
@@ -122,12 +124,20 @@ class Key4ItemsPanel extends React.Component {
         },
       },
     };
+
+    this.updateKeys(this.state.items);
+  }
+
+  updateKeys(items) {
+    this.props.updateKeys(Object.entries(items).reduce((c, [key,{done}]) => c + (!!done?1:0), 0));
   }
 
   toggleStatus = (key) => {
     const {items} = this.state;
     items[key].done = !items[key].done;
     this.setState({items});
+
+    this.updateKeys(items);
   }
 
   render() {
@@ -168,6 +178,14 @@ class Key4States extends React.Component {
     };
   }
 
+  updateDoor(door) {
+    this.setState({score: {...this.state.score, door}});
+  }
+
+  updateKeys(keys) {
+    this.setState({score: {...this.state.score, keys}});
+  }
+
   render() {
     const {user} = this.props;
     const {score} = this.state;
@@ -179,13 +197,13 @@ class Key4States extends React.Component {
         </View>
         <View style={[gstyles.container, styles.middleContainer]}>
           <View style={[gstyles.container, styles.key4AvatarContainer]}>
-            <Avatar source={user.photoURL || ''} />
+            <Avatar source={user.doorImage || ''} door={score.door} updateDoor={(door) => this.updateDoor(door)} />
           </View>
           <Key4ScoresPanel score={score}/>
         </View>
         <ScrollView>
           <View style={gstyles.container}>
-            <Key4ItemsPanel />
+            <Key4ItemsPanel updateKeys={(keys) => this.updateKeys(keys)} />
           </View>
         </ScrollView>
       </View>
@@ -197,7 +215,7 @@ class Key4Screen extends React.Component{
   render () {
     return (
       <View style={[gstyles.container, gstyles.gameContainer, gstyles.key4Container]}>
-        <WeekNavigator />
+        {/*<WeekNavigator />*/}
         <Key4States {...this.props}/>
       </View>
     );

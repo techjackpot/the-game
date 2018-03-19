@@ -58,7 +58,7 @@ class TopMiniHeader extends React.Component{
         </View>
         <View style={styles.panel}>
           <TouchableHighlight onPress={() => this.setProfileVisible(true)}>
-            <Image source={{ uri: user.photoURL }} style={styles.avatar} />
+            <Image source={ user.photoURL ? { uri: user.photoURL } : require('../assets/images/avatars/profile.jpg')} style={styles.avatar} />
           </TouchableHighlight>
         </View>
       </View>

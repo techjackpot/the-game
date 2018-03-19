@@ -80,8 +80,38 @@ const styles = EStyleSheet.create({
     fieldLabel: {
         color: '#919191',
     },
+    fieldLabelContainerBubble: {
+        backgroundColor: '#222222',
+        paddingHorizontal: 24,
+        paddingVertical: 8,
+        borderRadius: 32,
+        position: 'relative',
+    },
+    fieldLabelBubble: {
+        color: '#858585',
+        fontWeight: '900',
+        lineHeight: 22,
+    },
+    fieldLabelBubbleArrow: {
+        backgroundColor: '#222222',
+        width: 38,
+        height: 32,
+        position: 'absolute',
+        borderBottomRightRadius: 38,
+        bottom: 0,
+        left: -16,
+    },
+    fieldLabelBubbleArrowBox: {
+        backgroundColor: '$bgMain',
+        width: 16,
+        height: 32,
+        borderBottomRightRadius: 32,
+    },
     fieldValueContainer: {
         marginVertical: 8,
+    },
+    fieldValueSelected: {
+        backgroundColor: '#bb0000',
     },
     fieldInputValueContainer: {
     },
@@ -113,7 +143,6 @@ const styles = EStyleSheet.create({
         color: '#ffffff',
         fontSize: 7,
         textAlign: 'center',
-
     },
     fieldSingleValueImage: {
         width: 14,

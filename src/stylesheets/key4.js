@@ -59,6 +59,9 @@ const styles = EStyleSheet.create({
         borderWidth: 3,
         borderStyle: 'solid',
     },
+    key4AvatarOffStatus: {
+        borderColor: 'transparent',
+    },
     key4AvatarImageWrapper: {
         backgroundColor: '#1caceb',
         width: 120,
@@ -69,6 +72,9 @@ const styles = EStyleSheet.create({
         shadowRadius: 10,
         shadowColor: '#1caceb',
         shadowOffset: { height: 0, width: 0 },
+    },
+    key4AvatarImageOffStatus: {
+        shadowOpacity: 0,
     },
     key4AvatarImage: {
         width: 104,
