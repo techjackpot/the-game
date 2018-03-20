@@ -19,6 +19,25 @@ import { getStackData, moveToNextPhase, moveToNextField, updateStackField } from
 
 import { __get, __set, __validate } from '../helper';
 
+import objectAssignDeep from 'object-assign-deep';
+
+
+const arraytoString = (feelings) => {
+    let feelingStr =  feelings.toString().replace(/,/g, ", ");
+    if(feelings.length > 1) {
+       return feelingStr.replace(/,(?=[^,]*$)/, ' and');
+    }
+    return feelingStr.toLowerCase();
+}
+
+const dataFilter = (string, intro) => {
+  let newString = string
+  .replace(/\[intro(.|\n)username\]/gi, intro.username)
+  .replace(/\[intro(.|\n)who\]/gi, intro.who)
+  .replace(/\[intro(.|\n)feeling\]/gi, arraytoString(intro.feeling));
+  return newString;
+}
+
 class StackPhaseStepFieldInput extends React.Component {
   constructor(props) {
     super(props);
@@ -62,32 +81,20 @@ class StackPhaseStepField extends React.Component {
     super(props);
   
     this.state = {};
-    // this.props.updateIndicator()
   }
   render() {
     const {data, stack, phaseInd, stepInd} = this.props;
     const phaseId = __get([phaseInd, 'id'], StackPhaseData.data);
-    // let Layout;
-    // switch(data.type) {
-    //   case 'text':
-    //     Layout = StackPhaseStepFieldInput;
-    //     break;
-    //   case 'single':
-    //     Layout = StackPhaseStepFieldSingle;
-    //     break;
-    //   case 'multiple':
-    //     Layout = StackPhaseStepFieldMultiple;
-    //     break;
-    //   default:
-    //     Layout = StackPhaseStepFieldInput;
-    //     break;
-    // }
+    let value = __get([phaseId, data.id], stack.status);
+    if (typeof value === "boolean") {
+      value = value ? 'Yes' : 'No';
+    }
     return (
       <View style={[gstyles.container, styles.container, styles.fieldContainer]}>
         <View style={[styles.fieldTrackPointer, {top: 16}]} />
         { !!data.label && (
           <View style={[gstyles.container, styles.container, styles.fieldLabelContainer, styles.fieldLabelContainerBubble]}>
-            <Text style={styles.fieldLabelBubble}>{data.label}</Text>
+            <Text style={styles.fieldLabelBubble}>{dataFilter(data.label, stack.status.intro)}</Text>
             <View style={[styles.fieldLabelBubbleArrow]}>
               <View style={[styles.fieldLabelBubbleArrowBox]} />
             </View>
@@ -96,7 +103,7 @@ class StackPhaseStepField extends React.Component {
         {
           (phaseInd < stack.currentPhase || (phaseInd == stack.currentPhase && stepInd < stack.currentStep)) && (
             <View style={[gstyles.container, styles.container, styles.fieldLabelValueContainer, styles.fieldLabelValueContainerBubble]}>
-              <Text style={styles.fieldLabelValueBubble}>{__get([phaseId, data.id], stack.status)}</Text>
+              <Text style={styles.fieldLabelValueBubble}>{value}</Text>
               <View style={[styles.fieldLabelValueBubbleArrow]}>
                 <View style={[styles.fieldLabelValueBubbleArrowBox]} />
               </View>
@@ -301,6 +308,53 @@ class StackPhasePit extends React.Component {
   }
 }
 
+class PhaseStepIndicatorInputText extends React.Component {
+  constructor(props) {
+    super(props);
+  
+    this.state = {};
+  }
+  render() {
+    const {data, stack} = this.props;
+    return (
+      <TextInput
+        style={styles.valueIndicatorInput}
+        placeholderTextColor={'#6b6b6b'}
+        placeholder={dataFilter(data.placeholder, stack.status.intro) || ''}
+        value={stack.status[__get([stack.currentPhase, 'id'], StackPhaseData.data)][data.id]}
+        onChangeText={(text) => this.props.updateState(data.id, text)}
+      />
+    );
+  }
+}
+
+class PhaseStepIndicatorInputBoolean extends React.Component {
+  constructor(props) {
+    super(props);
+  
+    this.state = {};
+  }
+  render() {
+    const {data, stack} = this.props;
+    const cVal = stack.status[__get([stack.currentPhase, 'id'], StackPhaseData.data)][data.id];
+    return (
+      <View style={[gstyles.container, gstyles.flexRow]}>
+        {
+          [true,false].map((val, ind) =>
+            <TouchableOpacity
+              key={ind}
+              activeOpacity={0.9}
+              style={[styles.valueIndicatorInputBoolean, cVal===val ? styles.valueIndicatorInputBooleanSelected : {}]}
+              onPress={() => this.props.updateState(data.id, val)}
+            >
+              <Text style={[styles.valueIndicatorInputBooleanText, cVal===val? styles.valueIndicatorInputBooleanTextSelected : {}]}>{val ? 'Yes' : 'No'}</Text>
+            </TouchableOpacity>)
+        }
+      </View>
+    );
+  }
+}
+
 class PhaseStepIndicator extends React.Component {
   constructor(props) {
     super(props);
@@ -332,30 +386,22 @@ class PhaseStepIndicator extends React.Component {
     const {stack} = this.props;
     const data = __get([stack.currentPhase, 'steps', stack.currentStep, 'fields', 0], StackPhaseData.data);
 
-    // let Layout;
-    // switch(data.type) {
-    //   case 'text':
-    //     Layout = StackPhaseStepFieldInput;
-    //     break;
-    //   case 'single':
-    //     Layout = StackPhaseStepFieldSingle;
-    //     break;
-    //   case 'multiple':
-    //     Layout = StackPhaseStepFieldMultiple;
-    //     break;
-    //   default:
-    //     Layout = StackPhaseStepFieldInput;
-    //     break;
-    // }
+    let IndicatorInput;
+    switch(data.type) {
+      case 'driftBoolean':
+        IndicatorInput = PhaseStepIndicatorInputBoolean;
+        break;
+      default:
+        IndicatorInput = PhaseStepIndicatorInputText;
+        break;
+    }
     return (
       <View style={[gstyles.container, gstyles.flexRow, styles.valueIndicatorContainer]}>
         <View style={[gstyles.container, styles.valueIndicator]}>
-          <TextInput
-            style={styles.valueIndicatorInput}
-            placeholderTextColor={'#6b6b6b'}
-            placeholder={data.placeholder || ''}
-            value={stack.status[__get([stack.currentPhase, 'id'], StackPhaseData.data)][data.id]}
-            onChangeText={(text) => this.updateState(data.id, text)}
+          <IndicatorInput
+            data={data}
+            stack={this.props.stack}
+            updateState={(key, val) => this.updateState(key, val)}
           />
         </View>
         <View style={[gstyles.container, styles.moveToNextFieldButtonContainer]}>
@@ -440,7 +486,7 @@ class StackScreen extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    stack: state.stack || {}
+    stack: {...objectAssignDeep(state.stack || {}, {status: { intro: { username: state.user.name }}})}
   };
 };
 

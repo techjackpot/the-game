@@ -125,6 +125,7 @@ const styles = EStyleSheet.create({
     fieldLabelValueBubble: {
         color: '#000000',
         lineHeight: 22,
+        fontSize: 12,
     },
     fieldLabelValueBubbleArrow: {
         backgroundColor: '#ffffff',
@@ -224,6 +225,27 @@ const styles = EStyleSheet.create({
     valueIndicatorInput: {
         width: '100%',
         color: '#000000',
+    },
+    valueIndicatorInputBoolean: {
+        borderWidth: 2,
+        borderColor: '#000000',
+        borderRadius: 32,
+        marginHorizontal: 12,
+        minWidth: 52,
+        paddingVertical: 2,
+        paddingHorizontal: 4,
+        alignItems: 'center',
+    },
+    valueIndicatorInputBooleanSelected: {
+        borderColor: '#bb0000',
+    },
+    valueIndicatorInputBooleanText: {
+        color: '#000000',
+        fontSize: 7,
+        textAlign: 'center',
+    },
+    valueIndicatorInputBooleanTextSelected: {
+        color: '#bb0000',
     },
     moveToNextFieldButtonContainer: {
         flex: 0,

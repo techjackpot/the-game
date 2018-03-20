@@ -28,10 +28,10 @@ const Root = ({ store, persistor }) => (
       loading={<Loading />}
       persistor={persistor}
     >
-      <AppWithNavigationState />
+      {/*<AppWithNavigationState />*/}
       {/*<Core4Screen />*/}
       {/*<Key4Screen />*/}
-      {/*<StackScreen />*/}
+      <StackScreen />
     </PersistGate>
   </Provider>
 );
