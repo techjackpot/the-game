@@ -21,6 +21,9 @@ const styles = EStyleSheet.create({
         marginBottom: 60,
         backgroundColor: '$bgMain',
     },
+    withIndicator: {
+        paddingBottom: 80,
+    },
     phasesContainer: {
         marginVertical: 6,
         alignItems: 'stretch',
@@ -62,6 +65,7 @@ const styles = EStyleSheet.create({
         marginVertical: 4,
         paddingHorizontal: 8,
         marginLeft: 32,
+        marginRight: 24,
         zIndex: 99,
     },
     fieldTrackPointer: {
@@ -106,6 +110,37 @@ const styles = EStyleSheet.create({
         width: 16,
         height: 32,
         borderBottomRightRadius: 32,
+    },
+    fieldLabelValueContainer: {
+        alignItems: 'flex-start',
+        marginTop: 12,
+    },
+    fieldLabelValueContainerBubble: {
+        backgroundColor: '#ffffff',
+        paddingHorizontal: 24,
+        paddingVertical: 8,
+        borderRadius: 32,
+        position: 'relative',
+    },
+    fieldLabelValueBubble: {
+        color: '#000000',
+        lineHeight: 22,
+    },
+    fieldLabelValueBubbleArrow: {
+        backgroundColor: '#ffffff',
+        width: 38,
+        height: 20,
+        position: 'absolute',
+        borderBottomLeftRadius: 38,
+        bottom: 0,
+        right: -16,
+    },
+    fieldLabelValueBubbleArrowBox: {
+        backgroundColor: '$bgMain',
+        width: 16,
+        height: 20,
+        alignSelf: 'flex-end',
+        borderBottomLeftRadius: 32,
     },
     fieldValueContainer: {
         marginVertical: 8,
@@ -164,6 +199,48 @@ const styles = EStyleSheet.create({
         paddingHorizontal: 8,
         paddingVertical: 3,
     },
+
+
+    valueIndicatorContainer: {
+        backgroundColor: '#ffffff',
+        position: 'absolute',
+        zIndex: 101,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        maxHeight: 46,
+        minHeight: 46,
+        paddingHorizontal: 8,
+    },
+    valueIndicator: {
+        minHeight: 32,
+        maxHeight: 32,
+        paddingHorizontal: 8,
+        borderColor: '#cdcdcd',
+        borderWidth: 1,
+        borderRadius: 12,
+        marginRight: 12,
+    },
+    valueIndicatorInput: {
+        width: '100%',
+        color: '#000000',
+    },
+    moveToNextFieldButtonContainer: {
+        flex: 0,
+    },
+    moveToNextFieldButton: {
+        backgroundColor: '#222222',
+        minHeight: 32,
+        maxHeight: 32,
+        minWidth: 32,
+        maxWidth: 32,
+        borderRadius: 16,
+    },
+    moveToNextFieldButtonText: {
+        color: '#ffffff',
+        fontSize: 8,
+        fontWeight: '900',
+    }
 });
 
 export default styles;

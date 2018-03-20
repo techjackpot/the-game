@@ -14,7 +14,6 @@ export function getStackData(date) {
 }
 
 export function moveToNextPhase(nextPhase) {
-	console.log(nextPhase);
 	const data = __set(['currentPhase'], nextPhase);
 	return dispatch => new Promise((resolve) => {
 		return resolve(dispatch({
@@ -24,11 +23,12 @@ export function moveToNextPhase(nextPhase) {
 	});
 }
 
-export function moveToNextField(data) {
+export function moveToNextField(nextStep) {
+	const data = __set(['currentStep'], nextStep);
 	return dispatch => new Promise((resolve) => {
 		return resolve(dispatch({
 			type: 'STACK_NEXT_FIELD',
-			data: initialData,
+			data: data,
 		}));
 	});
 }

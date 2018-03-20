@@ -17,7 +17,7 @@ import StackPhaseData from '../constants/stack';
 
 import { getStackData, moveToNextPhase, moveToNextField, updateStackField } from '../actions/stack';
 
-import { __get, __set } from '../helper';
+import { __get, __set, __validate } from '../helper';
 
 class StackPhaseStepFieldInput extends React.Component {
   constructor(props) {
@@ -65,34 +65,44 @@ class StackPhaseStepField extends React.Component {
     // this.props.updateIndicator()
   }
   render() {
-    const {data} = this.props;
-    let Layout;
-    switch(data.type) {
-      case 'text':
-        Layout = StackPhaseStepFieldInput;
-        break;
-      case 'single':
-        Layout = StackPhaseStepFieldSingle;
-        break;
-      case 'multiple':
-        Layout = StackPhaseStepFieldMultiple;
-        break;
-      default:
-        Layout = StackPhaseStepFieldInput;
-        break;
-    }
+    const {data, stack, phaseInd, stepInd} = this.props;
+    const phaseId = __get([phaseInd, 'id'], StackPhaseData.data);
+    // let Layout;
+    // switch(data.type) {
+    //   case 'text':
+    //     Layout = StackPhaseStepFieldInput;
+    //     break;
+    //   case 'single':
+    //     Layout = StackPhaseStepFieldSingle;
+    //     break;
+    //   case 'multiple':
+    //     Layout = StackPhaseStepFieldMultiple;
+    //     break;
+    //   default:
+    //     Layout = StackPhaseStepFieldInput;
+    //     break;
+    // }
     return (
       <View style={[gstyles.container, styles.container, styles.fieldContainer]}>
-        <View style={[styles.fieldTrackPointer]} />
+        <View style={[styles.fieldTrackPointer, {top: 16}]} />
         { !!data.label && (
           <View style={[gstyles.container, styles.container, styles.fieldLabelContainer, styles.fieldLabelContainerBubble]}>
-            <Text style={styles.fieldLabel, styles.fieldLabelBubble}>{data.label}</Text>
+            <Text style={styles.fieldLabelBubble}>{data.label}</Text>
             <View style={[styles.fieldLabelBubbleArrow]}>
               <View style={[styles.fieldLabelBubbleArrowBox]} />
             </View>
           </View>
         ) }
-        <Layout data={data} />
+        {
+          (phaseInd < stack.currentPhase || (phaseInd == stack.currentPhase && stepInd < stack.currentStep)) && (
+            <View style={[gstyles.container, styles.container, styles.fieldLabelValueContainer, styles.fieldLabelValueContainerBubble]}>
+              <Text style={styles.fieldLabelValueBubble}>{__get([phaseId, data.id], stack.status)}</Text>
+              <View style={[styles.fieldLabelValueBubbleArrow]}>
+                <View style={[styles.fieldLabelValueBubbleArrowBox]} />
+              </View>
+            </View>
+          )
+        }
       </View>
     );
   }
@@ -104,13 +114,14 @@ class StackPhaseStep extends React.Component {
   
     this.state = {};
   }
+
   render() {
     const {data} = this.props;
     return (
       <View style={[gstyles.container, styles.container, styles.stepContainer]}>
         <View style={[gstyles.container, styles.container, styles.fieldsContainer]}>
           {
-            data.fields.map((field) => <StackPhaseStepField key={field.id} data={field} />)
+            data.fields.map((field, ind) => <StackPhaseStepField key={field.id} phaseInd={this.props.phaseInd} stepInd={this.props.stepInd} fieldInd={ind} data={field} stack={this.props.stack} />)
           }
         </View>
       </View>
@@ -124,14 +135,15 @@ class StackPhase extends React.Component {
   
     this.state = {};
   }
+
   render() {
-    const {data} = this.props;
+    const {data, stack} = this.props;
     return (
       <View style={[gstyles.container, styles.container, styles.phaseContainer]}>
         <View style={[gstyles.container, styles.container, styles.phaseLabel]}><Text style={styles.phaseLabelText}>{data.title.toUpperCase()}</Text></View>
         <View style={[gstyles.container, styles.container, styles.stepsContainer]}>
           {
-            data.steps.map((step) => <StackPhaseStep key={step.id} data={step} />)
+            data.steps.filter((step, ind) => data.id!==StackPhaseData.data[stack.currentPhase].id || ind<=stack.currentStep).map((step, ind) => <StackPhaseStep key={step.id} phaseInd={this.props.phaseInd} stepInd={ind} data={step} stack={this.props.stack} />)
           }
         </View>
       </View>
@@ -160,10 +172,6 @@ class StackPhasePit extends React.Component {
     }
   } 
 
-  validatePhase(data) {
-    return Object.entries(data).every(([key, val]) => val.constructor === Array ? val.length > 0 : val !== '');
-  }
-
   updatePitState(key, val, multi) {
     const {currentPhase, status} = this.props.stack;
     const {intro} = status;
@@ -185,10 +193,8 @@ class StackPhasePit extends React.Component {
       data: intro[key]
     })
 
-    console.log(currentPhase);
     if (currentPhase === 0) {
-      console.log(this.validatePhase(intro));
-      this.validatePhase(intro) && this.props.moveToNextPhase(1);
+      __validate(intro) && this.props.moveToNextPhase(1);
     }
   }
 
@@ -295,6 +301,73 @@ class StackPhasePit extends React.Component {
   }
 }
 
+class PhaseStepIndicator extends React.Component {
+  constructor(props) {
+    super(props);
+  
+    this.state = {
+
+    };
+  }
+
+  moveToNextField() {
+    const {stack} = this.props;
+    const phaseData = __get([stack.currentPhase], StackPhaseData.data);
+    let fieldValue = stack.status[phaseData.id][phaseData.steps[stack.currentStep].fields[0].id];
+    __validate(stack.status[phaseData.id]) && this.props.moveToNextPhase(stack.currentPhase+1) || stack.currentStep < phaseData.steps.length-1 && (fieldValue.constructor === Array ? fieldValue.length > 0 : fieldValue !== '') && this.props.moveToNextField(stack.currentStep+1);
+
+  }
+
+  updateState(key, val) {
+    const {currentPhase, status} = this.props.stack;
+
+    this.props.updateStackField({
+      phase: __get([currentPhase, 'id'], StackPhaseData.data),
+      field: key,
+      data: val,
+    });
+  }
+
+  render() {
+    const {stack} = this.props;
+    const data = __get([stack.currentPhase, 'steps', stack.currentStep, 'fields', 0], StackPhaseData.data);
+
+    // let Layout;
+    // switch(data.type) {
+    //   case 'text':
+    //     Layout = StackPhaseStepFieldInput;
+    //     break;
+    //   case 'single':
+    //     Layout = StackPhaseStepFieldSingle;
+    //     break;
+    //   case 'multiple':
+    //     Layout = StackPhaseStepFieldMultiple;
+    //     break;
+    //   default:
+    //     Layout = StackPhaseStepFieldInput;
+    //     break;
+    // }
+    return (
+      <View style={[gstyles.container, gstyles.flexRow, styles.valueIndicatorContainer]}>
+        <View style={[gstyles.container, styles.valueIndicator]}>
+          <TextInput
+            style={styles.valueIndicatorInput}
+            placeholderTextColor={'#6b6b6b'}
+            placeholder={data.placeholder || ''}
+            value={stack.status[__get([stack.currentPhase, 'id'], StackPhaseData.data)][data.id]}
+            onChangeText={(text) => this.updateState(data.id, text)}
+          />
+        </View>
+        <View style={[gstyles.container, styles.moveToNextFieldButtonContainer]}>
+          <TouchableOpacity style={[gstyles.container, styles.moveToNextFieldButton]} onPress={() => this.moveToNextField()}>
+            <Text style={[styles.moveToNextFieldButtonText]}>NEXT</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
+}
+
 class StackScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -307,8 +380,15 @@ class StackScreen extends React.Component {
     this.props.getStackData(moment().format('dddd, MMMM Do'));
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (JSON.stringify(this.props.stack) !== JSON.stringify(nextProps.stack)) {
+      this.forceUpdate();
+    }
+  }
+
   moveNext() {
-    console.log('done');
+    const {stack} = this.props;
+    this.props.moveToNextPhase(stack.currentPhase + 1);
   }
   restart() {
     this.props.getStackData(new Date());
@@ -323,11 +403,17 @@ class StackScreen extends React.Component {
 
   render () {
     const {stack} = this.props;
+    const {currentPhase, currentStep} = stack;
     return (
       <View style={[gstyles.container, styles.container, gstyles.gameContainer, gstyles.stackContainer, styles.stackContainer]}>
         <StatusBar hidden={true} />
-        <View style={[gstyles.container, styles.container, styles.stackPhasesContainer]}>
-          <ScrollView>
+        <View style={[gstyles.container, styles.container, styles.stackPhasesContainer, currentPhase>0 ? styles.withIndicator : {}]}>
+          <ScrollView
+            ref={ref => this.scrollView = ref}
+            onContentSizeChange={(contentWidth, contentHeight)=>{        
+                this.scrollView.scrollToEnd({animated: true});
+            }}
+          >
             <View style={[styles.fieldTrackBar]} />
             <View style={[gstyles.container, styles.container, styles.phasesContainer]}>
               <StackPhasePit
@@ -335,7 +421,7 @@ class StackScreen extends React.Component {
                 {...this.props}
               />
               {
-                StackPhaseData.data.filter((phase, key) => key!==0 /*&& key <= stack.currentPhase*/).map(phase => <StackPhase key={phase.id} data={phase} />)
+                StackPhaseData.data.filter((phase, ind) => ind!==0 && ind <= stack.currentPhase).map((phase, ind) => <StackPhase key={phase.id} phaseInd={ind+1} data={phase} {...this.props} />)
               }
             </View>
             {/*<View style={[gstyles.container, gstyles.flexRow, styles.nextButtonContainer]}>
@@ -343,6 +429,9 @@ class StackScreen extends React.Component {
               <TouchableOpacity style={styles.nextButton} onPress={() => this.restart()}><Text style={styles.nextButtonText}>• Restart •</Text></TouchableOpacity>
             </View>*/}
           </ScrollView>
+          {
+            currentPhase>0 && <PhaseStepIndicator {...this.props} />
+          }
         </View>
       </View>
     );
@@ -360,7 +449,7 @@ const mapDispatchToProps = dispatch => {
     dispatch,
     getStackData: date => dispatch(getStackData(date)),
     moveToNextPhase: nextPhase => dispatch(moveToNextPhase(nextPhase)),
-    moveToNextField,
+    moveToNextField: nextField => dispatch(moveToNextField(nextField)),
     updateStackField: fieldData => dispatch(updateStackField(fieldData)),
   }
 };
