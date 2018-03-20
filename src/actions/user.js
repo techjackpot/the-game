@@ -36,7 +36,6 @@ function getUserDetails(dispatch) {
       }
       return Promise.resolve('');
     }).then((doorImage) => {
-      console.log(doorImage);
       return dispatch({
         type: 'USER_DETAILS_UPDATE',
         data: {...userData, doorImage},

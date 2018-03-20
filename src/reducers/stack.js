@@ -14,7 +14,7 @@ export default function stackReducer(state = initialState, action) {
     case 'STACK_NEXT_PHASE': {
     	if (action.data) {
         if (action.data.currentPhase > state.currentPhase) {
-          return {...state, currentPhase: action.data.currentPhase};
+          return {...state, currentPhase: action.data.currentPhase, currentStep: 0};
         }
         return {...state};
 	    }
@@ -22,9 +22,10 @@ export default function stackReducer(state = initialState, action) {
     }
     case 'STACK_NEXT_FIELD': {
     	if (action.data) {
-	      return {
-	        ...state,
-	      };
+        if (action.data.currentStep > state.currentStep) {
+          return {...state, currentStep: action.data.currentStep};
+	      }
+        return {...state};
 	    }
       return initialState;
     }
