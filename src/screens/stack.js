@@ -905,7 +905,7 @@ class StackScreen extends React.Component {
     return (
       <View style={[gstyles.container, styles.container, gstyles.gameContainer, gstyles.stackContainer, styles.stackContainer]}>
         <StatusBar hidden={true} />
-        <View style={[gstyles.container, styles.container, styles.stackPhasesContainer, currentPhase>0 && currentPhase<StackPhaseData.data.length-1 ? styles.withIndicator : {}]}>
+        <View style={[gstyles.container, styles.container, styles.stackPhasesContainer, currentPhase>0 && currentPhase<=StackPhaseData.data.length-1 ? styles.withIndicator : {}]}>
           <ScrollView
             ref={ref => this.scrollView = ref}
             onContentSizeChange={(contentWidth, contentHeight)=>{        
@@ -931,7 +931,7 @@ class StackScreen extends React.Component {
             </View>*/}
           </ScrollView>
           {
-            currentPhase>0 && currentPhase<StackPhaseData.data.length-1 && <PhaseStepIndicator {...this.props} />
+            currentPhase>0 && currentPhase<=StackPhaseData.data.length-1 && <PhaseStepIndicator {...this.props} />
           }
         </View>
       </View>
