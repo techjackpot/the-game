@@ -84,6 +84,9 @@ const styles = EStyleSheet.create({
     fieldLabel: {
         color: '#919191',
     },
+    fieldBubbleContent: {
+        marginVertical: 5,
+    },
     fieldLabelContainerBubble: {
         backgroundColor: '#222222',
         paddingHorizontal: 24,
@@ -184,7 +187,86 @@ const styles = EStyleSheet.create({
         width: 14,
         height: 14,
     },
-
+    fieldShiftImageLabelContainer: {
+        marginVertical: 4,
+    },
+    fieldShiftImage: {
+        width: 48,
+        height: 48,
+        marginRight: 8,
+    },
+    fieldChoiceValueContainer: {
+        justifyContent: 'flex-start',
+    },
+    fieldChoiceValue: {
+        borderWidth: 2,
+        borderColor: '#ffffff',
+        backgroundColor: '#ffffff',
+        borderRadius: 16,
+        paddingVertical: 6,
+        paddingHorizontal: 16,
+        alignItems: 'center',
+        marginVertical: 6,
+        justifyContent: 'flex-start',
+        alignSelf: 'stretch',
+    },
+    fieldChoiceValueText: {
+        color: '#000000',
+        fontSize: 12,
+        textAlign: 'center',
+    },
+    fieldChoiceValueImage: {
+        width: 48,
+        height: 48,
+        marginRight: 12,
+    },
+    fieldChoiceValueSelected: {
+        backgroundColor: '#bb0000',
+    },
+    fieldPathValueContainer: {
+        justifyContent: 'center',
+        flexWrap: 'wrap',
+    },
+    fieldPathLevelValue: {
+        width: '44%',
+        borderColor: '#ffffff',
+        borderWidth: 2,
+        marginHorizontal: 5,
+        marginVertical: 5,
+        paddingTop: 10,
+    },
+    fieldPathLevelValueSelected: {
+        borderColor: '#bb0000',
+    },
+    fieldPathLevelText: {
+        color: '#ffffff',
+        fontWeight: '900',
+        textAlign: 'center',
+        marginVertical: 5,
+    },
+    fieldPathLevelValueImage: {
+        width: '100%',
+        height: 120,
+        marginVertical: 10,
+    },
+    fieldPathLevelValueIcon: {
+        width: 24,
+        height: 24,
+        marginRight: 6,
+    },
+    fieldPathLevelNameContainer: {
+        backgroundColor: '#212121',
+        alignItems: 'center',
+        maxHeight: 30,
+    },
+    fieldPathLevelNameContainerSelected: {
+        backgroundColor: '#bb0000',
+    },
+    fieldPathLevelName: {
+        color: '#ffffff',
+        fontSize: 9,
+    },
+    fieldPathLevelNameSelected: {},
 
 
     nextButtonContainer: {

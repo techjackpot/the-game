@@ -540,11 +540,12 @@ export default {
                     ]
                 }
             ]
-        },{
+        },
+        /*{
             "id": "path",
             "title": "THE PATH",
             "type": "hide",
             "steps": []
-        }
+        }*/
     ]
 }
