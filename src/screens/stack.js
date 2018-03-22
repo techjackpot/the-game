@@ -16,7 +16,7 @@ import StackPhaseData from '../constants/stack';
 
 import { getStackData, moveToNextPhase, moveToNextField, updateStackField, finishStack } from '../actions/stack';
 
-import { __get, __set, __validate } from '../helper';
+import { __get, __set, __validate, __getRandomInt } from '../helper';
 
 import objectAssignDeep from 'object-assign-deep';
 
@@ -99,9 +99,28 @@ class StackPhaseStepFieldBubbleContent extends React.Component {
   constructor(props) {
     super(props);
   
-    this.state = {};
+    this.state = {
+      loading: props.contentType === 'label',
+    };
   }
+
+  componentDidMount() {
+    if (this.state.loading) {
+      setTimeout(() => {
+        this.setState({
+          loading: false,
+        });
+      }, 1000 + __getRandomInt(1000));
+    }
+  }
+
   render() {
+    const {loading} = this.state;
+    if (loading) {
+      return (
+        <Image style={styles.typingLabel} resizeMode={'contain'} source={require('../assets/icons/typing.gif')} />
+      );
+    }
     const {noBubble} = this.props;
     return (
       <View style={[gstyles.container, styles.container, styles.fieldBubbleContent, styles.fieldLabelContainer, styles.fieldLabelContainerBubble]}>
@@ -116,14 +135,17 @@ class StackPhaseStepFieldBubbleContent extends React.Component {
   }
 }
 
+
 class StackPhaseStepFieldBubbleValue extends React.Component {
   constructor(props) {
     super(props);
   
-    this.state = {};
+    this.state = {
+    };
   }
   render() {
     const {noBubble} = this.props;
+
     return (
       <View style={[gstyles.container, styles.container, styles.fieldBubbleContent, styles.fieldLabelValueContainer, styles.fieldLabelValueContainerBubble]}>
         <Text style={styles.fieldLabelValueBubble}>{this.props.children}</Text>
@@ -316,7 +338,9 @@ class StackPhaseStepField extends React.Component {
         ) }
 
         { !!data.label && (
-          <StackPhaseStepFieldBubbleContent noBubble={data.type==='info' || data.type==='blockBoolean'}><Text style={styles.fieldLabelBubble}>{dataFilter(data.label, stack.status.intro)}</Text></StackPhaseStepFieldBubbleContent>
+          <StackPhaseStepFieldBubbleContent noBubble={data.type==='info' || data.type==='blockBoolean'} contentType={'label'}>
+            <Text style={styles.fieldLabelBubble}>{dataFilter(data.label, stack.status.intro)}</Text>
+          </StackPhaseStepFieldBubbleContent>
         ) }
 
         { data.type === 'blockBoolean' && phaseId === 'shift' && data.id === 'originalWant' && (
