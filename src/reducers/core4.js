@@ -13,7 +13,8 @@ export default function core4Reducer(state = initialState, action) {
     }
     case 'CORE4_UPDATE_DATA': {
     	if (action.data) {
-        return {...objectAssignDeep(state, action.data)};
+        return state;
+        // return {...objectAssignDeep(state, action.data)};
 	    }
       return initialState;
     }
