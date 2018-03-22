@@ -198,6 +198,13 @@ class Key4Screen extends React.Component{
     this.props.getKey4Data({weekId});
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.challengeId !== nextProps.challengeId) {
+      const weekId = moment().format('Y') + '' + moment().format('WW');
+      this.props.getCore4Data({weekId});
+    }
+  }
+
   render () {
     return (
       <View style={[gstyles.container, gstyles.gameContainer, gstyles.key4Container]}>
@@ -211,6 +218,7 @@ class Key4Screen extends React.Component{
 const mapStateToProps = state => {
   return {
     key4: state.key4 || {},
+    challengeId: state.user.challengeId || '',
   }
 };
 
