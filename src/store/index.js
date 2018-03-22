@@ -4,6 +4,7 @@ import { persistStore, persistCombineReducers } from 'redux-persist';
 import storage from 'redux-persist/es/storage'; // default: localStorage if web, AsyncStorage if react-native
 import thunk from 'redux-thunk';
 import reducers from '../reducers';
+import { middleware } from '../routes/AppNavigator';
 
 // Redux Persist config
 const config = {
@@ -14,13 +15,13 @@ const config = {
 
 const reducer = persistCombineReducers(config, reducers);
 
-const middleware = [thunk];
+const middlewares = [middleware, thunk];
 
 const configureStore = () => {
   const store = createStore(
     reducer,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-    compose(applyMiddleware(...middleware)),
+    compose(applyMiddleware(...middlewares)),
   );
 
   const persistor = persistStore(

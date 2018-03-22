@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
-  StatusBar,
 } from 'react-native';
 import moment from 'moment';
 
@@ -904,7 +903,6 @@ class StackScreen extends React.Component {
     const {currentPhase, currentStep} = stack;
     return (
       <View style={[gstyles.container, styles.container, gstyles.gameContainer, gstyles.stackContainer, styles.stackContainer]}>
-        <StatusBar hidden={true} />
         <View style={[gstyles.container, styles.container, styles.stackPhasesContainer, currentPhase>0 && currentPhase<=StackPhaseData.data.length-1 ? styles.withIndicator : {}]}>
           <ScrollView
             ref={ref => this.scrollView = ref}

@@ -27,18 +27,18 @@ function getUserDetails(dispatch) {
           let weekId = moment().format('YWW');
           return Firebase.firestore().collection('users').doc(UID).collection('apps').doc('ww').collection('challenges').doc(challengeId).collection('weeks').doc(weekId).collection('key4Targets').doc('door').get().then((doorDoc) => {
             if (doorDoc.exists) {
-              return Promise.resolve(doorDoc.data().image || '');
+              return Promise.resolve({challengeId, doorImage: doorDoc.data().image || ''});
             }
-            return Promise.resolve('');
+            return Promise.resolve({challengeId});
           })
         }
-        return Promise.resolve('');
+        return Promise.resolve({});
       }
-      return Promise.resolve('');
-    }).then((doorImage) => {
+      return Promise.resolve({});
+    }).then((data) => {
       return dispatch({
         type: 'USER_DETAILS_UPDATE',
-        data: {...userData, doorImage},
+        data: {...userData, ...data},
       });
     });
 
@@ -49,7 +49,7 @@ export function getUserData() {
   if (Firebase === null) return () => new Promise(resolve => resolve());
 
   // Ensure token is up to date
-  return dispatch => new Promise((resolve) => {
+  return dispatch => new Promise(async (resolve) => {
     Firebase.auth().onAuthStateChanged((loggedIn) => {
       if (loggedIn) {
         return resolve(getUserDetails(dispatch));
