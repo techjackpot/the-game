@@ -117,7 +117,7 @@ export default {
                 }
             ]
         },
-        {
+        /*{
             "id": "drift",
             "title": "DRIFT",
             "type": "target",
@@ -540,7 +540,7 @@ export default {
                     ]
                 }
             ]
-        },
+        },*/
         /*{
             "id": "path",
             "title": "THE PATH",

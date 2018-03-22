@@ -14,7 +14,7 @@ import { stack as styles, global as gstyles } from '../stylesheets';
 
 import StackPhaseData from '../constants/stack';
 
-import { getStackData, moveToNextPhase, moveToNextField, updateStackField } from '../actions/stack';
+import { getStackData, moveToNextPhase, moveToNextField, updateStackField, finishStack } from '../actions/stack';
 
 import { __get, __set, __validate } from '../helper';
 
@@ -739,6 +739,13 @@ class StackPhasePath extends React.Component {
             </View>
           </View>
         </View>
+        {
+          stack.status.light.feeling.length>0 && stack.status.light.power!=='' && (
+            <View style={[gstyles.container, gstyles.flexRow, styles.nextButtonContainer]}>
+              <TouchableOpacity style={styles.nextButton} onPress={() => this.props.finishStack()}><Text style={styles.nextButtonText}>FINISH</Text></TouchableOpacity>
+            </View>
+          )
+        }
       </View>
     );
   }
@@ -950,6 +957,7 @@ const mapDispatchToProps = dispatch => {
     moveToNextPhase: nextPhase => dispatch(moveToNextPhase(nextPhase)),
     moveToNextField: nextField => dispatch(moveToNextField(nextField)),
     updateStackField: fieldData => dispatch(updateStackField(fieldData)),
+    finishStack: () => dispatch(finishStack()),
   }
 };
 
