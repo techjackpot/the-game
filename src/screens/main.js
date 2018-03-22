@@ -12,8 +12,8 @@ import TopMiniHeader from './topminiheader';
 import Core4Screen from './core4';
 import Key4Screen from './key4';
 import StackScreen from './stack';
-import TimelineScreen from './timeline';
-import DashboardScreen from './dashboard';
+// import TimelineScreen from './timeline';
+// import DashboardScreen from './dashboard';
 // import TodayScreen from './today';
 // import MovieScreen from './movie';
 // import GroupsScreen from './groups';
@@ -22,6 +22,8 @@ import DashboardScreen from './dashboard';
 import Loading from './loading';
 
 import { main as styles, global as gstyles } from '../stylesheets';
+
+import { getUserData } from '../actions/user';
 
 // const TodayNav = StackNavigator(
 //   {
@@ -53,105 +55,105 @@ import { main as styles, global as gstyles } from '../stylesheets';
 //   }
 // );
 
-const Core4Nav = StackNavigator(
-  {
-    Core4: {
-      screen: Core4Screen,
-    },
-  },
-  {
-    initialRouteName: 'Core4',
-    navigationOptions: {
-      gesturesEnabled: false,
-    },
-    headerMode: 'none',
-  }
-);
-const Key4Nav = StackNavigator(
-  {
-    Key4: {
-      screen: Key4Screen,
-    },
-  },
-  {
-    initialRouteName: 'Key4',
-    navigationOptions: {
-      gesturesEnabled: false
-    },
-    headerMode: 'none',
-  }
-);
-const StackNav = StackNavigator(
-  {
-    Stack: {
-      screen: StackScreen,
-    },
-  },
-  {
-    initialRouteName: 'Stack',
-    navigationOptions: {
-      gesturesEnabled: false
-    },
-    headerMode: 'none',
-  }
-);
-const TimelineNav = StackNavigator(
-  {
-    Timeline: {
-      screen: TimelineScreen,
-    },
-  },
-  {
-    initialRouteName: 'Timeline',
-    navigationOptions: {
-      gesturesEnabled: false
-    },
-    headerMode: 'none',
-  }
-);
-const DashboardNav = StackNavigator(
-  {
-    Dashboard: {
-      screen: DashboardScreen,
-    },
-  },
-  {
-    initialRouteName: 'Dashboard',
-    navigationOptions: {
-      gesturesEnabled: false
-    },
-    headerMode: 'none',
-  }
-);
+// const Core4Nav = StackNavigator(
+//   {
+//     Core4: {
+//       screen: Core4Screen,
+//     },
+//   },
+//   {
+//     initialRouteName: 'Core4',
+//     navigationOptions: {
+//       gesturesEnabled: false,
+//     },
+//     headerMode: 'none',
+//   }
+// );
+// const Key4Nav = StackNavigator(
+//   {
+//     Key4: {
+//       screen: Key4Screen,
+//     },
+//   },
+//   {
+//     initialRouteName: 'Key4',
+//     navigationOptions: {
+//       gesturesEnabled: false
+//     },
+//     headerMode: 'none',
+//   }
+// );
+// const StackNav = StackNavigator(
+//   {
+//     Stack: {
+//       screen: StackScreen,
+//     },
+//   },
+//   {
+//     initialRouteName: 'Stack',
+//     navigationOptions: {
+//       gesturesEnabled: false
+//     },
+//     headerMode: 'none',
+//   }
+// );
+// const TimelineNav = StackNavigator(
+//   {
+//     Timeline: {
+//       screen: TimelineScreen,
+//     },
+//   },
+//   {
+//     initialRouteName: 'Timeline',
+//     navigationOptions: {
+//       gesturesEnabled: false
+//     },
+//     headerMode: 'none',
+//   }
+// );
+// const DashboardNav = StackNavigator(
+//   {
+//     Dashboard: {
+//       screen: DashboardScreen,
+//     },
+//   },
+//   {
+//     initialRouteName: 'Dashboard',
+//     navigationOptions: {
+//       gesturesEnabled: false
+//     },
+//     headerMode: 'none',
+//   }
+// );
 
 const GameNav = TabNavigator( 
   {
     Core4: {
-      screen: Core4Nav,
+      screen: Core4Screen,
       navigationOptions: {
         tabBarLabel: ({focused, tintColor}) => <Text style={[styles.topBarLabel, focused ? styles.activeTabBarLabel : {}, {color: tintColor}]}>CORE4</Text>
       }
     },
     Key4: {
-      screen: Key4Nav,
+      screen: Key4Screen,
       navigationOptions: {
         tabBarLabel: ({focused, tintColor}) => <Text style={[styles.topBarLabel, focused ? styles.activeTabBarLabel : {}, {color: tintColor}]}>KEY4</Text>
       }
     },
     Stack: {
-      screen: StackNav,
+      screen: StackScreen,
       navigationOptions: {
         tabBarLabel: ({focused, tintColor}) => <Text style={[styles.topBarLabel, focused ? styles.activeTabBarLabel : {}, {color: tintColor}]}>STACK</Text>
       }
     },
     /*Timeline: {
-      screen: TimelineNav,
+      screen: TimelineScreen,
       navigationOptions: {
         tabBarLabel: ({focused, tintColor}) => <Text style={[styles.topBarLabel, focused ? styles.activeTabBarLabel : {}, {color: tintColor}]}>TIMELINE</Text>
       }
     },
     Dashboard: {
-      screen: DashboardNav,
+      screen: DashboardScreen,
       navigationOptions: {
         tabBarLabel: ({focused, tintColor}) => <Text style={[styles.topBarLabel, focused ? styles.activeTabBarLabel : {}, {color: tintColor}]}>DASHBOARD</Text>
       }
@@ -268,6 +270,9 @@ const MainTabNavigator = TabNavigator({
 ); 
 
 class MainScreen extends React.Component {
+
+  componentDidMount = () => this.props.getUserData();
+
   render() {
     const {isLoading} = this.props;
     return (
@@ -289,10 +294,8 @@ const mapStateToProps = state => {
   }
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    dispatch
-  }
+const mapDispatchToProps = {
+  getUserData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainScreen);

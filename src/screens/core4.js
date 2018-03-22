@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   Text,
   View,
@@ -8,8 +9,11 @@ import {
   TouchableHighlight,
   ScrollView,
 } from 'react-native';
+import moment from 'moment';
 
 import { core4 as styles, global as gstyles } from '../stylesheets';
+
+import { getCore4Data, updateCore4Data } from '../actions/core4';
 
 const elitesAssets = {
   fitness: {
@@ -51,51 +55,47 @@ class Core4Elites extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      elites: {
-        fitness       : true,
-        fuel          : false,
-        meditation    : false,
-        memoirs       : false,
-        partner       : false,
-        posterity     : false,
-        discover      : true,
-        declare       : false,
-        fuel          : true,
-      }
     };
-    this.updateScore(this.state.elites);
   }
 
-  updateScore(elites) {
-    this.props.updateScore(Object.entries(elites).reduce((c, [key, val]) => c + (!!val?1:0), 0) * 0.5);
-  }
-
-  toggleStatus = (elite) => {
-    const {elites} = this.state;
-    elites[elite] = !elites[elite];
-    this.setState({elites});
-    this.updateScore(elites);
+  toggleStatus(taskGroup, task) {
+    const {challengeId, core4} = this.props;
+    const data = {tasks: {}};
+    data.tasks[taskGroup] = {};
+    data.tasks[taskGroup][task] = !core4.tasks[taskGroup][task];
+    data.completedTasks = core4.completedTasks + 0.5 * (!core4.tasks[taskGroup][task]?1:-1);
+    this.props.updateCore4Data(
+      {
+        challengeId,
+        weekId: core4.weekId,
+        dayId: core4.dayId,
+      },
+      data
+    );
   }
 
   render() {
-    const {elites} = this.state;
+    const {core4} = this.props;
+    const {tasks} = core4;
     return (
       <View style={[gstyles.container, styles.elitesContainer, gstyles.flexRow]}>
         {
-          Object.entries(elites).map(([elite, status]) => 
-            <TouchableOpacity activeOpacity={0.9} style={styles.eliteContainer} key={elite} onPress={() => this.toggleStatus(elite)}>
-              <View style={[gstyles.container, status === true ? styles.eliteActive : {}]}>
-                <View style={[gstyles.container, gstyles.flexRow, styles.eliteBackground]}>
-                  <View style={styles.backgroundWhiteSpace}></View>
-                  <Image style={styles.eliteBackgroudImage} resizeMode={'cover'} source={elitesAssets[elite].background} />
-                </View>
-                <View style={[gstyles.container, styles.eliteCategoryContainer, status === false ? styles.eliteInactive : {}]}>
-                  <View style={[gstyles.container, styles.eliteCategory]}>
-                    <Image style={styles.eliteCategoryIcon} resizeMode={'contain'} source={elitesAssets[elite].icon} />
+          Object.entries(tasks).map(([taskGroup, tasks]) => 
+            Object.entries(tasks).map(([task, done]) => 
+              <TouchableOpacity activeOpacity={0.9} style={styles.eliteContainer} key={task} onPress={() => this.toggleStatus(taskGroup, task)}>
+                <View style={[gstyles.container, done === true ? styles.eliteActive : {}]}>
+                  <View style={[gstyles.container, gstyles.flexRow, styles.eliteBackground]}>
+                    <View style={styles.backgroundWhiteSpace}></View>
+                    <Image style={styles.eliteBackgroudImage} resizeMode={'cover'} source={elitesAssets[task].background} />
+                  </View>
+                  <View style={[gstyles.container, styles.eliteCategoryContainer, done === false ? styles.eliteInactive : {}]}>
+                    <View style={[gstyles.container, styles.eliteCategory]}>
+                      <Image style={styles.eliteCategoryIcon} resizeMode={'contain'} source={elitesAssets[task].icon} />
+                    </View>
                   </View>
                 </View>
-              </View>
-            </TouchableOpacity>
+              </TouchableOpacity>
+            )
           )
         }
       </View>
@@ -114,19 +114,13 @@ class Core4ScoreStatusPanel extends React.Component {
       power: {
         active: false,
         score: 4
-      },
-      score: props.score
+      }
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.score !== nextProps.score) {
-      this.setState({score: nextProps.score});
-    }
-  }
-
   render () {
-    const {score, zone, power} = this.state;
+    const {zone, power} = this.state;
+    const {score} = this.props;
     return (
       <View style={[gstyles.container, gstyles.flexRow, styles.statusPanel]}>
         <View style={[gstyles.container, gstyles.flexColumn, styles.scoreBoard]}>
@@ -160,7 +154,7 @@ class Core4ScoreStatusPanel extends React.Component {
   }
 }
 
-export default class Core4Screen extends React.Component {
+class Core4Screen extends React.Component {
   constructor(props) {
     super(props);
   
@@ -168,11 +162,29 @@ export default class Core4Screen extends React.Component {
       score: 3.5
     };
   }
+
+  componentDidMount() {
+    const {challengeId} = this.props;
+    const weekId = moment().format('Y') + '' + moment().format('WW');
+    const dayId = moment().format('Y') + '' + moment().format('MM') + '' + moment().format('DD');
+    this.props.getCore4Data({challengeId, weekId, dayId});
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.challengeId !== nextProps.challengeId) {
+      const {challengeId} = nextProps;
+      const weekId = moment().format('Y') + '' + moment().format('WW');
+      const dayId = moment().format('Y') + '' + moment().format('MM') + '' + moment().format('DD');
+      this.props.getCore4Data({challengeId, weekId, dayId});
+    }
+  }
+
   updateScore(score) {
     this.setState({score});
   }
   render () {
     const {score} = this.state;
+    const {core4} = this.props;
     return (
       <View style={[gstyles.container, gstyles.gameContainer, gstyles.core4Container]}>
         {/*<View style={[gstyles.container, styles.dateNavigation]}>
@@ -186,13 +198,31 @@ export default class Core4Screen extends React.Component {
         </View>*/}
         <ScrollView>
           <View style={gstyles.container}>
-            <Core4ScoreStatusPanel score={score} />
+            <Core4ScoreStatusPanel score={core4.completedTasks} />
           </View>
           <View style={gstyles.container}>
-            <Core4Elites updateScore={(score) => this.updateScore(score)}/>
+            <Core4Elites {...this.props}/>
           </View>
         </ScrollView>
       </View>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    core4: state.core4 || {},
+    challengeId: state.user.challengeId || '',
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatch,
+    getCore4Data: (daySet) => dispatch(getCore4Data(daySet)),
+    updateCore4Data: (daySet, data) => dispatch(updateCore4Data(daySet, data)),
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Core4Screen);
+

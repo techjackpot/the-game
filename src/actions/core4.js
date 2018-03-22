@@ -1,0 +1,76 @@
+import ErrorMessages from '../constants/errors';
+import statusMessage from './status';
+import Firebase from '../lib/firebase';
+import initialData from '../store/core4';
+import moment from 'moment';
+import { __get, __set } from '../helper';
+
+function getCore4DataDetails(dispatch, daySet) {
+	const UID = (
+		Firebase
+		&& Firebase.auth()
+		&& Firebase.auth().currentUser
+		&& Firebase.auth().currentUser.uid
+	) ? Firebase.auth().currentUser.uid : null;
+
+	if (!UID) return false;
+
+	const {challengeId, weekId, dayId} = daySet;
+
+	const listener = Firebase.firestore().collection('users').doc(UID).collection('apps').doc('ww').collection('challenges').doc(challengeId).collection('weeks').doc(weekId).collection('core4').doc(dayId).onSnapshot((snapshot) => {
+		if (snapshot.exists) {
+			const data = snapshot.data() || {};
+			return dispatch({
+				type: 'CORE4_LOAD_DATA',
+				data,
+			});
+		}
+		return false;
+	});
+}
+
+export function getCore4Data(daySet) {
+	return dispatch => new Promise((resolve) => {
+		Firebase.auth().onAuthStateChanged((loggedIn) => {
+			if (loggedIn) {
+				return resolve(getCore4DataDetails(dispatch, daySet));
+			}
+			return () => new Promise(() => resolve());
+		});
+	});
+}
+
+
+function updateCore4DataDetails(dispatch, daySet, data) {
+	const UID = (
+		Firebase
+		&& Firebase.auth()
+		&& Firebase.auth().currentUser
+		&& Firebase.auth().currentUser.uid
+	) ? Firebase.auth().currentUser.uid : null;
+
+	if (!UID) return false;
+
+	const {challengeId, weekId, dayId} = daySet;
+    data.updatedAt = moment().toDate().getTime();
+
+	Firebase.firestore().collection('users').doc(UID).collection('apps').doc('ww').collection('challenges').doc(challengeId).collection('weeks').doc(weekId).collection('core4').doc(dayId).set(data, {merge: true}).then(() => {
+		return dispatch({
+			type: 'CORE4_UPDATE_DATA',
+			data,
+		});
+	}).catch(() => {
+		return false;
+	});
+}
+
+export function updateCore4Data(daySet, data) {
+	return dispatch => new Promise((resolve) => {
+		Firebase.auth().onAuthStateChanged((loggedIn) => {
+			if (loggedIn) {
+				return resolve(updateCore4DataDetails(dispatch, daySet, data));
+			}
+			return () => new Promise(() => resolve());
+		});
+	});
+}
