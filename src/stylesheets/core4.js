@@ -136,6 +136,12 @@ const styles = EStyleSheet.create({
         width: 12,
         height: 12,
     },
+
+    dudeContainer: {
+        width: '100%',
+        minHeight: 120,
+        maxHeight: 150,
+    },
 });
 
 export default styles;
