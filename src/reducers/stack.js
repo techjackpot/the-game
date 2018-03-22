@@ -30,8 +30,14 @@ export default function stackReducer(state = initialState, action) {
       return initialState;
     }
     case 'STACK_UPDATE_FIELD': {
+      if (action.data) {
+        return {...objectAssignDeep(state, action.data)};
+      }
+      return initialState;
+    }
+    case 'STACK_FINISH': {
     	if (action.data) {
-	      return {...objectAssignDeep(state, action.data)};
+	      // return {...objectAssignDeep(state, action.data)};
 	    }
       return initialState;
     }

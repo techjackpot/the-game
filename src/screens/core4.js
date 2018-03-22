@@ -59,14 +59,13 @@ class Core4Elites extends React.Component {
   }
 
   toggleStatus(taskGroup, task) {
-    const {challengeId, core4} = this.props;
+    const {core4} = this.props;
     const data = {tasks: {}};
     data.tasks[taskGroup] = {};
     data.tasks[taskGroup][task] = !core4.tasks[taskGroup][task];
     data.completedTasks = core4.completedTasks + 0.5 * (!core4.tasks[taskGroup][task]?1:-1);
     this.props.updateCore4Data(
       {
-        challengeId,
         weekId: core4.weekId,
         dayId: core4.dayId,
       },
@@ -159,31 +158,24 @@ class Core4Screen extends React.Component {
     super(props);
   
     this.state = {
-      score: 3.5
     };
   }
 
   componentDidMount() {
-    const {challengeId} = this.props;
     const weekId = moment().format('Y') + '' + moment().format('WW');
     const dayId = moment().format('Y') + '' + moment().format('MM') + '' + moment().format('DD');
-    this.props.getCore4Data({challengeId, weekId, dayId});
+    this.props.getCore4Data({weekId, dayId});
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.challengeId !== nextProps.challengeId) {
-      const {challengeId} = nextProps;
       const weekId = moment().format('Y') + '' + moment().format('WW');
       const dayId = moment().format('Y') + '' + moment().format('MM') + '' + moment().format('DD');
-      this.props.getCore4Data({challengeId, weekId, dayId});
+      this.props.getCore4Data({weekId, dayId});
     }
   }
 
-  updateScore(score) {
-    this.setState({score});
-  }
   render () {
-    const {score} = this.state;
     const {core4} = this.props;
     return (
       <View style={[gstyles.container, gstyles.gameContainer, gstyles.core4Container]}>

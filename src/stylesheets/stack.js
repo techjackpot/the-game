@@ -344,6 +344,12 @@ const styles = EStyleSheet.create({
         color: '#ffffff',
         fontSize: 8,
         fontWeight: '900',
+    },
+
+    typingLabel: {
+        width: 150,
+        height: 40,
+        backgroundColor: 'transparent',
     }
 });
 

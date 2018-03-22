@@ -24,15 +24,8 @@ function getUserDetails(dispatch) {
       if (challengeDoc.exists) {
         let challengeId = challengeDoc.data().activeChallenge;
         if (challengeId) {
-          let weekId = moment().format('YWW');
-          return Firebase.firestore().collection('users').doc(UID).collection('apps').doc('ww').collection('challenges').doc(challengeId).collection('weeks').doc(weekId).collection('key4Targets').doc('door').get().then((doorDoc) => {
-            if (doorDoc.exists) {
-              return Promise.resolve({challengeId, doorImage: doorDoc.data().image || ''});
-            }
-            return Promise.resolve({challengeId});
-          })
+          return Promise.resolve({challengeId});
         }
-        return Promise.resolve({});
       }
       return Promise.resolve({});
     }).then((data) => {

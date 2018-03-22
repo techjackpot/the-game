@@ -11,7 +11,7 @@ import moment from 'moment';
 
 import { key4 as styles, global as gstyles } from '../stylesheets';
 
-import { getUserData } from '../actions/user';
+import { getKey4Data, updateKey4Data } from '../actions/key4';
 
 class WeekNavigator extends React.Component {
   constructor(props) {
@@ -45,14 +45,15 @@ class WeekNavigator extends React.Component {
   }
 }
 
-class Avatar extends React.Component {
+class OneDoorAvatar extends React.Component {
   render() {
     const {source, door} = this.props;
+    const image = source ? {uri: source} : require('../assets/images/key4/door.jpg');
     return (
       <View style={[gstyles.container, styles.key4Avatar]}>
-        <View style={[gstyles.container, styles.key4AvatarImageWrapper, door === 0 ? styles.key4AvatarImageOffStatus : {}]}>
-          <TouchableOpacity activeOpacity={0.7} onPress={() => this.props.updateDoor((door+1)%2)}>
-            <Image style={[styles.image, styles.key4AvatarImage]} source={{uri: source}} />
+        <View style={[gstyles.container, styles.key4AvatarImageWrapper, !door ? styles.key4AvatarImageOffStatus : {}]}>
+          <TouchableOpacity activeOpacity={0.7} onPress={() => this.props.updateKey(!door)}>
+            <Image style={[styles.image, styles.key4AvatarImage]} source={image} />
           </TouchableOpacity>
         </View>
       </View>
@@ -62,19 +63,21 @@ class Avatar extends React.Component {
 
 class Key4ScoresPanel extends React.Component {
   render() {
-    const {score} = this.props;
+    const {key4} = this.props;
+    const doorScore = key4.door.complete?1:0;
+    const keyScore = Object.keys(key4).reduce((s, key) => s + (key4[key].complete?1:0), 0) - doorScore;
     return (
       <View style={[gstyles.container, gstyles.flexRow, styles.scoresContainer]}>
         <View style={[gstyles.container, gstyles.flexColumn, styles.scoreWidget]}>
           <View style={[gstyles.container, gstyles.flexRow, styles.limitScoreText]}>
-            <Text style={styles.scoreText}>{score.door}</Text>
+            <Text style={styles.scoreText}>{doorScore}</Text>
             <Text style={[styles.scoreText, styles.maxScoreLabel]}>/1</Text>
           </View>
           <Text style={styles.scoreLabelText}>DOOR</Text>
         </View>
         <View style={[gstyles.container, gstyles.flexColumn, styles.scoreWidget]}>
           <View style={[gstyles.container, gstyles.flexRow, styles.limitScoreText]}>
-            <Text style={styles.scoreText}>{score.keys}</Text>
+            <Text style={styles.scoreText}>{keyScore}</Text>
             <Text style={[styles.scoreText, styles.maxScoreLabel]}>/4</Text>
           </View>
           <Text style={styles.scoreLabelText}>KEYS</Text>
@@ -97,64 +100,24 @@ class Key4ItemsPanel extends React.Component {
     super(props);
   
     this.state = {
-      items: {
-        key1: {
-          key: 'Key 1',
-          name: 'Monday',
-          title: 'Get the new app done',
-          done: true,
-        },
-        key2: {
-          key: 'Key 2',
-          name: 'Tuesday',
-          title: 'Code up the InVision app',
-          done: true,
-        },
-        key3: {
-          key: 'Key 3',
-          name: 'Wednesday',
-          title: 'Team Meeting',
-          done: false,
-        },
-        key4: {
-          key: 'Key 4',
-          name: 'Saturday',
-          title: 'What can we do?',
-          done: false,
-        },
-      },
     };
-
-    this.updateKeys(this.state.items);
-  }
-
-  updateKeys(items) {
-    this.props.updateKeys(Object.entries(items).reduce((c, [key,{done}]) => c + (!!done?1:0), 0));
-  }
-
-  toggleStatus = (key) => {
-    const {items} = this.state;
-    items[key].done = !items[key].done;
-    this.setState({items});
-
-    this.updateKeys(items);
   }
 
   render() {
-    const {items} = this.state;
+    const {key4} = this.props;
     return (
       <View style={[gstyles.container, styles.key4ItemsContainer, gstyles.flexRow]}>
         {
-          Object.entries(items).map(([key, item]) => 
-            <TouchableOpacity style={styles.key4Item} activeOpacity={0.9} key={key} onPress={() => this.toggleStatus(key)}>
+          Object.entries(key4).filter(([key]) => key!=='door').map(([key, item]) =>
+            <TouchableOpacity style={styles.key4Item} activeOpacity={0.9} key={key} onPress={() => this.props.updateKey(key, !item.complete)}>
               {
-                item.done && <Image style={styles.keyDone} resizeMode={'stretch'} source={require('../assets/images/key4/active-line.png')} />
+                item.complete && <Image style={styles.keyDone} resizeMode={'stretch'} source={require('../assets/images/key4/active-line.png')} />
               }
               <View style={[gstyles.container, gstyles.flexRow, styles.key4ItemWrapper]}>
                 <Image style={styles.keyImage} source={require('../assets/images/key4/key-active.png')} />
                 <View style={[gstyles.container, styles.keyInfo]}>
-                  <Text style={[styles.keyTitle]}>{item.title}</Text>
-                  <Text style={[styles.keyLabel]}>{(item.key + '-' + item.name).toUpperCase()}</Text>
+                  <Text style={[styles.keyTitle]}>{item.target || key.toUpperCase()}</Text>
+                  <Text style={[styles.keyLabel]}>{(item.key + '-' + (item.completedDate ? moment(item.completedDate) : moment()).format('dddd')).toUpperCase()}</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -179,15 +142,32 @@ class Key4States extends React.Component {
   }
 
   updateDoor(door) {
+    const data = {
+      door: {
+        complete: door,
+        completedD
+      }
+    };
+    data['door']
     this.setState({score: {...this.state.score, door}});
   }
 
-  updateKeys(keys) {
-    this.setState({score: {...this.state.score, keys}});
+  updateKey(key, complete) {
+    const data = {};
+    data[key] = {
+      key,
+      complete,
+      completedDate: moment().format('Y') + '-' + moment().format('MM') + '-' + moment().format('DD'),
+      weekday: moment().isoWeekday(),
+    };
+
+    this.props.updateKey4Data({
+      weekId: moment().format('Y') + '' + moment().format('WW')
+    }, data)
   }
 
   render() {
-    const {user} = this.props;
+    const {key4} = this.props;
     const {score} = this.state;
     return (
       <View style={[gstyles.container, styles.key4statesContainer]}>
@@ -197,13 +177,13 @@ class Key4States extends React.Component {
         </View>
         <View style={[gstyles.container, styles.middleContainer]}>
           <View style={[gstyles.container, styles.key4AvatarContainer]}>
-            <Avatar source={user.doorImage || ''} door={score.door} updateDoor={(door) => this.updateDoor(door)} />
+            <OneDoorAvatar source={key4.door && key4.door.image || ''} door={key4.door && key4.door.complete || false} updateKey={(complete) => this.updateKey('door', complete)} />
           </View>
-          <Key4ScoresPanel score={score}/>
+          <Key4ScoresPanel key4={key4} />
         </View>
         <ScrollView>
           <View style={gstyles.container}>
-            <Key4ItemsPanel updateKeys={(keys) => this.updateKeys(keys)} />
+            <Key4ItemsPanel key4={key4} updateKey={(key, complete) => this.updateKey(key, complete)} />
           </View>
         </ScrollView>
       </View>
@@ -212,6 +192,19 @@ class Key4States extends React.Component {
 }
 
 class Key4Screen extends React.Component{
+
+  componentDidMount() {
+    const weekId = moment().format('Y') + '' + moment().format('WW');
+    this.props.getKey4Data({weekId});
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.challengeId !== nextProps.challengeId) {
+      const weekId = moment().format('Y') + '' + moment().format('WW');
+      this.props.getCore4Data({weekId});
+    }
+  }
+
   render () {
     return (
       <View style={[gstyles.container, gstyles.gameContainer, gstyles.key4Container]}>
@@ -222,12 +215,16 @@ class Key4Screen extends React.Component{
   }
 }
 
-const mapStateToProps = state => ({
-  user: state.user || {},
-});
+const mapStateToProps = state => {
+  return {
+    key4: state.key4 || {},
+    challengeId: state.user.challengeId || '',
+  }
+};
 
 const mapDispatchToProps = {
-  getUserData,
+  getKey4Data,
+  updateKey4Data,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Key4Screen);

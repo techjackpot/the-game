@@ -5,17 +5,10 @@ import initialData from '../store/core4';
 import moment from 'moment';
 import { __get, __set } from '../helper';
 
-function getCore4DataDetails(dispatch, daySet) {
-	const UID = (
-		Firebase
-		&& Firebase.auth()
-		&& Firebase.auth().currentUser
-		&& Firebase.auth().currentUser.uid
-	) ? Firebase.auth().currentUser.uid : null;
-
-	if (!UID) return false;
-
-	const {challengeId, weekId, dayId} = daySet;
+function getCore4DataDetails(dispatch, state, daySet) {
+	const UID = state.user.uid;
+	const {weekId, dayId} = daySet;
+	const challengeId = state.user.challengeId;
 
 	const listener = Firebase.firestore().collection('users').doc(UID).collection('apps').doc('ww').collection('challenges').doc(challengeId).collection('weeks').doc(weekId).collection('core4').doc(dayId).onSnapshot((snapshot) => {
 		if (snapshot.exists) {
@@ -30,10 +23,10 @@ function getCore4DataDetails(dispatch, daySet) {
 }
 
 export function getCore4Data(daySet) {
-	return dispatch => new Promise((resolve) => {
+	return (dispatch, getState) => new Promise((resolve) => {
 		Firebase.auth().onAuthStateChanged((loggedIn) => {
 			if (loggedIn) {
-				return resolve(getCore4DataDetails(dispatch, daySet));
+				return resolve(getCore4DataDetails(dispatch, getState(), daySet));
 			}
 			return () => new Promise(() => resolve());
 		});
@@ -41,17 +34,10 @@ export function getCore4Data(daySet) {
 }
 
 
-function updateCore4DataDetails(dispatch, daySet, data) {
-	const UID = (
-		Firebase
-		&& Firebase.auth()
-		&& Firebase.auth().currentUser
-		&& Firebase.auth().currentUser.uid
-	) ? Firebase.auth().currentUser.uid : null;
-
-	if (!UID) return false;
-
-	const {challengeId, weekId, dayId} = daySet;
+function updateCore4DataDetails(dispatch, state, daySet, data) {
+	const UID = state.user.uid;
+	const {weekId, dayId} = daySet;
+	const challengeId = state.user.challengeId;
     data.updatedAt = moment().toDate().getTime();
 
 	Firebase.firestore().collection('users').doc(UID).collection('apps').doc('ww').collection('challenges').doc(challengeId).collection('weeks').doc(weekId).collection('core4').doc(dayId).set(data, {merge: true}).then(() => {
@@ -65,10 +51,10 @@ function updateCore4DataDetails(dispatch, daySet, data) {
 }
 
 export function updateCore4Data(daySet, data) {
-	return dispatch => new Promise((resolve) => {
+	return (dispatch, getState) => new Promise((resolve) => {
 		Firebase.auth().onAuthStateChanged((loggedIn) => {
 			if (loggedIn) {
-				return resolve(updateCore4DataDetails(dispatch, daySet, data));
+				return resolve(updateCore4DataDetails(dispatch, getState(), daySet, data));
 			}
 			return () => new Promise(() => resolve());
 		});
