@@ -199,9 +199,9 @@ class Key4Screen extends React.Component{
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.challengeId !== nextProps.challengeId) {
+    if (this.props.challengeId !== nextProps.challengeId && nextProps.challengeId) {
       const weekId = moment().format('Y') + '' + moment().format('WW');
-      this.props.getCore4Data({weekId});
+      this.props.getKey4Data({weekId});
     }
   }
 
