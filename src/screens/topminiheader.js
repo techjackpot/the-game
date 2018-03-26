@@ -33,6 +33,10 @@ class TopMiniHeader extends React.Component{
       .catch(e => console.log(e));
   }
 
+  hideProfileModal() {
+    this.setProfileVisible(!this.state.profileVisible);
+  }
+
   render () {
     const {user} = this.props;
     return (
@@ -43,14 +47,9 @@ class TopMiniHeader extends React.Component{
           transparent={false}
           visible={this.state.profileVisible}
           style={styles.container}
-          >
-          <ProfileScreen handleLogout={() => this.handleLogout()} />
-          <TouchableHighlight
-            onPress={() => {
-              this.setProfileVisible(!this.state.profileVisible);
-            }}>
-            <Text>Hide Modal</Text>
-          </TouchableHighlight>
+          onRequestClose={() => {}}
+        >
+          <ProfileScreen handleLogout={() => this.handleLogout()} hideProfileModal={() => this.hideProfileModal()} />
         </Modal>
         <View style={styles.panel}>
           <Text style={styles.date}>{moment().format('dddd, MMMM Do').toUpperCase()}</Text>

@@ -1,5 +1,6 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {
+    Platform,
     StyleSheet,
 } from 'react-native';
 
@@ -17,9 +18,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     topBarIndicator: {
+        height: 0,
     },
     topBarLabel: {
         fontSize: 9,
+        marginTop: Platform.OS === 'android' ? 7 : 0,
     },
     activeTabBarLabel: {
         textDecorationLine: 'underline',
@@ -30,15 +33,16 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     bottomIcon: {
-        width: 30,
-        height: 30,
+        width: 25,
+        height: 25,
     },
     gameIconContainer: {
         borderColor: '#1fb9fc',
         borderWidth: 1,
         borderStyle: 'solid',
-        borderRadius: 45,
+        borderRadius: 25,
         width: 45,
+        height: 45,
         minHeight: 45,
         maxHeight: 45,
     }

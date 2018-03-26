@@ -68,7 +68,10 @@ class StackPhaseStepFieldInput extends React.Component {
     return (
       <View style={[gstyles.container, styles.container]}>
         <View style={[gstyles.container, styles.container, styles.fieldValueContainer, styles.fieldInputValueContainer]}>
-          <TextInput style={styles.fieldInputValue} placeholderTextColor={'#2c2c2c'} placeholder={data.placeholder || ''} />
+          <TextInput style={styles.fieldInputValue} placeholderTextColor={'#2c2c2c'} placeholder={data.placeholder || ''} 
+            autoCorrect={false}
+            underlineColorAndroid='transparent'
+          />
         </View>
       </View>
     );
@@ -551,6 +554,8 @@ class StackPhasePit extends React.Component {
                       placeholder={__get(['steps', 0, 'fields', 0, 'placeholder'], data)}
                       onChangeText={(text) => this.updatePitState('title', text)}
                       value={intro.title}
+                      autoCorrect={false}
+                      underlineColorAndroid='transparent'
                     />
                   </View>
                 </View>
@@ -598,6 +603,8 @@ class StackPhasePit extends React.Component {
                       placeholder={__get(['steps', 2, 'fields', 0, 'placeholder'], data)}
                       onChangeText={(text) => this.updatePitState('who', text)}
                       value={intro.who}
+                      autoCorrect={false}
+                      underlineColorAndroid='transparent'
                     />
                   </View>
                 </View>
@@ -790,6 +797,8 @@ class PhaseStepIndicatorInputText extends React.Component {
         placeholder={dataFilter(data.placeholder, stack.status.intro) || ''}
         value={stack.status[__get([stack.currentPhase, 'id'], StackPhaseData.data)][data.id]}
         onChangeText={(text) => this.props.updateState(data.id, text)}
+        autoCorrect={false}
+        underlineColorAndroid='transparent'
       />
     );
   }
