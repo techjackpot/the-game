@@ -28,6 +28,8 @@ const styles = EStyleSheet.create({
         minHeight: 160,
         maxHeight: 160,
         paddingBottom: 80,
+        position: 'relative',
+        zIndex: -2,
     },
     title: {
         color: '#ffffff',

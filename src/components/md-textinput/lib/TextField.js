@@ -149,7 +149,8 @@ const styles = StyleSheet.create({
   textInput: {
     fontSize: 16,
     height: 34,
-    lineHeight: 34
+    lineHeight: 34,
+    paddingBottom: 0,
   },
   denseTextInput: {
     fontSize: 13,

@@ -5,7 +5,7 @@ const styles = EStyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#bb0000'
+        backgroundColor: '$bgMain'
     },
     welcome: {
         fontSize: 20,

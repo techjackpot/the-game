@@ -162,11 +162,13 @@ const GameNav = TabNavigator(
   {
     initialRouteName: 'Core4',
     tabBarPosition: 'top',
+    animationEnabled: false,
     navigationOptions: {
       gesturesEnabled: false,
     },
     tabBarOptions: {
       showIcon: false,
+      iconStyle: {margin: 0, padding: 0, height: 0, maxHeight: 0},
       tabStyle: styles.topBarTab,
       indicatorStyle: styles.topBarIndicator,
       labelStyle: styles.topBarLabel,
@@ -229,7 +231,7 @@ const MainTabNavigator = TabNavigator({
       screen: GameNav,
       navigationOptions: {
         showLabel: false,
-        tabBarIcon: ({ focused, tintColor }) => <View style={[styles.container,styles.gameIconContainer]}><Image style={styles.bottomIcon} resizeMode={'contain'} source={focused ? require('../assets/icons/game-active.png') : require('../assets/icons/game.png')} /></View>,
+        tabBarIcon: ({ focused, tintColor }) => <View style={[gstyles.container, styles.gameIconContainer]}><Image style={styles.bottomIcon} resizeMode={'contain'} source={focused ? require('../assets/icons/game-active.png') : require('../assets/icons/game.png')} /></View>,
         showIcon: true
       },
     },
@@ -253,23 +255,39 @@ const MainTabNavigator = TabNavigator({
     swipeEnabled: false,
     tabBarPosition: 'bottom',
     initialRouteName: 'Game',
+    lazy: false,
+    animationEnabled: false,
     tabBarOptions: {
       showLabel: false,
+      showIcon: 'true',
       style: {
         backgroundColor: '#131313',
         height: 60,
         position: 'absolute',
+        padding: 0,
+        margin: 0,
         bottom: 0,
         left: 5,
         right: 5,
         borderTopLeftRadius: 5,
         borderTopRightRadius: 5,
       },
+      indicatorStyle: {
+        backgroundColor: '#f00',
+        height: 0,
+      },
+      labelStyle: { padding: 0, margin: 0, height: 0, maxHeight: 0, },
+      iconStyle: { height: 45, width: 45, padding: 0, margin: 0 },
     }
   }
 ); 
 
 class MainScreen extends React.Component {
+  constructor(props) {
+    super(props);
+  
+    this.state = {};
+  }
 
   componentDidMount = () => this.props.getUserData();
 

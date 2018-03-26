@@ -115,6 +115,7 @@ const styles = EStyleSheet.create({
         shadowRadius: 5,
         shadowColor: '#1caceb',
         shadowOffset: { height: 0, width: 0 },
+        elevation: 1,
     },
     eliteInactive: {
         backgroundColor: 'rgba(32, 32, 32, 0.9)'

@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-               BuildableName = "WarriorGame-tvOS.app"
-               BlueprintName = "WarriorGame-tvOS"
-               ReferencedContainer = "container:WarriorGame.xcodeproj">
+               BuildableName = "TheGame-tvOS.app"
+               BlueprintName = "TheGame-tvOS"
+               ReferencedContainer = "container:TheGame.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "WarriorGame-tvOSTests.xctest"
-               BlueprintName = "WarriorGame-tvOSTests"
-               ReferencedContainer = "container:WarriorGame.xcodeproj">
+               BuildableName = "TheGame-tvOSTests.xctest"
+               BlueprintName = "TheGame-tvOSTests"
+               ReferencedContainer = "container:TheGame.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -61,9 +61,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "WarriorGame-tvOSTests.xctest"
-               BlueprintName = "WarriorGame-tvOSTests"
-               ReferencedContainer = "container:WarriorGame.xcodeproj">
+               BuildableName = "TheGame-tvOSTests.xctest"
+               BlueprintName = "TheGame-tvOSTests"
+               ReferencedContainer = "container:TheGame.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -71,9 +71,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "WarriorGame-tvOS.app"
-            BlueprintName = "WarriorGame-tvOS"
-            ReferencedContainer = "container:WarriorGame.xcodeproj">
+            BuildableName = "TheGame-tvOS.app"
+            BlueprintName = "TheGame-tvOS"
+            ReferencedContainer = "container:TheGame.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -94,9 +94,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "WarriorGame-tvOS.app"
-            BlueprintName = "WarriorGame-tvOS"
-            ReferencedContainer = "container:WarriorGame.xcodeproj">
+            BuildableName = "TheGame-tvOS.app"
+            BlueprintName = "TheGame-tvOS"
+            ReferencedContainer = "container:TheGame.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -113,9 +113,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "WarriorGame-tvOS.app"
-            BlueprintName = "WarriorGame-tvOS"
-            ReferencedContainer = "container:WarriorGame.xcodeproj">
+            BuildableName = "TheGame-tvOS.app"
+            BlueprintName = "TheGame-tvOS"
+            ReferencedContainer = "container:TheGame.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

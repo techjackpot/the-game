@@ -1,5 +1,5 @@
 {
-  "name": "warrior-game",
+  "name": "the-game",
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
@@ -14,6 +14,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
+    "rename": "node ./bin/rename.js",
     "test": "jest"
   },
   "jest": {

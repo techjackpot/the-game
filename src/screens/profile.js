@@ -11,17 +11,17 @@ import gstyles, { profile as styles } from '../stylesheets';
 import { logout, getUserData } from '../actions/user';
 
 class ProfileScreen extends React.Component{
-
-  handleLogout() {
-    this.props.handleLogout();
-  }
-
   render () {
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={() => this.handleLogout()}>
+        <TouchableOpacity onPress={() => this.props.handleLogout()}>
           <Text style={styles.welcome}>
             Log out
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => this.props.hideProfileModal()}>
+          <Text style={styles.welcome}>
+            Close
           </Text>
         </TouchableOpacity>
       </View>
