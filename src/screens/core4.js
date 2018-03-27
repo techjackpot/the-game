@@ -122,12 +122,26 @@ class Core4Dude extends React.Component {
   constructor(props) {
     super(props);
   
-    this.state = {};
+    this.state = {
+      offset: props.score / props.max,
+    };
+  }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.score !== nextProps.score) {
+      const {score, max} = nextProps;
+      const {offset} = this.state;
+      let newOffset = score / max;
+      let itr = 0;
+      let timer = setInterval(() => {
+        itr ++;
+        this.setState({offset: offset + itr*(newOffset-offset)/10})
+        if (itr >=10) clearInterval(timer);
+      }, 20);
+    }
   }
   render() {
-    const {max, score} = this.props;
-    let type = score === max ? 'url(#full-gradient)' : 'url(#gradient)';
-    let offset = score / max;
+    const {offset} = this.state;
+    let type = offset===1 ? 'url(#full-gradient)' : 'url(#gradient)';
     return (
       <View style={[gstyles.container, styles.dudeContainer]}>
         <Svg width="100%" height="100%" viewBox="0 0 900 1236" preserveAspectRatio="xMidYMid">

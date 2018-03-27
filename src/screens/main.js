@@ -6,6 +6,7 @@ import {
   Text
 } from 'react-native';
 import { StackNavigator, TabNavigator } from 'react-navigation';
+import SafeAreaView from 'react-native-safe-area-view';
 
 import TopMiniHeader from './topminiheader';
 
@@ -176,6 +177,9 @@ const GameNav = TabNavigator(
       activeTintColor: '#ffffff',
       inactiveTintColor: '#4b4b4b',
       upperCaseLabel: false,
+      forceInset: {
+        bottom: 'never',
+      }
     }
   }
 );
@@ -273,7 +277,6 @@ const MainTabNavigator = TabNavigator({
         borderTopRightRadius: 5,
       },
       indicatorStyle: {
-        backgroundColor: '#f00',
         height: 0,
       },
       labelStyle: { padding: 0, margin: 0, height: 0, maxHeight: 0, },
@@ -289,7 +292,11 @@ class MainScreen extends React.Component {
     this.state = {};
   }
 
-  componentDidMount = () => this.props.getUserData();
+  componentDidMount = () => {
+    this.props.getUserData().catch(() => {
+      this.props.navigation.navigate('Login');
+    })
+  }
 
   render() {
     const {isLoading} = this.props;

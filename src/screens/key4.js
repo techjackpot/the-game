@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
+import {BoxShadow} from 'react-native-shadow';
 import moment from 'moment';
 
 import { key4 as styles, global as gstyles } from '../stylesheets';
@@ -50,12 +51,25 @@ class OneDoorAvatar extends React.Component {
     const {source, door} = this.props;
     const image = source ? {uri: source} : require('../assets/images/key4/door.jpg');
     return (
-      <View style={[gstyles.container, styles.key4Avatar]}>
-        <View style={[gstyles.container, styles.key4AvatarImageWrapper, !door ? styles.key4AvatarImageOffStatus : {}]}>
-          <TouchableOpacity activeOpacity={0.7} onPress={() => this.props.updateKey(!door)}>
-            <Image style={[styles.image, styles.key4AvatarImage]} source={image} />
-          </TouchableOpacity>
-        </View>
+      <View style={[gstyles.container, styles.key4Avatar, door ? styles.key4AvatarOnBorder : {}]}>
+
+        {/*<BoxShadow setting={{
+            width:160,
+            height:170,
+            color:"#f00",
+            border:8,
+            radius:10,
+            opacity:0.5,
+            x:0,
+            y:3,
+            style:{marginVertical:5}
+        }}>*/}
+          <View style={[gstyles.container, styles.key4AvatarImageWrapper, !door ? styles.key4AvatarImageOffStatus : {}]}>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => this.props.updateKey(!door)}>
+              <Image style={[styles.image, styles.key4AvatarImage]} source={image} />
+            </TouchableOpacity>
+          </View>
+        {/*</BoxShadow>*/}
       </View>
     );
   }
@@ -175,10 +189,10 @@ class Key4States extends React.Component {
           <Text style={[styles.title]}>Get The Main Thing Done Here</Text>
           <Text style={[styles.subCaption]}>{'One Door'.toUpperCase()}</Text>
         </View>
+        <View style={[gstyles.container, styles.key4AvatarContainer]}>
+          <OneDoorAvatar source={key4.door && key4.door.image || ''} door={key4.door && key4.door.complete || false} updateKey={(complete) => this.updateKey('door', complete)} />
+        </View>
         <View style={[gstyles.container, styles.middleContainer]}>
-          <View style={[gstyles.container, styles.key4AvatarContainer]}>
-            <OneDoorAvatar source={key4.door && key4.door.image || ''} door={key4.door && key4.door.complete || false} updateKey={(complete) => this.updateKey('door', complete)} />
-          </View>
           <Key4ScoresPanel key4={key4} />
         </View>
         <ScrollView>

@@ -1,3 +1,6 @@
+import {
+    Platform,
+} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 const styles = EStyleSheet.create({
@@ -28,8 +31,6 @@ const styles = EStyleSheet.create({
         minHeight: 160,
         maxHeight: 160,
         paddingBottom: 80,
-        position: 'relative',
-        zIndex: -2,
     },
     title: {
         color: '#ffffff',
@@ -50,7 +51,10 @@ const styles = EStyleSheet.create({
         position: 'absolute',
         width: 140,
         height: 140,
-        top: -70,
+        top: 90,
+        left: 'auto',
+        right: 'auto',
+        zIndex: 99,
     },
     key4Avatar: {
         width: 140,
@@ -60,6 +64,12 @@ const styles = EStyleSheet.create({
         borderColor: '#404040',
         borderWidth: 3,
         borderStyle: 'solid',
+    },
+    key4AvatarOnBorder: {
+        ...Platform.OS === 'android' ? {
+            borderColor: 'rgba(42, 173, 232, 0.5)',
+            backgroundColor: 'rgba(42, 173, 232, 0.2)',
+        } : {}
     },
     key4AvatarOffStatus: {
         borderColor: 'transparent',
@@ -74,6 +84,7 @@ const styles = EStyleSheet.create({
         shadowRadius: 10,
         shadowColor: '#1caceb',
         shadowOffset: { height: 0, width: 0 },
+        elevation: 2,
     },
     key4AvatarImageOffStatus: {
         shadowOpacity: 0,

@@ -1,5 +1,6 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {Platform} from 'react-native';
+import { ifIphoneX } from 'react-native-iphone-x-helper';
 
 const styles = EStyleSheet.create({
     stackContainer: {
@@ -289,7 +290,11 @@ const styles = EStyleSheet.create({
         backgroundColor: '#ffffff',
         position: 'absolute',
         zIndex: 101,
-        bottom: 0,
+        ...ifIphoneX({
+            bottom: 35,
+        }, {
+            bottom: 0,
+        }),
         left: 0,
         right: 0,
         maxHeight: 46,
@@ -304,10 +309,13 @@ const styles = EStyleSheet.create({
         borderWidth: 1,
         borderRadius: 12,
         marginRight: 12,
+        alignItems: 'center',
     },
     valueIndicatorInput: {
         width: '100%',
         color: '#000000',
+        paddingVertical: 4,
+        textAlignVertical: 'top',
     },
     valueIndicatorInputBoolean: {
         borderWidth: 2,
