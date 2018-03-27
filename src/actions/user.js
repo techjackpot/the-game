@@ -42,13 +42,12 @@ export function getUserData() {
   if (Firebase === null) return () => new Promise(resolve => resolve());
 
   // Ensure token is up to date
-  return dispatch => new Promise(async (resolve) => {
+  return dispatch => new Promise(async (resolve, reject) => {
     Firebase.auth().onAuthStateChanged((loggedIn) => {
       if (loggedIn) {
         return resolve(getUserDetails(dispatch));
       }
-
-      return () => new Promise(() => resolve());
+      return () => new Promise(() => reject());
     });
   });
 }

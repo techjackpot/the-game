@@ -1,4 +1,5 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
+import { ifIphoneX } from 'react-native-iphone-x-helper';
 import {
     Platform,
     StyleSheet,
@@ -31,6 +32,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#0c0c0c',
         height: 40,
         paddingHorizontal: 20,
+        ...ifIphoneX({
+            paddingTop: 34,
+        }, {
+            paddingTop: 0,
+        })
     },
     bottomIcon: {
         width: 25,

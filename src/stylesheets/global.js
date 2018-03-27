@@ -1,4 +1,5 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
+import { ifIphoneX } from 'react-native-iphone-x-helper';
 
 const styles = EStyleSheet.create({
     container: {
@@ -25,6 +26,11 @@ const styles = EStyleSheet.create({
     },
     topNavContainer: {
     	maxHeight: 80,
+        ...ifIphoneX({
+            marginTop: 44,
+        }, {
+            marginTop: 0,
+        })
     },
     loadingContainer: {
     	position: 'absolute',
