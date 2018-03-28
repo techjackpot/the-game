@@ -34,6 +34,10 @@ const styles = EStyleSheet.create({
     },
     loadingContainer: {
     	position: 'absolute',
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        zIndex: 9999,
     },
     core4Container: {
     },

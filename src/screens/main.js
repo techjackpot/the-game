@@ -6,7 +6,7 @@ import {
   Text
 } from 'react-native';
 import { StackNavigator, TabNavigator } from 'react-navigation';
-import SafeAreaView from 'react-native-safe-area-view';
+import moment from 'moment';
 
 import TopMiniHeader from './topminiheader';
 
@@ -25,6 +25,8 @@ import Loading from './loading';
 import { main as styles, global as gstyles } from '../stylesheets';
 
 import { getUserData } from '../actions/user';
+import { getCore4Data } from '../actions/core4';
+import { getKey4Data } from '../actions/key4';
 
 // const TodayNav = StackNavigator(
 //   {
@@ -290,22 +292,27 @@ class MainScreen extends React.Component {
     super(props);
   
     this.state = {};
+
+    this._bootstrapAsync();
   }
 
-  componentDidMount = () => {
-    this.props.getUserData().catch(() => {
-      this.props.navigation.navigate('Login');
-    })
+  _bootstrapAsync = async () => {
+    if (!this.props.user.uid) {
+      this.props.navigation.navigate('Auth');
+    } else {
+      const weekId = moment().format('Y') + '' + moment().format('WW');
+      const dayId = moment().format('Y') + '' + moment().format('MM') + '' + moment().format('DD');
+      this.props.getCore4Data({weekId, dayId});
+      this.props.getKey4Data({weekId});
+    }
   }
 
   render() {
-    const {isLoading} = this.props;
+    const {loading} = this.props;
     return (
       <View style={[gstyles.mainContainer]}>
-        {
-          // isLoading && <Loading style={[gstyles.container, gstyles.loadingContainer]} />
-        }
-        <TopMiniHeader {...this.props} />
+        { loading && <Loading /> }
+        <TopMiniHeader navigation={this.props.navigation} />
         <MainTabNavigator />
       </View>
     );
@@ -315,12 +322,14 @@ class MainScreen extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.user || {},
-    isLoading: state.status.loading || false,
+    loading: state.status.loading || false,
   }
 };
 
 const mapDispatchToProps = {
   getUserData,
+  getCore4Data,
+  getKey4Data,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainScreen);

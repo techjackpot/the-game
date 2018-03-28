@@ -7,7 +7,7 @@ import {
 import { loading as styles, global as gstyles } from '../stylesheets';
 
 const Loading = () => (
-  <View style={gstyles.container}>
+  <View style={[gstyles.container, gstyles.loadingContainer]}>
     <ActivityIndicator size="large" color={'#ffffff'} />
   </View>
 );

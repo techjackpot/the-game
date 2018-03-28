@@ -48,7 +48,10 @@ export function finishStack() {
 	return (dispatch, getState) => new Promise((resolve) => {
 		const {user, stack} = getState();
 		const UID = user.uid;
-		const challengeId = user.challengeId;
+	  const challengeId = user && user.challenge && user.challenge.id || '';
+
+	  if (!challengeId) return false;
+
 		const weekId = moment().format('Y') + '' + moment().format('WW');
 
 		const data = stack.status;
