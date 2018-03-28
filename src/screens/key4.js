@@ -211,9 +211,9 @@ class Key4Screen extends React.Component{
     const weekId = moment().format('Y') + '' + moment().format('WW');
     this.props.getKey4Data({weekId});
   }
-
+  
   componentWillReceiveProps(nextProps) {
-    if (this.props.challengeId !== nextProps.challengeId && nextProps.challengeId) {
+    if (this.props.challenge.id !== nextProps.challenge.id && nextProps.challenge.id) {
       const weekId = moment().format('Y') + '' + moment().format('WW');
       this.props.getKey4Data({weekId});
     }
@@ -232,7 +232,7 @@ class Key4Screen extends React.Component{
 const mapStateToProps = state => {
   return {
     key4: state.key4 || {},
-    challengeId: state.user.challengeId || '',
+    challenge: state.user && state.user.challenge && state.user.challenge || '',
   }
 };
 

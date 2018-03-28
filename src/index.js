@@ -10,7 +10,8 @@ import AppWithNavigationState from './routes/AppNavigator';
 import Loading from './screens/loading';
 
 // Hide StatusBar on Android as it overlaps tabs
-if (Platform.OS === 'android') StatusBar.setHidden(true);
+// if (Platform.OS === 'android')
+StatusBar.setHidden(true);
 
 
 EStyleSheet.build({

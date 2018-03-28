@@ -57,6 +57,7 @@ const choiceData = {
 };
 
 
+/*
 class StackPhaseStepFieldInput extends React.Component {
   constructor(props) {
     super(props);
@@ -97,6 +98,7 @@ class StackPhaseStepFieldSingle extends React.Component {
     );
   }
 }
+*/
 
 class StackPhaseStepFieldBubbleContent extends React.Component {
   constructor(props) {

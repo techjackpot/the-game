@@ -17,24 +17,29 @@ function getUserDetails(dispatch) {
 
   if (!UID) return false;
 
-  const ref = Firebase.firestore().collection('users').doc(UID).collection('public').doc('profile').onSnapshot((doc) => {
-    const userData = doc.data() || {};
-
-    return Firebase.firestore().collection('users').doc(UID).collection('apps').doc('ww').get().then((challengeDoc) => {
-      if (challengeDoc.exists) {
-        let challengeId = challengeDoc.data().activeChallenge;
-        if (challengeId) {
-          return Promise.resolve({challengeId});
-        }
-      }
-      return Promise.resolve({});
-    }).then((data) => {
-      return dispatch({
-        type: 'USER_DETAILS_UPDATE',
-        data: {...userData, ...data},
-      });
+  const listener_user = Firebase.firestore().collection('users').doc(UID).collection('public').doc('profile').onSnapshot((doc) => {
+    const data = doc.data() || {};
+    return dispatch({
+      type: 'USER_DETAILS_UPDATE',
+      data,
     });
+  });
 
+  Firebase.firestore().collection('users').doc(UID).collection('apps').doc('ww').get().then((challengeDoc) => {
+    if (challengeDoc.exists) {
+      let challengeId = challengeDoc.data().activeChallenge;
+      if (challengeId) {
+        const listener_challenge = Firebase.firestore().collection('users').doc(UID).collection('apps').doc('ww').collection('challenges').doc(challengeId).onSnapshot((snapshot) => {
+          if (snapshot.exists) {
+            const data = snapshot.data() || {};
+            return dispatch({
+              type: 'USER_DETAILS_UPDATE',
+              data: {challenge: data},
+            })
+          }
+        });
+      }
+    }
   });
 }
 

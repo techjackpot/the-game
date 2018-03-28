@@ -8,9 +8,11 @@ import { __get, __set } from '../helper';
 function getCore4DataDetails(dispatch, state, daySet) {
 	const UID = state.user.uid;
 	const {weekId, dayId} = daySet;
-	const challengeId = state.user.challengeId;
+  const challengeId = state.user && state.user.challenge && state.user.challenge.id || '';
 
-	const listener = Firebase.firestore().collection('users').doc(UID).collection('apps').doc('ww').collection('challenges').doc(challengeId).collection('weeks').doc(weekId).collection('core4').doc(dayId).onSnapshot((snapshot) => {
+  if (!challengeId) return false;
+
+	const status_listener = Firebase.firestore().collection('users').doc(UID).collection('apps').doc('ww').collection('challenges').doc(challengeId).collection('weeks').doc(weekId).collection('core4').doc(dayId).onSnapshot((snapshot) => {
 		if (snapshot.exists) {
 			const data = snapshot.data() || {};
 			return dispatch({
@@ -37,8 +39,11 @@ export function getCore4Data(daySet) {
 function updateCore4DataDetails(dispatch, state, daySet, data) {
 	const UID = state.user.uid;
 	const {weekId, dayId} = daySet;
-	const challengeId = state.user.challengeId;
-    data.updatedAt = moment().toDate().getTime();
+  const challengeId = state.user && state.user.challenge && state.user.challenge.id || '';
+
+  if (!challengeId) return false;
+  
+  data.updatedAt = moment().toDate().getTime();
 
 	Firebase.firestore().collection('users').doc(UID).collection('apps').doc('ww').collection('challenges').doc(challengeId).collection('weeks').doc(weekId).collection('core4').doc(dayId).set(data, {merge: true}).then(() => {
 		return dispatch({

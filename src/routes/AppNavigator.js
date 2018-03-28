@@ -3,16 +3,15 @@ import { addNavigationHelpers, StackNavigator } from 'react-navigation';
 import { createStore, combineReducers } from 'redux';
 import { connect } from 'react-redux';
 import { createReduxBoundAddListener, createReactNavigationReduxMiddleware } from 'react-navigation-redux-helpers';
-import shallowCompare from 'react-addons-shallow-compare';
 import { RouteConfigs, StackNavigatorConfig } from './';
 
 export const AppNavigator = StackNavigator(RouteConfigs, StackNavigatorConfig);
 
 export const middleware = createReactNavigationReduxMiddleware(
-  "Login",
+  "Auth",
   state => state.nav,
 );
-const addListener = createReduxBoundAddListener("Login");
+const addListener = createReduxBoundAddListener("Auth");
 
 class App extends React.Component {
 

@@ -8,9 +8,7 @@ import {
 
 import gstyles, { profile as styles } from '../stylesheets';
 
-import { logout, getUserData } from '../actions/user';
-
-class ProfileScreen extends React.Component{
+export default class ProfileScreen extends React.Component{
   render () {
     return (
       <View style={styles.container}>
@@ -28,12 +26,3 @@ class ProfileScreen extends React.Component{
     );
   }
 }
-
-const mapStateToProps = state => ({
-  user: state.user || {},
-});
-
-const mapDispatchToProps = {
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileScreen);

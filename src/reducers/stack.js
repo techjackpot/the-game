@@ -1,5 +1,6 @@
 import Store from '../store/stack';
 import objectAssignDeep from 'object-assign-deep';
+import merge from 'deepmerge';
 
 export const initialState = Store;
 
@@ -37,7 +38,7 @@ export default function stackReducer(state = initialState, action) {
     }
     case 'STACK_FINISH': {
     	if (action.data) {
-	      // return {...objectAssignDeep(state, action.data)};
+	      // return {...merge(state, action.data)};
 	    }
       return initialState;
     }

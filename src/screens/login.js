@@ -10,14 +10,17 @@ import {
   KeyboardAvoidingView,
   Platform,
   Dimensions,
+  ActivityIndicator,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import DropdownAlert from 'react-native-dropdownalert';
 import Spinner from 'react-native-loading-spinner-overlay';
 import TextField from '../components/md-textinput';
+import Loading from '../screens/loading';
 const {height, width} = Dimensions.get('window');
+import moment from 'moment';
 
-import gstyles, { login as styles } from '../stylesheets';
+import { login as styles, global as gstyles } from '../stylesheets';
 
 import { login } from '../actions/user';
 
@@ -41,7 +44,9 @@ class LoginScreen extends React.Component{
 
   handleSubmit() {
     this.props.onFormSubmit(this.state)
-      .then(() => this.props.navigation.navigate('Main'))
+      .then(() => {
+        this.props.navigation.navigate('Main');
+      })
       .catch(e => this.dropdown.alertWithType('error', 'Error', e.message || e));
   }
 
@@ -58,12 +63,14 @@ class LoginScreen extends React.Component{
         source = {loginBackground}
       >
         <View style = {[styles.container/*, {opacity: (this.state.authChecked ? 1 : 0)}*/]}>
-          <Spinner 
+          {/*<Spinner 
               visible = {loading} 
               textContent = {"Signing in..."} 
               textStyle={{color: '#FFF'}} 
               overlayColor    = 'rgba(0, 0, 0, 0.5)'
-          />
+          />*/}
+
+          { loading && <Loading /> }
           
           <View style = {styles.topspace}>
             <View style = {styles.logoarea}>
@@ -75,13 +82,10 @@ class LoginScreen extends React.Component{
               </Image>
             </View>
             <View style={styles.apptitle}>
-              <Text style={styles.warriorchar}>W</Text>
-              <Text style={styles.warriorchar}>A</Text>
-              <Text style={styles.warriorchar}>R</Text>
-              <Text style={styles.warriorchar}>R</Text>
-              <Text style={styles.warriorchar}>I</Text>
-              <Text style={styles.warriorchar}>O</Text>
-              <Text style={styles.warriorchar}>R</Text>
+              <Text style={styles.chatchar}>T</Text>
+              <Text style={styles.chatchar}>H</Text>
+              <Text style={styles.chatchar}>E</Text>
+              <Text style={styles.chatchar}> </Text>
               <Text style={styles.chatchar}>G</Text>
               <Text style={styles.chatchar}>A</Text>
               <Text style={styles.chatchar}>M</Text>

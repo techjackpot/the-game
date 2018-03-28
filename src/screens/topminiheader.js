@@ -9,10 +9,11 @@ import {
   Modal,
 } from 'react-native';
 import moment from 'moment';
+import { NavigationActions } from 'react-navigation';
 
 import { topminiheader as styles, global as gstyles } from '../stylesheets';
 
-import { logout, getUserData } from '../actions/user';
+import { logout } from '../actions/user';
 
 import ProfileScreen from './profile';
 
@@ -26,11 +27,19 @@ class TopMiniHeader extends React.Component{
     this.setState({profileVisible: visible});
   }
 
+  _navigateTo = (routeName: string) => {
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName })]
+    })
+    this.props.navigation.dispatch(resetAction)
+  }
+
   handleLogout() {
     this.setProfileVisible(false);
     this.props.userLogout()
-      .then(() => this.props.navigation.navigate('Login'))
-      .catch(e => console.log(e));
+      .then(() => this._navigateTo('Login'))
+      .catch(e => this._navigateTo('Login'));
   }
 
   hideProfileModal() {

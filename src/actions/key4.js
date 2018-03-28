@@ -8,13 +8,15 @@ import { __get, __set } from '../helper';
 function getKey4DataDetails(dispatch, state, daySet) {
 	const UID = state.user.uid;
 	const {weekId} = daySet;
-	const challengeId = state.user.challengeId;
+  const challengeId = state.user && state.user.challenge && state.user.challenge.id || '';
+
+  if (!challengeId) return false;
 
 	const listener = Firebase.firestore().collection('users').doc(UID).collection('apps').doc('ww').collection('challenges').doc(challengeId).collection('weeks').doc(weekId).collection('key4Targets').onSnapshot((querySnapshot) => {
 		const data = {};
-        querySnapshot.forEach((doc) => {
-            data[doc.id] = doc.data();
-        });
+    querySnapshot.forEach((doc) => {
+        data[doc.id] = doc.data();
+    });
 		return dispatch({
 			type: 'KEY4_LOAD_DATA',
 			data,
@@ -37,21 +39,23 @@ export function getKey4Data(daySet) {
 function updateKey4DataDetails(dispatch, state, daySet, data) {
 	const UID = state.user.uid;
 	const {weekId} = daySet;
-	const challengeId = state.user.challengeId;
+  const challengeId = state.user && state.user.challenge && state.user.challenge.id || '';
 
-    const promises = [];
-    Object.keys(data).map((key) => {
-		promises.push(Firebase.firestore().collection('users').doc(UID).collection('apps').doc('ww').collection('challenges').doc(challengeId).collection('weeks').doc(weekId).collection('key4Targets').doc(key).set(data[key], {merge: true}));
-    });
+  if (!challengeId) return false;
 
-    Promise.all(promises).then(() => {
-		return dispatch({
-			type: 'KEY4_UPDATE_DATA',
-			data,
-		});
-    }).catch(() => {
-    	return false;
-    })
+  const promises = [];
+  Object.keys(data).map((key) => {
+	promises.push(Firebase.firestore().collection('users').doc(UID).collection('apps').doc('ww').collection('challenges').doc(challengeId).collection('weeks').doc(weekId).collection('key4Targets').doc(key).set(data[key], {merge: true}));
+  });
+
+  Promise.all(promises).then(() => {
+	return dispatch({
+		type: 'KEY4_UPDATE_DATA',
+		data,
+	});
+  }).catch(() => {
+  	return false;
+  })
 }
 
 export function updateKey4Data(daySet, data) {

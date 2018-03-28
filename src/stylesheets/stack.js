@@ -314,7 +314,7 @@ const styles = EStyleSheet.create({
     valueIndicatorInput: {
         width: '100%',
         color: '#000000',
-        paddingVertical: 4,
+        paddingVertical: 5,
         textAlignVertical: 'top',
     },
     valueIndicatorInputBoolean: {

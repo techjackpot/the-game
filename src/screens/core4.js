@@ -90,18 +90,19 @@ class Core4Elites extends React.Component {
   }
 
   render() {
-    const {core4} = this.props;
+    const {core4, challenge} = this.props;
     const {tasks} = core4;
+    const {outcomes} = challenge;
     return (
       <View style={[gstyles.container, styles.elitesContainer, gstyles.flexRow]}>
         {
-          Object.entries(tasks).map(([taskGroup, tasks]) => 
-            Object.entries(tasks).map(([task, done]) => 
+          Object.entries(tasks).map(([taskGroup, subtasks]) => 
+            Object.entries(subtasks).map(([task, done]) => 
               <TouchableOpacity activeOpacity={0.9} style={styles.eliteContainer} key={task} onPress={() => this.toggleStatus(taskGroup, task)}>
                 <View style={[gstyles.container, done === true ? styles.eliteActive : {}]}>
                   <View style={[gstyles.container, gstyles.flexRow, styles.eliteBackground]}>
                     <View style={styles.backgroundWhiteSpace}></View>
-                    <Image style={styles.eliteBackgroudImage} resizeMode={'cover'} source={elitesAssets[task].background} />
+                    <Image style={styles.eliteBackgroudImage} resizeMode={'cover'} source={outcomes && outcomes[task] && outcomes[task].image && {uri: outcomes[task].image} || elitesAssets[task].background} />
                   </View>
                   <View style={[gstyles.container, styles.eliteCategoryContainer, done === false ? styles.eliteInactive : {}]}>
                     <View style={[gstyles.container, styles.eliteCategory]}>
@@ -233,7 +234,7 @@ class Core4Screen extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.challengeId !== nextProps.challengeId) {
+    if (this.props.challenge.id !== nextProps.challenge.id && nextProps.challenge.id) {
       const weekId = moment().format('Y') + '' + moment().format('WW');
       const dayId = moment().format('Y') + '' + moment().format('MM') + '' + moment().format('DD');
       this.props.getCore4Data({weekId, dayId});
@@ -269,7 +270,7 @@ class Core4Screen extends React.Component {
 const mapStateToProps = state => {
   return {
     core4: state.core4 || {},
-    challengeId: state.user.challengeId || '',
+    challenge: state.user && state.user.challenge || {},
   };
 };
 

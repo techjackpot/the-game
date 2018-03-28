@@ -26,6 +26,8 @@
     ]
   },
   "dependencies": {
+    "babel-plugin-transform-remove-console": "^6.9.0",
+    "deepmerge": "^2.1.0",
     "fbjs": "^0.8.16",
     "firebase": "^4.11.0",
     "immutable": "^3.8.2",
