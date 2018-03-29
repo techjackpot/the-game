@@ -8,9 +8,10 @@ import {
   TextInput,
   ScrollView,
   ProgressViewIOS,
-  ProgressBar,
   Platform,
+  Keyboard
 } from 'react-native';
+import ProgressBar from 'react-native-progress/Bar';
 import moment from 'moment';
 
 import { stack as styles, global as gstyles } from '../stylesheets';
@@ -127,10 +128,10 @@ class BubbleProgressBar extends React.Component {
   render() {
     const {progress} = this.state;
     const color = '#bb0000';
-    if (Platform.OS !== 'android') {
-      return <ProgressViewIOS progress={progress} progressTintColor={color} />;
-    }
-    return <View />;
+    // if (Platform.OS !== 'android') {
+    //   return <ProgressViewIOS progress={progress} progressTintColor={color} />;
+    // }
+    return <ProgressBar width={300} height={2} borderRadius={2} borderWidth={0} unfilledColor={'#414141'} progress={progress} color={color} />;
   }
 }
 
@@ -164,7 +165,7 @@ class StackPhaseStepFieldBubbleContent extends React.Component {
   render() {
     const {loading} = this.state;
     if (loading) {
-      return <View style={{marginVertical: 18}}><BubbleProgressBar duration={this.duration} /></View>
+      return <View style={[gstyles.container, {marginVertical: 18}]}><BubbleProgressBar duration={this.duration} /></View>
     }
     const {noBubble} = this.props;
     return (
@@ -961,9 +962,31 @@ class PhaseStepIndicator extends React.Component {
 }
 
 class StackScreen extends React.Component {
+  constructor(props) {
+    super(props);
+  
+    this.state = {
+      keyboard: false,
+    };
+  }
 
   componentWillMount() {
     this.props.getStackData(new Date());
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => this._keyboardDidShow());
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => this._keyboardDidHide());
+  }
+
+  componentWillUnmount() {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
+  }
+
+  _keyboardDidShow() {
+    this.setState({keyboard: true});
+  }
+
+  _keyboardDidHide() {
+    this.setState({keyboard: false});
   }
 
   moveNext() {
@@ -985,12 +1008,13 @@ class StackScreen extends React.Component {
   render () {
     const {stack} = this.props;
     const {currentPhase, currentStep} = stack;
+    const {keyboard} = this.state;
     return (
       <View style={[gstyles.container, styles.container, gstyles.gameContainer, gstyles.stackContainer, styles.stackContainer]}>
-        <View style={[gstyles.container, styles.container, styles.stackPhasesContainer, currentPhase>0 && currentPhase<=StackPhaseData.data.length-1 ? styles.withIndicator : {}]}>
+        <View style={[gstyles.container, styles.container, styles.stackPhasesContainer, currentPhase>0 && currentPhase<=StackPhaseData.data.length-1 ? styles.withIndicator : {}, keyboard ? styles.withKeyboard : {}]}>
           <ScrollView
             ref={ref => this.scrollView = ref}
-            onContentSizeChange={(contentWidth, contentHeight)=>{        
+            onContentSizeChange={(contentWidth, contentHeight)=>{
                 this.scrollView.scrollToEnd({animated: true});
             }}
           >
