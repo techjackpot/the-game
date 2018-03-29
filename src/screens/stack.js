@@ -7,6 +7,9 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
+  ProgressViewIOS,
+  ProgressBar,
+  Platform,
 } from 'react-native';
 import moment from 'moment';
 
@@ -100,31 +103,69 @@ class StackPhaseStepFieldSingle extends React.Component {
 }
 */
 
+class BubbleProgressBar extends React.Component {
+  constructor(props) {
+    super(props);
+  
+    this.state = {
+      progress: 0,
+    };
+    this._isMounted = false;
+  }
+  componentDidMount() {
+    this._isMounted = true;
+    const {duration} = this.props;
+    let timer = setInterval(() => {
+      const {progress} = this.state;
+      this._isMounted && this.setState({progress: progress + 0.02})
+      if (progress >= 1) clearInterval(timer);
+    }, duration / 200);
+  }
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+  render() {
+    const {progress} = this.state;
+    const color = '#bb0000';
+    return <ProgressViewIOS progress={progress} progressTintColor={color} />;
+  }
+}
+
 class StackPhaseStepFieldBubbleContent extends React.Component {
   constructor(props) {
     super(props);
   
     this.state = {
       loading: props.contentType === 'label',
+      progress: 0,
     };
+    this._isMounted = false;
+    this.duration = 500 + __getRandomInt(500);
   }
 
   componentDidMount() {
+    this._isMounted = true;
     if (this.state.loading) {
       setTimeout(() => {
-        this.setState({
+        this._isMounted && this.setState({
           loading: false,
         });
-      }, 1000 + __getRandomInt(1000));
+      }, this.duration);
     }
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   render() {
     const {loading} = this.state;
     if (loading) {
-      return (
-        <Image style={styles.typingLabel} resizeMode={'contain'} source={require('../assets/icons/typing.gif')} />
-      );
+      if (Platform.OS === 'android') {  
+        return <Image style={styles.typingLabel} resizeMode={'contain'} source={require('../assets/icons/typing.gif')} />;
+      } else {
+        return <View style={{marginVertical: 18}}><BubbleProgressBar duration={this.duration} /></View>
+      }
     }
     const {noBubble} = this.props;
     return (
@@ -165,11 +206,6 @@ class StackPhaseStepFieldBubbleValue extends React.Component {
 }
 
 class StackPhaseStepField extends React.Component {
-  constructor(props) {
-    super(props);
-  
-    this.state = {};
-  }
   render() {
     const {data, stack, phaseInd, stepInd} = this.props;
     const phaseId = __get([phaseInd, 'id'], StackPhaseData.data);
@@ -426,10 +462,9 @@ class StackPhaseStepField extends React.Component {
 }
 
 class StackPhaseStep extends React.Component {
-  constructor(props) {
-    super(props);
-  
-    this.state = {};
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.stack.currentStep === this.props.stepInd || nextProps.stack.currentStep - 1 === this.props.stepInd;
   }
 
   render() {
@@ -447,10 +482,9 @@ class StackPhaseStep extends React.Component {
 }
 
 class StackPhase extends React.Component {
-  constructor(props) {
-    super(props);
-  
-    this.state = {};
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.stack.currentPhase === this.props.phaseInd;
   }
 
   updateChoice(val) {
@@ -495,6 +529,7 @@ class StackPhasePit extends React.Component {
     super(props);
   
     this.state = {
+      isEditing: false,
     };
 
     this.core4Icons = {
@@ -505,13 +540,20 @@ class StackPhasePit extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (JSON.stringify(this.props.stack.status.intro) !== JSON.stringify(nextProps.stack.status.intro)) {
-      this.forceUpdate();
-    }
-  } 
+  componentDidMount() {
+    this.setState({isEditing: true});
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return !!this.state.isEditing;
+  }
+  componentWillUnmount() {
+    this.setState({isEditing: false});
+  }
 
   updatePitState(key, val, multi) {
+    !this.state.isEditing && this.setState({isEditing: true});
+
     const {currentPhase, status} = this.props.stack;
     const {intro} = status;
 
@@ -530,6 +572,8 @@ class StackPhasePit extends React.Component {
       phase: 'intro',
       field: key,
       data: intro[key]
+    }).then(() => {
+      this.state.isEditing && this.setState({isEditing: false});
     })
 
     if (currentPhase === 0) {
@@ -649,6 +693,7 @@ class StackPhasePath extends React.Component {
     super(props);
   
     this.state = {
+      isEditing: false,
     };
 
     this.powerlevels = {
@@ -681,13 +726,20 @@ class StackPhasePath extends React.Component {
     this.feelings = ['aware', 'joy', 'hope', 'certainty', 'faith', 'peace', 'expansion', 'empathy', 'power', 'love', 'gratitude', 'awake', 'trust', 'supported', 'awe', 'focus', 'curious', 'creativity', 'happy', 'open', 'inspiration'];
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (JSON.stringify(this.props.stack.status.light) !== JSON.stringify(nextProps.stack.status.light)) {
-      this.forceUpdate();
-    }
-  } 
+  componentDidMount() {
+    this.setState({isEditing: true});
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return !!this.state.isEditing;
+  }
+  componentWillUnmount() {
+    this.setState({isEditing: false});
+  }
 
   updatePathState(key, val, multi) {
+    !this.state.isEditing && this.setState({isEditing: true});
+
     const {currentPhase, status} = this.props.stack;
     const {light} = status;
 
@@ -706,6 +758,8 @@ class StackPhasePath extends React.Component {
       phase: 'light',
       field: key,
       data: light[key]
+    }).then(() => {
+      this.state.isEditing && this.setState({isEditing: false});
     })
   }
 
@@ -775,7 +829,7 @@ class StackPhasePath extends React.Component {
         {
           stack.status.light.feeling.length>0 && stack.status.light.power!=='' && (
             <View style={[gstyles.container, gstyles.flexRow, styles.nextButtonContainer]}>
-              <TouchableOpacity style={styles.nextButton} onPress={() => this.props.finishStack()}><Text style={styles.nextButtonText}>FINISH</Text></TouchableOpacity>
+              <TouchableOpacity style={styles.nextButton} onPress={() => this.props.finishStackAndMove()}><Text style={styles.nextButtonText}>FINISH</Text></TouchableOpacity>
             </View>
           )
         }
@@ -933,12 +987,12 @@ class StackScreen extends React.Component {
     this.props.getStackData(new Date());
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (JSON.stringify(this.props.stack) !== JSON.stringify(nextProps.stack)) {
-      this.forceUpdate();
-    }
-  } 
-
+  finishStackAndMove() {
+    this.props.finishStack().then(() => {
+      this.props.getStackData(new Date());
+      this.props.navigation.navigate('Core4');
+    })
+  }
 
   render () {
     const {stack} = this.props;
@@ -962,7 +1016,7 @@ class StackScreen extends React.Component {
                 StackPhaseData.data.filter((phase, ind) => ind!==0 && ind <= stack.currentPhase).map((phase, ind) => <StackPhase key={phase.id} phaseInd={ind+1} data={phase} {...this.props} />)
               }
               {
-                StackPhaseData.data.length-1 < stack.currentPhase && <StackPhasePath {...this.props} />
+                StackPhaseData.data.length-1 < stack.currentPhase && <StackPhasePath finishStackAndMove={() => this.finishStackAndMove()} {...this.props} />
               }
             </View>
             {/*<View style={[gstyles.container, gstyles.flexRow, styles.nextButtonContainer]}>

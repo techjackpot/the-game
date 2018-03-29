@@ -78,7 +78,7 @@ const styles = EStyleSheet.create({
         height: 7,
         backgroundColor: '#fff',
         borderRadius: 12,
-        zIndex: 99,
+        zIndex: 199,
     },
     fieldLabelContainer: {
         alignItems: 'flex-start',
