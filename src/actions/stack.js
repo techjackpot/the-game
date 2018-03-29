@@ -45,7 +45,8 @@ export function updateStackField(fieldData) {
 }
 
 export function finishStack() {
-	return (dispatch, getState) => new Promise((resolve) => {
+	return (dispatch, getState) => new Promise(async (resolve) => {
+    await statusMessage(dispatch, 'loading', true);
 		const {user, stack} = getState();
 		const UID = user.uid;
 	  const challengeId = user && user.challenge && user.challenge.id || '';
@@ -66,6 +67,10 @@ export function finishStack() {
 		data.progress = result;
 
 		return Firebase.firestore().collection('users').doc(UID).collection('apps').doc('ww').collection('challenges').doc(challengeId).collection('weeks').doc(weekId).collection('stacks').add(data).then(() => {
+      setTimeout(async () => {
+        resolve();
+        await statusMessage(dispatch, 'loading', false);
+      }, 1000); // Resolve after 1s so that user sees a message
 			return resolve(dispatch({
 				type: 'STACK_FINISH',
 			}));

@@ -89,7 +89,7 @@ const styles = EStyleSheet.create({
         paddingBottom: 60,
     },
     eliteContainer: {
-        width: '48%',
+        width: '100%',
         height: 50,
         marginVertical: 7,
     },
@@ -111,11 +111,11 @@ const styles = EStyleSheet.create({
     },
     eliteActive: {
         backgroundColor: 'transparent',
-        shadowOpacity: 0.75,
-        shadowRadius: 5,
-        shadowColor: '#1caceb',
-        shadowOffset: { height: 0, width: 0 },
-        elevation: 1,
+        // shadowOpacity: 0.75,
+        // shadowRadius: 5,
+        // shadowColor: '#1caceb',
+        // shadowOffset: { height: 0, width: 0 },
+        // elevation: 1,
     },
     eliteInactive: {
         backgroundColor: 'rgba(32, 32, 32, 0.9)'

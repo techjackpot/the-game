@@ -8,7 +8,9 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   ScrollView,
+  AppState,
 } from 'react-native';
+import {BoxShadow} from 'react-native-shadow';
 import Svg,{
     Circle,
     Ellipse,
@@ -98,19 +100,31 @@ class Core4Elites extends React.Component {
         {
           Object.entries(tasks).map(([taskGroup, subtasks]) => 
             Object.entries(subtasks).map(([task, done]) => 
-              <TouchableOpacity activeOpacity={0.9} style={styles.eliteContainer} key={task} onPress={() => this.toggleStatus(taskGroup, task)}>
-                <View style={[gstyles.container, done === true ? styles.eliteActive : {}]}>
-                  <View style={[gstyles.container, gstyles.flexRow, styles.eliteBackground]}>
-                    <View style={styles.backgroundWhiteSpace}></View>
-                    <Image style={styles.eliteBackgroudImage} resizeMode={'cover'} source={outcomes && outcomes[task] && outcomes[task].image && {uri: outcomes[task].image} || elitesAssets[task].background} />
-                  </View>
-                  <View style={[gstyles.container, styles.eliteCategoryContainer, done === false ? styles.eliteInactive : {}]}>
-                    <View style={[gstyles.container, styles.eliteCategory]}>
-                      <Image style={styles.eliteCategoryIcon} resizeMode={'contain'} source={elitesAssets[task].icon} />
+              <BoxShadow key={task}  setting={{
+                  width: 155,
+                  height: 50,
+                  color: '#1caceb',
+                  border: 8,
+                  radius: 10,
+                  opacity: done === true ? 0.3 : 0,
+                  x: 0,
+                  y: 7,
+                  style: {marginVertical: 7}
+              }}>
+                <TouchableOpacity activeOpacity={0.9} style={styles.eliteContainer} key={task} onPress={() => this.toggleStatus(taskGroup, task)}>
+                  <View style={[gstyles.container, done === true ? styles.eliteActive : {}]}>
+                    <View style={[gstyles.container, gstyles.flexRow, styles.eliteBackground]}>
+                      <View style={styles.backgroundWhiteSpace}></View>
+                      <Image style={styles.eliteBackgroudImage} resizeMode={'cover'} source={outcomes && outcomes[task] && outcomes[task].image && {uri: outcomes[task].image} || elitesAssets[task].background} />
+                    </View>
+                    <View style={[gstyles.container, styles.eliteCategoryContainer, done === false ? styles.eliteInactive : {}]}>
+                      <View style={[gstyles.container, styles.eliteCategory]}>
+                        <Image style={styles.eliteCategoryIcon} resizeMode={'contain'} source={elitesAssets[task].icon} />
+                      </View>
                     </View>
                   </View>
-                </View>
-              </TouchableOpacity>
+                </TouchableOpacity>
+            </BoxShadow>
             )
           )
         }
@@ -127,6 +141,7 @@ class Core4Dude extends React.Component {
       offset: props.score / props.max,
     };
   }
+
   componentWillReceiveProps(nextProps) {
     if (this.props.score !== nextProps.score) {
       const {score, max} = nextProps;
@@ -145,7 +160,7 @@ class Core4Dude extends React.Component {
     let type = offset===1 ? 'url(#full-gradient)' : 'url(#gradient)';
     return (
       <View style={[gstyles.container, styles.dudeContainer]}>
-        <Svg width="100%" height="100%" viewBox="0 0 900 1236" preserveAspectRatio="xMidYMid">
+        <Svg width="150" height="150" viewBox="0 0 900 1236" preserveAspectRatio="xMidYMid">
           <Defs>
             <LinearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
               <Stop offset="0" stopColor="#039BE5"></Stop>

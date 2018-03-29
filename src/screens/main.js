@@ -27,6 +27,7 @@ import { main as styles, global as gstyles } from '../stylesheets';
 import { getUserData } from '../actions/user';
 import { getCore4Data } from '../actions/core4';
 import { getKey4Data } from '../actions/key4';
+import { getStackData } from '../actions/stack';
 
 // const TodayNav = StackNavigator(
 //   {
@@ -304,6 +305,7 @@ class MainScreen extends React.Component {
       const dayId = moment().format('Y') + '' + moment().format('MM') + '' + moment().format('DD');
       this.props.getCore4Data({weekId, dayId});
       this.props.getKey4Data({weekId});
+      this.props.getStackData(new Date());
     }
   }
 
@@ -330,6 +332,7 @@ const mapDispatchToProps = {
   getUserData,
   getCore4Data,
   getKey4Data,
+  getStackData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainScreen);
