@@ -127,7 +127,10 @@ class BubbleProgressBar extends React.Component {
   render() {
     const {progress} = this.state;
     const color = '#bb0000';
-    return <ProgressViewIOS progress={progress} progressTintColor={color} />;
+    if (Platform.OS !== 'android') {
+      return <ProgressViewIOS progress={progress} progressTintColor={color} />;
+    }
+    return <View />;
   }
 }
 
@@ -161,11 +164,7 @@ class StackPhaseStepFieldBubbleContent extends React.Component {
   render() {
     const {loading} = this.state;
     if (loading) {
-      if (Platform.OS === 'android') {  
-        return <Image style={styles.typingLabel} resizeMode={'contain'} source={require('../assets/icons/typing.gif')} />;
-      } else {
-        return <View style={{marginVertical: 18}}><BubbleProgressBar duration={this.duration} /></View>
-      }
+      return <View style={{marginVertical: 18}}><BubbleProgressBar duration={this.duration} /></View>
     }
     const {noBubble} = this.props;
     return (
@@ -545,7 +544,7 @@ class StackPhasePit extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return !!this.state.isEditing;
+    return !!this.state.isEditing || this.props.stack.currentPhase === 0;
   }
   componentWillUnmount() {
     this.setState({isEditing: false});
@@ -962,21 +961,9 @@ class PhaseStepIndicator extends React.Component {
 }
 
 class StackScreen extends React.Component {
-  constructor(props) {
-    super(props);
-  
-    this.state = {
-    };
-  }
 
   componentWillMount() {
-    this.props.getStackData(moment().format('dddd, MMMM Do'));
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (JSON.stringify(this.props.stack) !== JSON.stringify(nextProps.stack)) {
-      this.forceUpdate();
-    }
+    this.props.getStackData(new Date());
   }
 
   moveNext() {
@@ -989,8 +976,9 @@ class StackScreen extends React.Component {
 
   finishStackAndMove() {
     this.props.finishStack().then(() => {
-      this.props.getStackData(new Date());
-      this.props.navigation.navigate('Core4');
+      this.props.getStackData(new Date()).then(() => {
+        this.props.navigation.navigate('Core4');
+      });
     })
   }
 

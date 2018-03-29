@@ -203,7 +203,7 @@ const styles = EStyleSheet.create({
     fieldChoiceValue: {
         borderWidth: 2,
         borderColor: '#ffffff',
-        backgroundColor: '#ffffff',
+        backgroundColor: 'transparent',
         borderRadius: 16,
         paddingVertical: 6,
         paddingHorizontal: 16,
@@ -213,7 +213,7 @@ const styles = EStyleSheet.create({
         alignSelf: 'stretch',
     },
     fieldChoiceValueText: {
-        color: '#000000',
+        color: '#ffffff',
         fontSize: 12,
         textAlign: 'center',
     },
@@ -223,7 +223,7 @@ const styles = EStyleSheet.create({
         marginRight: 12,
     },
     fieldChoiceValueSelected: {
-        backgroundColor: '#bb0000',
+        borderColor: '#bb0000',
     },
     fieldPathValueContainer: {
         justifyContent: 'center',
