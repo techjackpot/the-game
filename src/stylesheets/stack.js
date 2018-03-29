@@ -26,6 +26,11 @@ const styles = EStyleSheet.create({
     withIndicator: {
         paddingBottom: 80,
     },
+    withKeyboard: {
+        ...(Platform.OS !== 'android' ? {
+            marginBottom: 215,
+        } : {})
+    },
     phasesContainer: {
         marginVertical: 6,
         alignItems: 'stretch',
