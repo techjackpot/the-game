@@ -32,6 +32,8 @@ function getUserDetails(dispatch) {
         const listener_challenge = Firebase.firestore().collection('users').doc(UID).collection('apps').doc('ww').collection('challenges').doc(challengeId).onSnapshot((snapshot) => {
           if (snapshot.exists) {
             const data = snapshot.data() || {};
+            data.id = challengeId;
+            console.log(data.id);
             return dispatch({
               type: 'USER_DETAILS_UPDATE',
               data: {challenge: data},
