@@ -46,17 +46,12 @@ class PhaseStepIndicatorInputBoolean extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    stack: {...objectAssignDeep(state.stack || {}, {status: { intro: { username: state.user.name }}})}
-  };
-};
+const mapStateToProps = state => ({
+  stack: {...objectAssignDeep(state.stack || {}, {status: { intro: { username: state.user.name }}})}
+});
 
-const mapDispatchToProps = dispatch => {
-  return {
-    dispatch,
-    updateStackField: fieldData => dispatch(updateStackField(fieldData)),
-  }
+const mapDispatchToProps = {
+  updateStackField,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PhaseStepIndicatorInputBoolean);

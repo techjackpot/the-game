@@ -42,20 +42,20 @@ class PhaseStepIndicator extends React.Component {
     }
 
 
-    let IndicatorInput;
-    switch(data.type) {
-      case 'driftBoolean':
-      case 'blockBoolean':
-        IndicatorInput = PhaseStepIndicatorInputBoolean;
-        break;
-      default:
-        IndicatorInput = PhaseStepIndicatorInputText;
-        break;
-    }
+    const IndicatorInput = (() => {
+      switch(data.type) {
+        case 'driftBoolean':
+        case 'blockBoolean':
+          return PhaseStepIndicatorInputBoolean;
+        default:
+          return PhaseStepIndicatorInputText;
+      }
+    })();
+
     return (
       <View style={[gstyles.container, gstyles.flexRow, styles.valueIndicatorContainer]}>
         <View style={[gstyles.container, styles.valueIndicator]}>
-          <IndicatorInput />
+          <IndicatorInput></IndicatorInput>
         </View>
         <View style={[gstyles.container, styles.moveToNextFieldButtonContainer]}>
           <TouchableOpacity style={[gstyles.container, styles.moveToNextFieldButton]} onPress={() => this.moveToNextField()}>
@@ -67,18 +67,13 @@ class PhaseStepIndicator extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    stack: {...objectAssignDeep(state.stack || {}, {status: { intro: { username: state.user.name }}})}
-  };
-};
+const mapStateToProps = state => ({
+  stack: {...objectAssignDeep(state.stack || {}, {status: { intro: { username: state.user.name }}})}
+});
 
-const mapDispatchToProps = dispatch => {
-  return {
-    dispatch,
-    moveToNextPhase: nextPhase => dispatch(moveToNextPhase(nextPhase)),
-    moveToNextField: nextField => dispatch(moveToNextField(nextField)),
-  }
+const mapDispatchToProps = {
+  moveToNextPhase,
+  moveToNextField,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PhaseStepIndicator);
