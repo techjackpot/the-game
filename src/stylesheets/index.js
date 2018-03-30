@@ -30,22 +30,22 @@ export const today = styles_today;
 export const topminiheader = styles_topminiheader;
 export const global = styles_global;
 
-const styles = {
-    core4,
-    dashboard,
-    groups,
-    key4,
-    loading,
-    login,
-    main,
-    movie,
-    notification,
-    profile,
-    stack,
-    timeline,
-    today,
-    topminiheader,
-    global,
-};
+// const styles = {
+//     core4,
+//     dashboard,
+//     groups,
+//     key4,
+//     loading,
+//     login,
+//     main,
+//     movie,
+//     notification,
+//     profile,
+//     stack,
+//     timeline,
+//     today,
+//     topminiheader,
+//     global,
+// };
 
-export default styles;
+// export default styles;
