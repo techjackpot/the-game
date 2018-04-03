@@ -24,6 +24,9 @@ export default class BubbleProgressBar extends React.Component {
   componentWillUnmount() {
     this._isMounted = false;
   }
+  shouldComponentUpdate(nextProps, nextState) {
+    return this.state.progress <= 1;
+  }
   render() {
     const {progress} = this.state;
     return <ProgressBar width={300} height={2} borderRadius={2} borderWidth={0} unfilledColor={'#414141'} progress={progress} color={'#bb0000'} />;

@@ -27,6 +27,8 @@ const styles = StyleSheet.create({
     },
     activeTabBarLabel: {
         textDecorationLine: 'underline',
+        fontSize: 11,
+        color: '#1fb9fc',
     },
     topBar: {
         backgroundColor: '#0c0c0c',

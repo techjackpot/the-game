@@ -11,10 +11,11 @@ const arraytoString = (feelings) => {
     return feelingStr.toLowerCase();
 }
 
-const __dataFilter = (string, intro) => {
+const __dataFilter = (string, intro, index = '') => {
   let newString = string
   .replace(/\[intro(.|\n)username\]/gi, intro.username)
   .replace(/\[intro(.|\n)who\]/gi, intro.who)
+  .replace(/\[index]/gi, index === 1 ? '' : index)
   .replace(/\[intro(.|\n)feeling\]/gi, arraytoString(intro.feeling));
   return newString;
 }

@@ -40,6 +40,7 @@
 		8E7D4B171F8AFD9C00699FE4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8E7D4B161F8AFD9B00699FE4 /* GoogleService-Info.plist */; };
 		A038CD85D39748E122AC50D7 /* libPods-TheGame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 333056BA5B7ADABE709DF4A1 /* libPods-TheGame.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
+		E15D8B092073863F00015825 /* libFastImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E15D8AE0207385A200015825 /* libFastImage.a */; };
 		E1CA5A39206741C000232699 /* AgencyFBRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E1CA5A0C206741BF00232699 /* AgencyFBRegular.ttf */; };
 		E1CA5A3A206741C000232699 /* AgencyFBLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E1CA5A37206741BF00232699 /* AgencyFBLight.ttf */; };
 		E1CA5A3B206741C000232699 /* AgencyFBBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E1CA5A38206741C000232699 /* AgencyFBBold.ttf */; };
@@ -313,6 +314,13 @@
 			remoteGlobalIDString = 358F4ED71D1E81A9004DF814;
 			remoteInfo = RCTBlob;
 		};
+		E15D8ADF207385A200015825 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E15D8AD9207385A000015825 /* FastImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A287971D1DE0C0A60081BDFA;
+			remoteInfo = FastImage;
+		};
 		E1CA5A32206741BF00232699 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
@@ -374,6 +382,7 @@
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		ADF4CB3C3BF44D3EBA8B78C4 /* RNFirebase.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFirebase.xcodeproj; path = "../node_modules/react-native-firebase/ios/RNFirebase.xcodeproj"; sourceTree = "<group>"; };
 		B7AFA8AA9A1CFD17320E9074 /* Pods-TheGame.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheGame.release.xcconfig"; path = "Pods/Target Support Files/Pods-TheGame/Pods-TheGame.release.xcconfig"; sourceTree = "<group>"; };
+		E15D8AD9207385A000015825 /* FastImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FastImage.xcodeproj; path = "../node_modules/react-native-fast-image/ios/FastImage.xcodeproj"; sourceTree = "<group>"; };
 		E1CA5A0C206741BF00232699 /* AgencyFBRegular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = AgencyFBRegular.ttf; path = ../src/assets/fonts/AgencyFBRegular.ttf; sourceTree = "<group>"; };
 		E1CA5A37206741BF00232699 /* AgencyFBLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = AgencyFBLight.ttf; path = ../src/assets/fonts/AgencyFBLight.ttf; sourceTree = "<group>"; };
 		E1CA5A38206741C000232699 /* AgencyFBBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = AgencyFBBold.ttf; path = ../src/assets/fonts/AgencyFBBold.ttf; sourceTree = "<group>"; };
@@ -394,6 +403,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E15D8B092073863F00015825 /* libFastImage.a in Frameworks */,
 				E1CA5A45206743D800232699 /* libRNSVG.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
@@ -554,6 +564,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		53F2512C29AE4388867604B1 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		5E91572E1DD0AC6500FF2AA8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -584,6 +601,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				E15D8AD9207385A000015825 /* FastImage.xcodeproj */,
 				E1CA5A3C206743C200232699 /* RNSVG.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -625,6 +643,7 @@
 				6A84F842C723265FECF9ADFD /* Pods */,
 				927E270FF1706B5003F5613D /* Frameworks */,
 				8E7D4AFB1F8AFD6F00699FE4 /* Recovered References */,
+				53F2512C29AE4388867604B1 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -671,6 +690,14 @@
 			children = (
 				ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */,
 				8E7D4B021F8AFD6F00699FE4 /* libRCTBlob-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E15D8ADA207385A000015825 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E15D8AE0207385A200015825 /* libFastImage.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -778,6 +805,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 6BEUX95QF7;
+						ProvisioningStyle = Automatic;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -802,6 +830,10 @@
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = E15D8ADA207385A000015825 /* Products */;
+					ProjectRef = E15D8AD9207385A000015825 /* FastImage.xcodeproj */;
+				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
@@ -1122,6 +1154,13 @@
 			remoteRef = ADBDB9261DFEBF0700ED6528 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		E15D8AE0207385A200015825 /* libFastImage.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libFastImage.a;
+			remoteRef = E15D8ADF207385A200015825 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		E1CA5A33206741BF00232699 /* libjsinspector.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1407,6 +1446,8 @@
 			baseConfigurationReference = 4031C5D3468A6410BB4016B9 /* Pods-TheGame.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 6BEUX95QF7;
@@ -1422,8 +1463,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.wakeupwarrior.thegame-demo";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wakeupwarrior.the-game";
 				PRODUCT_NAME = TheGame;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1433,6 +1475,8 @@
 			baseConfigurationReference = B7AFA8AA9A1CFD17320E9074 /* Pods-TheGame.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6BEUX95QF7;
 				DISPLAY_NAME = TheGame;
@@ -1447,8 +1491,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.wakeupwarrior.thegame-demo";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wakeupwarrior.the-game";
 				PRODUCT_NAME = TheGame;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

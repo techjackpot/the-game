@@ -51,7 +51,7 @@ const styles = EStyleSheet.create({
         color: '#000',
         paddingHorizontal: 10,
         paddingVertical: 2,
-        fontSize: 6,
+        fontSize: 9,
         fontWeight: '700',
     },
     stepsContainer: {
@@ -109,7 +109,7 @@ const styles = EStyleSheet.create({
     fieldLabelBubbleArrow: {
         backgroundColor: '#222222',
         width: 38,
-        height: 32,
+        height: 24,
         position: 'absolute',
         borderBottomRightRadius: 38,
         bottom: 0,
@@ -118,7 +118,7 @@ const styles = EStyleSheet.create({
     fieldLabelBubbleArrowBox: {
         backgroundColor: '$bgMain',
         width: 16,
-        height: 32,
+        height: 24,
         borderBottomRightRadius: 32,
     },
     fieldLabelValueContainer: {
@@ -181,25 +181,25 @@ const styles = EStyleSheet.create({
         marginRight: 10,
         marginBottom: 6,
         minWidth: 52,
-        paddingVertical: 2,
-        paddingHorizontal: 4,
+        paddingVertical: 3,
+        paddingHorizontal: 5,
         alignItems: 'center',
     },
     fieldSingleValueText: {
         color: '#ffffff',
-        fontSize: 7,
+        fontSize: 10,
         textAlign: 'center',
     },
     fieldSingleValueImage: {
-        width: 14,
-        height: 14,
+        width: 16,
+        height: 16,
     },
     fieldShiftImageLabelContainer: {
         marginVertical: 4,
     },
     fieldShiftImage: {
-        width: 48,
-        height: 48,
+        width: 42,
+        height: 42,
         marginRight: 8,
     },
     fieldChoiceValueContainer: {
@@ -278,6 +278,7 @@ const styles = EStyleSheet.create({
 
     nextButtonContainer: {
         justifyContent: 'space-around',
+        marginBottom: 24,
     },
     nextButton: {
         borderWidth: 2,
@@ -285,6 +286,21 @@ const styles = EStyleSheet.create({
         borderRadius: 32,
     },
     nextButtonText: {
+        color: '#ffffff',
+        paddingHorizontal: 8,
+        paddingVertical: 3,
+    },
+
+    addMoreActionButtonContainer: {
+        justifyContent: 'space-around',
+        marginTop: 16,
+    },
+    addMoreActionButton: {
+        borderWidth: 2,
+        borderColor: '#bb0000',
+        borderRadius: 32,
+    },
+    addMoreActionButtonText: {
         color: '#ffffff',
         paddingHorizontal: 8,
         paddingVertical: 3,
@@ -337,7 +353,7 @@ const styles = EStyleSheet.create({
     },
     valueIndicatorInputBooleanText: {
         color: '#000000',
-        fontSize: 7,
+        fontSize: 10,
         textAlign: 'center',
     },
     valueIndicatorInputBooleanTextSelected: {

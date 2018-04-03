@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {BoxShadow} from 'react-native-shadow';
 import moment from 'moment';
 
@@ -66,7 +67,7 @@ class OneDoorAvatar extends React.Component {
         }}>*/}
           <View style={[gstyles.container, styles.key4AvatarImageWrapper, !door ? styles.key4AvatarImageOffStatus : {}]}>
             <TouchableOpacity activeOpacity={0.7} onPress={() => this.props.updateKey(!door)}>
-              <Image style={[styles.image, styles.key4AvatarImage]} source={image} />
+              <FastImage style={[styles.image, styles.key4AvatarImage]} source={image} />
             </TouchableOpacity>
           </View>
         {/*</BoxShadow>*/}
@@ -125,10 +126,10 @@ class Key4ItemsPanel extends React.Component {
           Object.entries(key4).filter(([key]) => key!=='door').map(([key, item]) =>
             <TouchableOpacity style={styles.key4Item} activeOpacity={0.9} key={key} onPress={() => this.props.updateKey(key, !item.complete)}>
               {
-                item.complete && <Image style={styles.keyDone} resizeMode={'stretch'} source={require('../assets/images/key4/active-line.png')} />
+                item.complete && <FastImage style={styles.keyDone} resizeMode={'stretch'} source={require('../assets/images/key4/active-line.png')} />
               }
               <View style={[gstyles.container, gstyles.flexRow, styles.key4ItemWrapper]}>
-                <Image style={styles.keyImage} source={require('../assets/images/key4/key-active.png')} />
+                <FastImage style={styles.keyImage} source={require('../assets/images/key4/key-active.png')} />
                 <View style={[gstyles.container, styles.keyInfo]}>
                   <Text style={[styles.keyTitle]}>{item.target || key.toUpperCase()}</Text>
                   <Text style={[styles.keyLabel]}>{(item.key + '-' + (item.completedDate ? moment(item.completedDate) : moment()).format('dddd')).toUpperCase()}</Text>
@@ -186,7 +187,7 @@ class Key4States extends React.Component {
     return (
       <View style={[gstyles.container, styles.key4statesContainer]}>
         <View style={[gstyles.container, gstyles.flexColumn, styles.topContainer]}>
-          <Text style={[styles.title]}>Get The Main Thing Done Here</Text>
+          <Text style={[styles.title]}>{key4.door.target || 'Get The Main Thing Done Here'}</Text>
           <Text style={[styles.subCaption]}>{'One Door'.toUpperCase()}</Text>
         </View>
         <View style={[gstyles.container, styles.key4AvatarContainer]}>

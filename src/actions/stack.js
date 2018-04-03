@@ -24,8 +24,9 @@ export function moveToNextPhase(nextPhase) {
 	});
 }
 
-export function moveToNextField(nextStep) {
+export function moveToNextField(nextStep, force = false) {
 	const data = __set(['currentStep'], nextStep);
+	data.force = force;
 	return dispatch => new Promise((resolve) => {
 		return resolve(dispatch({
 			type: 'STACK_NEXT_FIELD',

@@ -19,8 +19,18 @@ class PhaseStepIndicator extends React.Component {
   moveToNextField(force = false) {
     const {stack} = this.props;
     const phaseData = __get([stack.currentPhase], StackPhaseData.data);
-    let fieldValue = stack.status[phaseData.id][phaseData.steps[stack.currentStep].fields[0].id];
-    /*__validate(stack.status[phaseData.id])*/ stack.currentStep >= phaseData.steps.length-1 && this.props.moveToNextPhase(stack.currentPhase+1) || stack.currentStep < phaseData.steps.length-1 && (force || (fieldValue.constructor === Array ? fieldValue.length > 0 : fieldValue !== '')) && this.props.moveToNextField(stack.currentStep+1);
+    const fieldData = phaseData.steps[stack.currentStep].fields[0];
+    let fieldValue = '';
+    if (fieldData.type === 'text-multiple') {
+      fieldValue = stack.status[phaseData.id].actions[stack.status[phaseData.id].actions.length - 1][fieldData.id];
+    } else {
+      fieldValue = stack.status[phaseData.id][fieldData.id];
+    }
+    if (fieldData.type === 'text-multiple' && fieldData.id === 'how') {
+      /*__validate(stack.status[phaseData.id])*/ (force || (fieldValue.constructor === Array ? fieldValue.length > 0 : fieldValue !== '')) && this.props.moveToNextField(stack.currentStep+1);
+    } else {
+      /*__validate(stack.status[phaseData.id])*/ stack.currentStep >= phaseData.steps.length-1 && this.props.moveToNextPhase(stack.currentPhase+1) || stack.currentStep < phaseData.steps.length-1 && (force || (fieldValue.constructor === Array ? fieldValue.length > 0 : fieldValue !== '')) && this.props.moveToNextField(stack.currentStep+1);
+    }
   }
 
   render() {
@@ -41,6 +51,9 @@ class PhaseStepIndicator extends React.Component {
       return <View />;
     }
 
+    // if (data.type === 'text-multiple' && data.id === 'how') {
+    //   return <View />;
+    // }
 
     const IndicatorInput = (() => {
       switch(data.type) {

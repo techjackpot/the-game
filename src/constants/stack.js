@@ -48,7 +48,7 @@ export default {
                             "type": "multi",
                             "placeholder": "",
                             "label": "Which of the four feelings of the drift are you currently experiencing right now?",
-                            "options": ['anger', 'blame', 'guilt', 'shame', 'other'],
+                            "options": ['angry', 'depressed', 'confused', 'helpless', 'irritated', 'afraid', 'hurt', 'sad', 'weak', 'other'],
                         }
                     ]
                 },
@@ -216,7 +216,7 @@ export default {
                         {
                             "id": "clear",
                             "type": "info",
-                            "label": "Okay [intro.username], time to get clear about what you want!",
+                            "label": "Okay [intro.username], Time To Get Clear About What You Want!",
                             "placeholder": "placeholder"
                         }
                     ]
@@ -511,7 +511,7 @@ export default {
                     "fields": [
                         {
                             "id": "what",
-                            "type": "text",
+                            "type": "text-multiple",
                             "label": " [intro.username], now seeing what you see, what is the one thing you must take action on in the next 48 hours?",
                             "placeholder": "I will __[do this one thing]__."
                         }
@@ -522,8 +522,8 @@ export default {
                     "fields": [
                         {
                             "id": "must",
-                            "type": "text",
-                            "label": "Why is this action a must for you?",
+                            "type": "text-multiple",
+                            "label": "Why is Action [index] a must for you?",
                             "placeholder": "I must do this one thing __[describe why you are doing this one thing]__."
                         }
                     ]
@@ -533,8 +533,8 @@ export default {
                     "fields": [
                         {
                             "id": "how",
-                            "type": "text",
-                            "label": "How will you know you have completed this action?",
+                            "type": "text-multiple",
+                            "label": "How will you know you have completed Action [index]?",
                             "placeholder": "The result will be __[describe how you will know you have completed the one thing]__."
                         }
                     ]

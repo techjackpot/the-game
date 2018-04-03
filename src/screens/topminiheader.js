@@ -4,10 +4,10 @@ import {
   Text,
   View,
   TouchableHighlight,
-  StatusBar,
   Image,
   Modal,
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import moment from 'moment';
 import { NavigationActions } from 'react-navigation';
 
@@ -50,7 +50,6 @@ class TopMiniHeader extends React.Component{
     const {user} = this.props;
     return (
       <View style={[gstyles.container, gstyles.flexRow, gstyles.topNavContainer, styles.wrapper]}>
-        <StatusBar hidden={true} />
         <Modal
           animationType="fade"
           transparent={false}
@@ -66,7 +65,7 @@ class TopMiniHeader extends React.Component{
         </View>
         <View style={styles.panel}>
           <TouchableHighlight onPress={() => this.setProfileVisible(true)}>
-            <Image source={ user.photoURL ? { uri: user.photoURL } : require('../assets/images/avatars/profile.jpg')} style={styles.avatar} />
+            <FastImage source={ user.photoURL ? { uri: user.photoURL } : require('../assets/images/avatars/profile.jpg')} style={styles.avatar} />
           </TouchableHighlight>
         </View>
       </View>
