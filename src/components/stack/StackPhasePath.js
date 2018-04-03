@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import objectAssignDeep from 'object-assign-deep';
 import { stack as styles, global as gstyles } from '../../stylesheets';
 
@@ -38,7 +39,7 @@ export const powerlevels = {
   }
 };
 
-export const feelings = ['aware', 'joy', 'hope', 'certainty', 'faith', 'peace', 'expansion', 'empathy', 'power', 'love', 'gratitude', 'awake', 'trust', 'supported', 'awe', 'focus', 'curious', 'creativity', 'happy', 'open', 'inspiration'];
+export const feelings = ['happy', 'alive', 'love', 'clear', 'open','committed', 'inspired', 'strong', 'powerful', 'other'];
 
 class StackPhasePath extends React.Component {
   constructor(props) {
@@ -119,9 +120,9 @@ class StackPhasePath extends React.Component {
                           onPress={() => this.updatePathState('power', level)}
                         >
                           <Text style={styles.fieldPathLevelText}>{data.state}</Text>
-                          <Image resizeMode={'contain'} style={[styles.fieldPathLevelValueImage]} source={data.image} />
+                          <FastImage resizeMode={'contain'} style={[styles.fieldPathLevelValueImage]} source={data.image} />
                           <View style={[gstyles.container, gstyles.flexRow, styles.container, styles.fieldPathLevelNameContainer, stack.status.light.power===level ? styles.fieldPathLevelNameContainerSelected : {}]}>
-                            <Image style={[styles.fieldPathLevelValueIcon]} source={data.icon} />
+                            <FastImage style={[styles.fieldPathLevelValueIcon]} source={data.icon} />
                             <Text style={[styles.fieldPathLevelName, stack.status.light.power===level ? styles.fieldPathLevelNameSelected : {}]}>{data.name}</Text>
                           </View>
                         </TouchableOpacity>

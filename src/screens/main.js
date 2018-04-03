@@ -5,6 +5,7 @@ import {
   View,
   Text
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import { StackNavigator, TabNavigator } from 'react-navigation';
 import moment from 'moment';
 
@@ -135,31 +136,31 @@ const GameNav = TabNavigator(
     Core4: {
       screen: Core4Screen,
       navigationOptions: {
-        tabBarLabel: ({focused, tintColor}) => <Text style={[styles.topBarLabel, focused ? styles.activeTabBarLabel : {}, {color: tintColor}]}>CORE4</Text>
+        tabBarLabel: ({focused, tintColor}) => <Text style={[styles.topBarLabel, {color: tintColor}, focused ? styles.activeTabBarLabel : {}]}>CORE4</Text>
       }
     },
     Key4: {
       screen: Key4Screen,
       navigationOptions: {
-        tabBarLabel: ({focused, tintColor}) => <Text style={[styles.topBarLabel, focused ? styles.activeTabBarLabel : {}, {color: tintColor}]}>KEY4</Text>
+        tabBarLabel: ({focused, tintColor}) => <Text style={[styles.topBarLabel, {color: tintColor}, focused ? styles.activeTabBarLabel : {}]}>KEY4</Text>
       }
     },
     Stack: {
       screen: StackScreen,
       navigationOptions: {
-        tabBarLabel: ({focused, tintColor}) => <Text style={[styles.topBarLabel, focused ? styles.activeTabBarLabel : {}, {color: tintColor}]}>STACK</Text>
+        tabBarLabel: ({focused, tintColor}) => <Text style={[styles.topBarLabel, {color: tintColor}, focused ? styles.activeTabBarLabel : {}]}>STACK</Text>
       }
     },
     /*Timeline: {
       screen: TimelineScreen,
       navigationOptions: {
-        tabBarLabel: ({focused, tintColor}) => <Text style={[styles.topBarLabel, focused ? styles.activeTabBarLabel : {}, {color: tintColor}]}>TIMELINE</Text>
+        tabBarLabel: ({focused, tintColor}) => <Text style={[styles.topBarLabel, {color: tintColor}, focused ? styles.activeTabBarLabel : {}]}>TIMELINE</Text>
       }
     },
     Dashboard: {
       screen: DashboardScreen,
       navigationOptions: {
-        tabBarLabel: ({focused, tintColor}) => <Text style={[styles.topBarLabel, focused ? styles.activeTabBarLabel : {}, {color: tintColor}]}>DASHBOARD</Text>
+        tabBarLabel: ({focused, tintColor}) => <Text style={[styles.topBarLabel, {color: tintColor}, focused ? styles.activeTabBarLabel : {}]}>DASHBOARD</Text>
       }
     }*/
   },
@@ -222,7 +223,7 @@ const MainTabNavigator = TabNavigator({
       screen: TodayNav,
       navigationOptions: {
         showLabel: false,
-        tabBarIcon: ({ tintColor }) => <Image style={styles.bottomIcon} resizeMode={'contain'} source={require('../assets/icons/magazine.png')} />,
+        tabBarIcon: ({ tintColor }) => <FastImage style={styles.bottomIcon} resizeMode={'contain'} source={require('../assets/icons/magazine.png')} />,
         showIcon: true
       },
     },
@@ -230,7 +231,7 @@ const MainTabNavigator = TabNavigator({
       screen: MovieNav,
       navigationOptions: {
         showLabel: false,
-        tabBarIcon: ({ tintColor }) => <Image style={styles.bottomIcon} resizeMode={'contain'} source={require('../assets/icons/tv.png')} />,
+        tabBarIcon: ({ tintColor }) => <FastImage style={styles.bottomIcon} resizeMode={'contain'} source={require('../assets/icons/tv.png')} />,
         showIcon: true
       },
     },*/
@@ -238,7 +239,7 @@ const MainTabNavigator = TabNavigator({
       screen: GameNav,
       navigationOptions: {
         showLabel: false,
-        tabBarIcon: ({ focused, tintColor }) => <View style={[gstyles.container, styles.gameIconContainer]}><Image style={styles.bottomIcon} resizeMode={'contain'} source={focused ? require('../assets/icons/game-active.png') : require('../assets/icons/game.png')} /></View>,
+        tabBarIcon: ({ focused, tintColor }) => <View style={[gstyles.container, styles.gameIconContainer]}><FastImage style={styles.bottomIcon} resizeMode={'contain'} source={focused ? require('../assets/icons/game-active.png') : require('../assets/icons/game.png')} /></View>,
         showIcon: true
       },
     },
@@ -246,7 +247,7 @@ const MainTabNavigator = TabNavigator({
       screen: GroupsNav,
       navigationOptions: {
         showLabel: false,
-        tabBarIcon: ({ tintColor }) => <Image style={styles.bottomIcon} resizeMode={'contain'} source={require('../assets/icons/groups.png')} />,
+        tabBarIcon: ({ tintColor }) => <FastImage style={styles.bottomIcon} resizeMode={'contain'} source={require('../assets/icons/groups.png')} />,
         showIcon: true
       },
     },
@@ -254,7 +255,7 @@ const MainTabNavigator = TabNavigator({
       screen: NotificationNav,
       navigationOptions: {
         showLabel: false,
-        tabBarIcon: ({ tintColor }) => <Image style={styles.bottomIcon} resizeMode={'contain'} source={require('../assets/icons/bell.png')} />,
+        tabBarIcon: ({ tintColor }) => <FastImage style={styles.bottomIcon} resizeMode={'contain'} source={require('../assets/icons/bell.png')} />,
         showIcon: true
       },
     }*/

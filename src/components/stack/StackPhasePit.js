@@ -7,6 +7,7 @@ import {
   Image,
   TextInput
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import objectAssignDeep from 'object-assign-deep';
 import StackPhaseData from '../../constants/stack';
 import { __get, __validate } from '../../helper';
@@ -116,7 +117,7 @@ class StackPhasePit extends React.Component {
                           style={[styles.fieldSingleValue, intro.core4===type ? styles.fieldValueSelected : {}]}
                           onPress={() => this.updatePitState('core4', type)}
                         >
-                          <Image style={[styles.fieldSingleValueImage]} source={core4Icons[type]} />
+                          <FastImage style={[styles.fieldSingleValueImage]} source={core4Icons[type]} />
                         </TouchableOpacity>
                       )
                     }

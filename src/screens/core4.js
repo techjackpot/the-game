@@ -1,29 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import {
   Text,
   View,
   Image,
-  StatusBar,
   TouchableOpacity,
-  TouchableHighlight,
   ScrollView,
-  AppState,
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {BoxShadow} from 'react-native-shadow';
 import Svg,{
-    Circle,
-    Ellipse,
     G,
     LinearGradient,
-    RadialGradient,
-    Line,
     Path,
-    Polygon,
-    Polyline,
-    Rect,
-    Symbol,
-    Use,
     Defs,
     Stop
 } from 'react-native-svg';
@@ -115,11 +104,11 @@ class Core4Elites extends React.Component {
                   <View style={[gstyles.container, done === true ? styles.eliteActive : {}]}>
                     <View style={[gstyles.container, gstyles.flexRow, styles.eliteBackground]}>
                       <View style={styles.backgroundWhiteSpace}></View>
-                      <Image style={styles.eliteBackgroudImage} resizeMode={'cover'} source={outcomes && outcomes[task] && outcomes[task].image && {uri: outcomes[task].image} || elitesAssets[task].background} />
+                      <FastImage style={styles.eliteBackgroudImage} resizeMode={'cover'} source={outcomes && outcomes[task] && outcomes[task].image && {uri: outcomes[task].image} || elitesAssets[task].background} />
                     </View>
                     <View style={[gstyles.container, styles.eliteCategoryContainer, done === false ? styles.eliteInactive : {}]}>
                       <View style={[gstyles.container, styles.eliteCategory]}>
-                        <Image style={styles.eliteCategoryIcon} resizeMode={'contain'} source={elitesAssets[task].icon} />
+                        <FastImage style={styles.eliteCategoryIcon} resizeMode={'contain'} source={elitesAssets[task].icon} />
                       </View>
                     </View>
                   </View>

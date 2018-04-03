@@ -13,6 +13,7 @@ import { getStackData } from '../actions/stack';
 import PhaseStepIndicator from '../components/stack/PhaseStepIndicator';
 import StackPhasePath from '../components/stack/StackPhasePath';
 import StackPhasePit from '../components/stack/StackPhasePit';
+import StackPhaseLight from '../components/stack/StackPhaseLight';
 import StackPhase from '../components/stack/StackPhase';
 
 class StackScreen extends React.Component {
@@ -51,7 +52,7 @@ class StackScreen extends React.Component {
             <View style={[gstyles.container, styles.container, styles.phasesContainer]}>
               <StackPhasePit />
               {
-                StackPhaseData.data.filter((phase, ind) => ind!==0 && ind <= currentPhase).map((phase, ind) => <StackPhase key={phase.id} phaseInd={ind+1} />)
+                StackPhaseData.data.filter((phase, ind) => ind!==0 && ind <= currentPhase).map((phase, ind) => phase.id==='light' ? <StackPhaseLight key={phase.id} phaseInd={ind+1} /> : <StackPhase key={phase.id} phaseInd={ind+1} />)
               }
               {
                 StackPhaseData.data.length-1 < currentPhase && <StackPhasePath navigation={this.props.navigation} />

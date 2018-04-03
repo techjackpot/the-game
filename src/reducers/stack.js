@@ -23,7 +23,7 @@ export default function stackReducer(state = initialState, action) {
     }
     case 'STACK_NEXT_FIELD': {
     	if (action.data) {
-        if (action.data.currentStep > state.currentStep) {
+        if (action.data.currentStep > state.currentStep || action.data.force) {
           return {...state, currentStep: action.data.currentStep};
 	      }
         return {...state};

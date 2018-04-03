@@ -56,9 +56,16 @@ export default {
         light: {
             revelation: '', // What is the Most Significant Insight/Revelation you’re leaving this stack experience with?
             why: '', // Why do you feel that Insight/Revelation is significant?
-            what: '', //  [intro.username], Now Seeing what You see, What is the ONE THING You MUST take Action On in the next 48 hours?
-            must: '', // Why is this Action a MUST for you?
-            how: '', // How Will You Know You Have Completed This Action?
+            // what: '', //  [intro.username], Now Seeing what You see, What is the ONE THING You MUST take Action On in the next 48 hours?
+            // must: '', // Why is this Action a MUST for you?
+            // how: '', // How Will You Know You Have Completed This Action?
+            actions: [
+                {
+                    what: '', //  [intro.username], Now Seeing what You see, What is the ONE THING You MUST take Action On in the next 48 hours?
+                    must: '', // Why is this Action a MUST for you?
+                    how: '' // How Will You Know You Have Completed This Action?
+                }
+            ], // Actions
             power: 0, // Selector Type
             feeling: [] // Grid Selector Type, [intro.username], at the end of this Stack what level of power are you feeling ?
         },

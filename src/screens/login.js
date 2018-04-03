@@ -12,9 +12,9 @@ import {
   Dimensions,
   ActivityIndicator,
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import PropTypes from 'prop-types';
 import DropdownAlert from 'react-native-dropdownalert';
-import Spinner from 'react-native-loading-spinner-overlay';
 import TextField from '../components/md-textinput';
 import Loading from '../screens/loading';
 const {height, width} = Dimensions.get('window');
@@ -63,23 +63,16 @@ class LoginScreen extends React.Component{
         source = {loginBackground}
       >
         <View style = {[styles.container/*, {opacity: (this.state.authChecked ? 1 : 0)}*/]}>
-          {/*<Spinner 
-              visible = {loading} 
-              textContent = {"Signing in..."} 
-              textStyle={{color: '#FFF'}} 
-              overlayColor    = 'rgba(0, 0, 0, 0.5)'
-          />*/}
 
           { loading && <Loading /> }
           
           <View style = {styles.topspace}>
             <View style = {styles.logoarea}>
-              <Image 
+              <FastImage 
                 style  = { styles.logoimage }
                 source = { require('../assets/images/logo.png') }
                 resizeMode = {'contain'}
-              >  
-              </Image>
+              />
             </View>
             <View style={styles.apptitle}>
               <Text style={styles.chatchar}>T</Text>
