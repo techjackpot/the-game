@@ -24,6 +24,6 @@ target 'TheGame' do
   
   pod 'Fabric', '~> 1.7.2'
   pod 'Crashlytics', '~> 3.9.3'
-  pod 'react-native-fast-image', :path => '../node_modules/react-native-fast-image'
+#  pod 'react-native-fast-image', :path => '../node_modules/react-native-fast-image'
 
 end
