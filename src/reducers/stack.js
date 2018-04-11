@@ -1,6 +1,7 @@
 import Store from '../store/stack';
 import objectAssignDeep from 'object-assign-deep';
 import merge from 'deepmerge';
+import { __calculateStackProgress } from '../helper';
 
 export const initialState = Store;
 
@@ -32,7 +33,9 @@ export default function stackReducer(state = initialState, action) {
     }
     case 'STACK_UPDATE_FIELD': {
       if (action.data) {
-        return {...objectAssignDeep(state, action.data)};
+        const data = {...objectAssignDeep(state, action.data)};
+        data.progress = __calculateStackProgress(data.status);
+        return data;
       }
       return initialState;
     }

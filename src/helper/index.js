@@ -20,4 +20,26 @@ const __dataFilter = (string, intro, index = '') => {
   return newString;
 }
 
-export { __get, __set, __validate, __getRandomInt, __dataFilter }
+const __calculateStackProgress = (stack) => {
+  // situation & clear are not questions, so we will subtract them from the total
+  // 45 questions (47-2)
+  let runningTotal = 45;
+  let total = add(stack.intro) + add(stack.dark) + add(stack.drift) + add(stack.shift) + add(stack.lift) + add(stack.light);
+  let result = eval((total / runningTotal).toFixed(2));
+
+  return result;
+}
+
+const add = (chunk) => {
+  let total = 0;
+  Object.keys(chunk).forEach((item) => {
+      if(chunk[item].constructor === Array ? chunk[item].length > 0 : chunk[item] !== '') {
+          total += 1;
+      }
+  });
+
+  return total;
+}
+
+
+export { __get, __set, __validate, __getRandomInt, __dataFilter, __calculateStackProgress }

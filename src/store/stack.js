@@ -73,4 +73,5 @@ export default {
 	date: moment().format('dddd, MMMM Do'),
 	currentPhase: 0,
 	currentStep: 0,
+    progress: 0,
 };

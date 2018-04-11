@@ -53,6 +53,7 @@ class PhaseStepIndicatorInputText extends React.Component {
         onChangeText={(text) => this.updateState(data.id, text)}
         autoCorrect={false}
         underlineColorAndroid='transparent'
+        multiline={true}
       />
     );
   }

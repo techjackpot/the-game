@@ -6,6 +6,10 @@ import { PersistGate } from 'redux-persist/es/integration/react';
 
 import EStyleSheet from 'react-native-extended-stylesheet';
 
+import {
+  setCustomText,
+} from 'react-native-global-props';
+
 import AppWithNavigationState from './routes/AppNavigator';
 import Loading from './screens/loading';
 
@@ -17,6 +21,17 @@ StatusBar.setHidden(true);
 EStyleSheet.build({
   $bgMain: '#121212'
 });
+
+// Setting default styles for all Text components.
+const customTextProps = {
+  style: {
+    fontFamily: 'AgencyFB-Bold',
+    letterSpacing: 2,
+  }
+};
+
+setCustomText(customTextProps);
+ 
 
 
 const Root = ({ store, persistor }) => {
