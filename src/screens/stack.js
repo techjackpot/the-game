@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Keyboard,
+  Dimensions,
 } from 'react-native';
 import objectAssignDeep from 'object-assign-deep';
 import StackPhaseData from '../constants/stack';
@@ -15,6 +16,9 @@ import StackPhasePath from '../components/stack/StackPhasePath';
 import StackPhasePit from '../components/stack/StackPhasePit';
 import StackPhaseLight from '../components/stack/StackPhaseLight';
 import StackPhase from '../components/stack/StackPhase';
+import ProgressBar from 'react-native-progress/Bar';
+
+const {height, width} = Dimensions.get('window');
 
 class StackScreen extends React.Component {
   constructor(props) {
@@ -27,8 +31,20 @@ class StackScreen extends React.Component {
 
   componentWillMount() {
     this.props.getStackData(new Date());
-    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => this.setState({keyboard: true}));
-    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => this.setState({keyboard: false}));
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+      this.setState({keyboard: true});
+      setTimeout(() => {
+        const {currentPhase} = this.props;
+        (currentPhase>0 && currentPhase<=StackPhaseData.data.length-1) && this.scrollView && this.scrollView.scrollToEnd();
+      });
+    });
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+      this.setState({keyboard: false});
+      setTimeout(() => {
+        const {currentPhase} = this.props;
+        (currentPhase>0 && currentPhase<=StackPhaseData.data.length-1) && this.scrollView && this.scrollView.scrollToEnd();
+      });
+    });
   }
 
   componentWillUnmount() {
@@ -37,15 +53,18 @@ class StackScreen extends React.Component {
   }
 
   render () {
-    const {currentPhase} = this.props;
+    const {currentPhase, progress} = this.props;
     const {keyboard} = this.state;
     return (
       <View style={[gstyles.container, styles.container, gstyles.gameContainer, gstyles.stackContainer, styles.stackContainer]}>
         <View style={[gstyles.container, styles.container, styles.stackPhasesContainer, currentPhase>0 && currentPhase<=StackPhaseData.data.length-1 ? styles.withIndicator : {}, keyboard ? styles.withKeyboard : {}]}>
+          <View style={styles.overallProgressView}>
+            <ProgressBar width={width} height={2} borderRadius={2} borderWidth={0} unfilledColor={'#414141'} progress={progress} color={'#bb0000'} />
+          </View>
           <ScrollView
             ref={ref => this.scrollView = ref}
             onContentSizeChange={(contentWidth, contentHeight) => {
-                this.scrollView.scrollToEnd({animated: true});
+                this.scrollView.scrollToEnd();
             }}
           >
             <View style={[styles.fieldTrackBar]} />
@@ -70,6 +89,7 @@ class StackScreen extends React.Component {
 
 const mapStateToProps = state => ({
   currentPhase: state.stack.currentPhase || 0,
+  progress: state.stack.progress || 0,
 });
 
 const mapDispatchToProps = {

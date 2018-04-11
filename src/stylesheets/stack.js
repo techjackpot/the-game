@@ -28,7 +28,7 @@ const styles = EStyleSheet.create({
     },
     withKeyboard: {
         ...(Platform.OS !== 'android' ? {
-            marginBottom: 215,
+            marginBottom: 235,
         } : {})
     },
     phasesContainer: {
@@ -75,6 +75,12 @@ const styles = EStyleSheet.create({
         marginRight: 24,
         zIndex: 99,
     },
+    leftAligned: {
+        alignItems: 'flex-start',
+    },
+    rightAligned: {
+        alignItems: 'flex-end',
+    },
     fieldTrackPointer: {
         position: 'absolute',
         left: -18,
@@ -100,6 +106,7 @@ const styles = EStyleSheet.create({
         paddingVertical: 8,
         borderRadius: 32,
         position: 'relative',
+        alignSelf: 'flex-start',
     },
     fieldLabelBubble: {
         color: '#858585',
@@ -131,6 +138,7 @@ const styles = EStyleSheet.create({
         paddingVertical: 8,
         borderRadius: 32,
         position: 'relative',
+        alignSelf: 'flex-end',
     },
     fieldLabelValueBubble: {
         color: '#000000',
@@ -312,7 +320,7 @@ const styles = EStyleSheet.create({
         position: 'absolute',
         zIndex: 101,
         ...ifIphoneX({
-            bottom: 35,
+            bottom: 55,
         }, {
             bottom: 0,
         }),
@@ -380,7 +388,11 @@ const styles = EStyleSheet.create({
         width: 150,
         height: 40,
         backgroundColor: 'transparent',
-    }
+    },
+
+    overallProgressView: {
+        marginBottom: 7,
+    },
 });
 
 export default styles;

@@ -218,8 +218,8 @@ const GameNav = TabNavigator(
 //   }
 // );
 
-const MainTabNavigator = TabNavigator({
-    /*Today: {
+/*const MainTabNavigator = TabNavigator({
+    Today: {
       screen: TodayNav,
       navigationOptions: {
         showLabel: false,
@@ -234,7 +234,7 @@ const MainTabNavigator = TabNavigator({
         tabBarIcon: ({ tintColor }) => <FastImage style={styles.bottomIcon} resizeMode={'contain'} source={require('../assets/icons/tv.png')} />,
         showIcon: true
       },
-    },*/
+    },
     Game: {
       screen: GameNav,
       navigationOptions: {
@@ -243,7 +243,7 @@ const MainTabNavigator = TabNavigator({
         showIcon: true
       },
     },
-    /*Groups: {
+    Groups: {
       screen: GroupsNav,
       navigationOptions: {
         showLabel: false,
@@ -258,7 +258,7 @@ const MainTabNavigator = TabNavigator({
         tabBarIcon: ({ tintColor }) => <FastImage style={styles.bottomIcon} resizeMode={'contain'} source={require('../assets/icons/bell.png')} />,
         showIcon: true
       },
-    }*/
+    }
   }, {
     swipeEnabled: false,
     tabBarPosition: 'bottom',
@@ -287,7 +287,70 @@ const MainTabNavigator = TabNavigator({
       iconStyle: { height: 45, width: 45, padding: 0, margin: 0 },
     }
   }
-); 
+);*/
+
+const MainTabNavigator = TabNavigator({
+    Core4: {
+      screen: Core4Screen,
+      navigationOptions: {
+        showLabel: false,
+        tabBarIcon: ({ focused, tintColor }) => <View style={[gstyles.container, focused ? styles.activeIconContainer : {}]}><FastImage style={styles.bottomIcon} resizeMode={'contain'} source={focused ? require('../assets/icons/game-active.png') : require('../assets/icons/game.png')} /></View>,
+        showIcon: true
+      },
+    },
+    /*PowerZone: {
+      screen: Core4Screen,
+      navigationOptions: {
+        showLabel: false,
+        tabBarIcon: ({ focused, tintColor }) => <View style={[gstyles.container, focused ? styles.activeIconContainer : {}]}><FastImage style={styles.bottomIcon} resizeMode={'contain'} source={focused ? require('../assets/icons/game-active.png') : require('../assets/icons/game.png')} /></View>,
+        showIcon: true
+      },
+    },*/
+    Key4: {
+      screen: Key4Screen,
+      navigationOptions: {
+        showLabel: false,
+        tabBarIcon: ({ focused, tintColor }) => <View style={[gstyles.container, focused ? styles.activeIconContainer : {}]}><FastImage style={styles.bottomIcon} resizeMode={'contain'} source={focused ? require('../assets/icons/key-active.png') : require('../assets/icons/key.png')} /></View>,
+        showIcon: true
+      },
+    },
+    Stack: {
+      screen: StackScreen,
+      navigationOptions: {
+        showLabel: false,
+        tabBarIcon: ({ tintColor }) => <FastImage style={styles.bottomIcon} resizeMode={'contain'} source={require('../assets/icons/magazine.png')} />,
+        showIcon: true
+      },
+    }
+  }, {
+    swipeEnabled: false,
+    tabBarPosition: 'bottom',
+    initialRouteName: 'Core4',
+    lazy: false,
+    animationEnabled: false,
+    tabBarOptions: {
+      showLabel: false,
+      showIcon: 'true',
+      style: {
+        backgroundColor: '#131313',
+        height: 60,
+        position: 'absolute',
+        padding: 0,
+        margin: 0,
+        bottom: 0,
+        left: 5,
+        right: 5,
+        borderTopLeftRadius: 5,
+        borderTopRightRadius: 5,
+      },
+      indicatorStyle: {
+        height: 0,
+      },
+      labelStyle: { padding: 0, margin: 0, height: 0, maxHeight: 0, },
+      iconStyle: { height: 45, width: 45, padding: 0, margin: 0 },
+    }
+  }
+);
 
 class MainScreen extends React.Component {
   constructor(props) {

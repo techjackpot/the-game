@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         width: 25,
         height: 25,
     },
-    gameIconContainer: {
+    activeIconContainer: {
         borderColor: '#1fb9fc',
         borderWidth: 1,
         borderStyle: 'solid',

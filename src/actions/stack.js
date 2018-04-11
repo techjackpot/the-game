@@ -3,7 +3,7 @@ import statusMessage from './status';
 import Firebase from '../lib/firebase';
 import moment from 'moment';
 import initialData from '../store/stack';
-import { __get, __set } from '../helper';
+import { __get, __set, __calculateStackProgress } from '../helper';
 
 export function getStackData(date) {
   return dispatch => new Promise((resolve) => {
@@ -58,14 +58,8 @@ export function finishStack() {
 
 		const data = stack.status;
 
-    // situation & clear are not questions, so we will subtract them from the total
-    // 49 questions
-    let runningTotal = 46.75;
-    let total = Object.keys(data).reduce((s, type) => s + Object.keys(data[type]).reduce((t, key) => t + data[type][key]!==''?1:0 ,0), 0);
-    let result = (total / runningTotal).toFixed(2);
-
 		data.date = new Date();
-		data.progress = result;
+		data.progress = __calculateStackProgress(stack.status) || 0;
 
 		return Firebase.firestore().collection('users').doc(UID).collection('apps').doc('ww').collection('challenges').doc(challengeId).collection('weeks').doc(weekId).collection('stacks').add(data).then(() => {
       setTimeout(async () => {
