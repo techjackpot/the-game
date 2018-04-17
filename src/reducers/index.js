@@ -4,6 +4,7 @@ import nav from './nav';
 import stack from './stack';
 import core4 from './core4';
 import key4 from './key4';
+import key4PowerZone from './key4PowerZone'
 
 const rehydrated = (state = false, action) => {
   switch (action.type) {
@@ -22,4 +23,5 @@ export default {
   stack,
   core4,
   key4,
+  key4PowerZone
 };

@@ -18,7 +18,7 @@ import { getKey4Data, updateKey4Data } from '../actions/key4';
 class WeekNavigator extends React.Component {
   constructor(props) {
     super(props);
-  
+
     this.state = {
       weekId: moment().week(),
     };
@@ -111,13 +111,6 @@ class Key4ScoresPanel extends React.Component {
 }
 
 class Key4ItemsPanel extends React.Component {
-  constructor(props) {
-    super(props);
-  
-    this.state = {
-    };
-  }
-
   render() {
     const {key4} = this.props;
     return (
@@ -212,7 +205,7 @@ class Key4Screen extends React.Component{
     const weekId = moment().format('Y') + '' + moment().format('WW');
     this.props.getKey4Data({weekId});
   }
-  
+
   componentWillReceiveProps(nextProps) {
     if (this.props.challenge.id !== nextProps.challenge.id && nextProps.challenge.id) {
       const weekId = moment().format('Y') + '' + moment().format('WW');
@@ -230,12 +223,10 @@ class Key4Screen extends React.Component{
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    key4: state.key4 || {},
-    challenge: state.user && state.user.challenge && state.user.challenge || '',
-  }
-};
+const mapStateToProps = state => ({
+  key4: state.key4 || {},
+  challenge: state.user && state.user.challenge && state.user.challenge || '',
+});
 
 const mapDispatchToProps = {
   getKey4Data,

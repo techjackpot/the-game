@@ -41,5 +41,11 @@ const add = (chunk) => {
   return total;
 }
 
+const __isSameDay = (d1, d2) => {
+  return d1.getFullYear() === d2.getFullYear()
+    && d1.getDate() === d2.getDate()
+    && d1.getMonth() === d2.getMonth();
+}
 
-export { __get, __set, __validate, __getRandomInt, __dataFilter, __calculateStackProgress }
+
+export { __get, __set, __validate, __getRandomInt, __dataFilter, __calculateStackProgress, __isSameDay }

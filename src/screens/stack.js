@@ -17,6 +17,8 @@ import StackPhasePit from '../components/stack/StackPhasePit';
 import StackPhaseLight from '../components/stack/StackPhaseLight';
 import StackPhase from '../components/stack/StackPhase';
 import ProgressBar from 'react-native-progress/Bar';
+import { __isSameDay } from '../helper';
+import moment from 'moment';
 
 const {height, width} = Dimensions.get('window');
 
@@ -30,7 +32,9 @@ class StackScreen extends React.Component {
   }
 
   componentWillMount() {
-    this.props.getStackData(new Date());
+    if (this.props.stackDate !== moment().format('dddd, MMMM Do')) {
+      this.props.getStackData(new Date());
+    }
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
       this.setState({keyboard: true});
       setTimeout(() => {
@@ -88,6 +92,7 @@ class StackScreen extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  stackDate: state.stack.date,
   currentPhase: state.stack.currentPhase || 0,
   progress: state.stack.progress || 0,
 });

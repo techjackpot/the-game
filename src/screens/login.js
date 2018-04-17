@@ -178,21 +178,16 @@ Login.defaultProps = {
   successMessage: null,
 };
 
-const mapStateToProps = state => {
-  return {
-    user: state.user || {},
-    isLoading: state.status.loading || false,
-    infoMessage: state.status.info || null,
-    errorMessage: state.status.error || null,
-    successMessage: state.status.success || null,
-  }
-};
+const mapStateToProps = state => ({
+  user: state.user || {},
+  isLoading: state.status.loading || false,
+  infoMessage: state.status.info || null,
+  errorMessage: state.status.error || null,
+  successMessage: state.status.success || null,
+});
 
-const mapDispatchToProps = dispatch => {
-  return {
-    dispatch,
-    onFormSubmit: data => dispatch(login(data)),
-  }
+const mapDispatchToProps = {
+  onFormSubmit: login,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

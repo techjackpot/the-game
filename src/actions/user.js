@@ -25,7 +25,7 @@ function getUserDetails(dispatch) {
     });
   });
 
-  Firebase.firestore().collection('users').doc(UID).collection('apps').doc('ww').get().then((challengeDoc) => {
+  return Firebase.firestore().collection('users').doc(UID).collection('apps').doc('ww').get().then((challengeDoc) => {
     if (challengeDoc.exists) {
       let challengeId = challengeDoc.data().activeChallenge;
       if (challengeId) {

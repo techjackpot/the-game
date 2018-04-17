@@ -53,6 +53,7 @@ const styles = EStyleSheet.create({
         paddingVertical: 2,
         fontSize: 9,
         fontWeight: '700',
+        fontFamily: 'Helvetica',
     },
     stepsContainer: {
         alignItems: 'stretch',
@@ -96,6 +97,7 @@ const styles = EStyleSheet.create({
     },
     fieldLabel: {
         color: '#919191',
+        fontFamily: 'Helvetica',
     },
     fieldBubbleContent: {
         marginVertical: 5,
@@ -112,6 +114,7 @@ const styles = EStyleSheet.create({
         color: '#858585',
         fontWeight: '900',
         lineHeight: 22,
+        fontFamily: 'Helvetica',
     },
     fieldLabelBubbleArrow: {
         backgroundColor: '#222222',
@@ -144,6 +147,7 @@ const styles = EStyleSheet.create({
         color: '#000000',
         lineHeight: 22,
         fontSize: 12,
+        fontFamily: 'Helvetica',
     },
     fieldLabelValueBubbleArrow: {
         backgroundColor: '#ffffff',
@@ -160,6 +164,9 @@ const styles = EStyleSheet.create({
         height: 20,
         alignSelf: 'flex-end',
         borderBottomLeftRadius: 32,
+    },
+    fieldBubbleValueText: {
+        fontFamily: 'Helvetica',
     },
     fieldValueContainer: {
         marginVertical: 8,
@@ -197,6 +204,7 @@ const styles = EStyleSheet.create({
         color: '#ffffff',
         fontSize: 10,
         textAlign: 'center',
+        fontFamily: 'Helvetica',
     },
     fieldSingleValueImage: {
         width: 16,
@@ -229,6 +237,7 @@ const styles = EStyleSheet.create({
         color: '#ffffff',
         fontSize: 12,
         textAlign: 'center',
+        fontFamily: 'Helvetica',
     },
     fieldChoiceValueImage: {
         width: 48,
@@ -258,6 +267,7 @@ const styles = EStyleSheet.create({
         fontWeight: '900',
         textAlign: 'center',
         marginVertical: 5,
+        fontFamily: 'Helvetica',
     },
     fieldPathLevelValueImage: {
         width: '100%',
@@ -280,6 +290,7 @@ const styles = EStyleSheet.create({
     fieldPathLevelName: {
         color: '#ffffff',
         fontSize: 9,
+        fontFamily: 'Helvetica',
     },
     fieldPathLevelNameSelected: {},
 
@@ -297,6 +308,7 @@ const styles = EStyleSheet.create({
         color: '#ffffff',
         paddingHorizontal: 8,
         paddingVertical: 3,
+        fontFamily: 'Helvetica',
     },
 
     addMoreActionButtonContainer: {
@@ -312,6 +324,7 @@ const styles = EStyleSheet.create({
         color: '#ffffff',
         paddingHorizontal: 8,
         paddingVertical: 3,
+        fontFamily: 'Helvetica',
     },
 
 
@@ -363,9 +376,11 @@ const styles = EStyleSheet.create({
         color: '#000000',
         fontSize: 10,
         textAlign: 'center',
+        fontFamily: 'Helvetica',
     },
     valueIndicatorInputBooleanTextSelected: {
         color: '#bb0000',
+        fontFamily: 'Helvetica',
     },
     moveToNextFieldButtonContainer: {
         flex: 0,
@@ -382,6 +397,7 @@ const styles = EStyleSheet.create({
         color: '#ffffff',
         fontSize: 8,
         fontWeight: '900',
+        fontFamily: 'Helvetica',
     },
 
     typingLabel: {
