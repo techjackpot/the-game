@@ -12,6 +12,7 @@ import styles_stack from './stack';
 import styles_timeline from './timeline';
 import styles_today from './today';
 import styles_topminiheader from './topminiheader';
+import styles_powerzone from './powerzone';
 import styles_global from './global';
 
 export const core4 = styles_core4;
@@ -28,6 +29,7 @@ export const stack = styles_stack;
 export const timeline = styles_timeline;
 export const today = styles_today;
 export const topminiheader = styles_topminiheader;
+export const powerzone = styles_powerzone;
 export const global = styles_global;
 
 // const styles = {

@@ -96,8 +96,8 @@ const styles = EStyleSheet.create({
     },
     middleContainer: {
         backgroundColor: '#1c1c1c',
-        minHeight: 130,
-        maxHeight: 130,
+        minHeight: 100,
+        maxHeight: 100,
     },
     scoresContainer: {
         marginHorizontal: 8,

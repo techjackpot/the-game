@@ -8,6 +8,8 @@ export default {
     week          : parseInt(moment().format('WW')),
     year          : parseInt(moment().format('Y')),
     completedTasks: 0,
+    power         : 0,
+    zone          : 0,
     tasks         : {
         // Body
         body    : {

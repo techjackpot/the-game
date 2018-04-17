@@ -105,7 +105,8 @@ class StackPhaseStepFieldBubbleContent extends React.Component {
 
 class StackPhaseStepFieldBubbleValue extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
-    return false;
+    const {currentPhaseId} = this.props;
+    return currentPhaseId === 'light';
   }
   render() {
     const {noBubble} = this.props;
@@ -177,8 +178,28 @@ class StackPhaseStepField extends React.Component {
     this.props.moveToNextPhase(stack.currentPhase+1);
   }
 
+  removeAction(actionInd) {
+    const {stack} = this.props;
+
+    let moving = false;
+    if (actionInd === stack.status.light.actions.length-1) {
+      moving = true;
+    }
+    stack.status.light.actions.splice(actionInd, 1);
+    
+    this.props.updateStackField({
+      phase: 'light',
+      field: 'actions',
+      data: stack.status.light.actions,
+    }).then(() => {
+      moving && this.props.moveToNextField(5, true);
+    })
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
-    return this.props.phaseInd === this.props.stack.currentPhase && this.props.stepInd === this.props.stack.currentStep;
+    const {stack} = this.props;
+    const currentPhaseId = __get([stack.currentPhase, 'id'], StackPhaseData.data);
+    return (this.props.phaseInd === this.props.stack.currentPhase && this.props.stepInd === this.props.stack.currentStep) || (currentPhaseId === 'light');
   }
 
   render() {
@@ -362,6 +383,9 @@ class StackPhaseStepField extends React.Component {
         { data.type === 'text-multiple' && (
           <StackPhaseStepFieldBubbleContent noBubble={true} contentType={'label'}>
             <Text style={styles.fieldLabelBubble}>{__dataFilter(data.label, stack.status.intro, actionInd+1)}</Text>
+            { data.id==='what' && stack.status.light.actions.length>1 && (
+              <TouchableOpacity style={[styles.addMoreActionButton, {marginTop: 5}]} onPress={() => this.removeAction(actionInd)}><Text style={styles.addMoreActionButtonText}>Remove</Text></TouchableOpacity>
+            ) }
           </StackPhaseStepFieldBubbleContent>
         ) }
 
@@ -421,11 +445,11 @@ class StackPhaseStepField extends React.Component {
           </View>
         ) }
         { (data.type!=='text-multiple') && (data.id !== 'choice') && (!!value && (phaseInd < stack.currentPhase || (phaseInd == stack.currentPhase && stepInd < stack.currentStep))) && (
-            <StackPhaseStepFieldBubbleValue><Text>{value}</Text></StackPhaseStepFieldBubbleValue>
+            <StackPhaseStepFieldBubbleValue currentPhaseId={currentPhaseId}><Text style={styles.fieldBubbleValueText}>{value}</Text></StackPhaseStepFieldBubbleValue>
         ) }
         
         { (data.type==='text-multiple') && (data.id !== 'choice') && (!!value && (phaseInd < stack.currentPhase || (phaseInd == stack.currentPhase && (stepInd < stack.currentStep || actionInd < stack.status.light.actions.length-1)))) && (
-            <StackPhaseStepFieldBubbleValue><Text>{value}</Text></StackPhaseStepFieldBubbleValue>
+            <StackPhaseStepFieldBubbleValue currentPhaseId={currentPhaseId}><Text style={styles.fieldBubbleValueText}>{value}</Text></StackPhaseStepFieldBubbleValue>
         ) }
 
         { phaseId === 'lift' && data.id === 'body' && !!stack.status.lift.body && (

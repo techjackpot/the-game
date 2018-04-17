@@ -172,23 +172,8 @@ class Core4Dude extends React.Component {
 }
 
 class Core4ScoreStatusPanel extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      zone: {
-        active: false,
-        score: 3
-      },
-      power: {
-        active: false,
-        score: 4
-      }
-    };
-  }
-
   render () {
-    const {zone, power} = this.state;
-    const {score} = this.props;
+    const {score, power, zone} = this.props;
     return (
       <View style={[gstyles.container, gstyles.flexRow, styles.statusPanel]}>
         <View style={[gstyles.container, gstyles.flexColumn, styles.scoreBoard]}>
@@ -196,22 +181,19 @@ class Core4ScoreStatusPanel extends React.Component {
             <Text style={[styles.scoreText, styles.totalScore]}>{score}</Text>
             <Text style={[styles.scoreText, styles.maxScore]}>/4</Text>
           </View>
-          <View style={[styles.horizontalBar, !zone.active && !power.active ? {display: 'none'} : {}]} />
+          <View style={styles.horizontalBar} />
           <View style={[styles.addonScores, gstyles.flexRow]}>
-            { zone.active && (
+            { score===4 && (
                 <View style={[gstyles.container, gstyles.flexColumn, styles.addonScoreArea]}>
                   <View style={styles.addonScoreLabel}><Text style={styles.addonScoreLabelText}>ZONE</Text></View>
-                  <Text style={[styles.scoreText, styles.addonScore]}>{zone.score}</Text>
+                  <Text style={[styles.scoreText, styles.addonScore]}>{zone}</Text>
                 </View>
               )
             }
-            { power.active && (
-                <View style={[gstyles.container, gstyles.flexColumn, styles.addonScoreArea]}>
-                  <View style={styles.addonScoreLabel}><Text style={styles.addonScoreLabelText}>POWER</Text></View>
-                  <Text style={[styles.scoreText, styles.addonScore]}>{power.score}</Text>
-                </View>
-              )
-            }
+            <View style={[gstyles.container, gstyles.flexColumn, styles.addonScoreArea]}>
+              <View style={styles.addonScoreLabel}><Text style={styles.addonScoreLabelText}>POWER</Text></View>
+              <Text style={[styles.scoreText, styles.addonScore]}>{power}</Text>
+            </View>
           </View>
         </View>
         <View style={[gstyles.container, styles.statusBoard]}>
@@ -224,12 +206,6 @@ class Core4ScoreStatusPanel extends React.Component {
 }
 
 class Core4Screen extends React.Component {
-  constructor(props) {
-    super(props);
-  
-    this.state = {
-    };
-  }
 
   componentDidMount() {
     const weekId = moment().format('Y') + '' + moment().format('WW');
@@ -260,7 +236,7 @@ class Core4Screen extends React.Component {
         </View>*/}
         <ScrollView>
           <View style={gstyles.container}>
-            <Core4ScoreStatusPanel score={core4.completedTasks} />
+            <Core4ScoreStatusPanel score={core4.completedTasks} zone={core4.zone} power={core4.power} />
           </View>
           <View style={gstyles.container}>
             <Core4Elites {...this.props}/>
@@ -271,19 +247,14 @@ class Core4Screen extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
+const mapStateToProps = state => ({
     core4: state.core4 || {},
     challenge: state.user && state.user.challenge || {},
-  };
-};
+});
 
-const mapDispatchToProps = dispatch => {
-  return {
-    dispatch,
-    getCore4Data: (daySet) => dispatch(getCore4Data(daySet)),
-    updateCore4Data: (daySet, data) => dispatch(updateCore4Data(daySet, data)),
-  }
+const mapDispatchToProps = {
+  getCore4Data,
+  updateCore4Data,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Core4Screen);

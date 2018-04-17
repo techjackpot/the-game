@@ -106,7 +106,7 @@ class StackPhasePit extends React.Component {
                 <View style={[styles.fieldTrackPointer]} />
                 <View style={[gstyles.container, styles.container]}>
                   <View style={[gstyles.container, styles.container, styles.fieldLabelContainer]}>
-                    <Text style={styles.fieldLabel}>{__get(['steps', 1, 'fields', 0, 'label'], data).toUpperCase()}</Text>
+                    <Text style={styles.fieldLabel}>{__get(['steps', 1, 'fields', 0, 'label'], data)}</Text>
                   </View>
                   <View style={[gstyles.container, gstyles.flexRow, styles.fieldValueContainer, styles.fieldSingleValueContainer]}>
                     {
@@ -132,7 +132,7 @@ class StackPhasePit extends React.Component {
                 <View style={[styles.fieldTrackPointer]} />
                 <View style={[gstyles.container, styles.container]}>
                   <View style={[gstyles.container, styles.container, styles.fieldLabelContainer]}>
-                    <Text style={styles.fieldLabel}>{__get(['steps', 2, 'fields', 0, 'label'], data).toUpperCase()}</Text>
+                    <Text style={styles.fieldLabel}>{__get(['steps', 2, 'fields', 0, 'label'], data)}</Text>
                   </View>
                   <View style={[gstyles.container, styles.container, styles.fieldValueContainer, styles.fieldInputValueContainer]}>
                     <TextInput
@@ -155,7 +155,7 @@ class StackPhasePit extends React.Component {
                 <View style={[styles.fieldTrackPointer]} />
                 <View style={[gstyles.container, styles.container]}>
                   <View style={[gstyles.container, styles.container, styles.fieldLabelContainer]}>
-                    <Text style={styles.fieldLabel}>{__get(['steps', 3, 'fields', 0, 'label'], data).toUpperCase()}</Text>
+                    <Text style={styles.fieldLabel}>{__get(['steps', 3, 'fields', 0, 'label'], data)}</Text>
                   </View>
                   <View style={[gstyles.container, gstyles.flexRow, styles.fieldValueContainer, styles.fieldSingleValueContainer]}>
                     {

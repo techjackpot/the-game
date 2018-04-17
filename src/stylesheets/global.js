@@ -45,7 +45,7 @@ const styles = EStyleSheet.create({
     },
     stackContainer: {
         alignItems: 'stretch',
-    }
+    },
 });
 
 export default styles;

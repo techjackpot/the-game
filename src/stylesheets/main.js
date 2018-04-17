@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
         height: 45,
         minHeight: 45,
         maxHeight: 45,
-    }
+    },
 });
 
 export default styles;

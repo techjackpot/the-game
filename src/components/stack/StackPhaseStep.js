@@ -24,7 +24,9 @@ class StackPhaseStep extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return nextProps.stack.currentStep === this.props.stepInd || nextProps.stack.currentStep - 1 === this.props.stepInd;
+    const {stack} = this.props;
+    const currentPhaseId = __get([stack.currentPhase, 'id'], StackPhaseData.data);
+    return (nextProps.stack.currentStep === this.props.stepInd || nextProps.stack.currentStep - 1 === this.props.stepInd) || (currentPhaseId === 'light');
   }
 
   render() {
